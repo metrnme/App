@@ -11,4 +11,7 @@
     <string name="usertype">U S E R T Y P E</string>
     <string name="musician">Musician</string>
     <string name="listener">Listener</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
 </resources>
