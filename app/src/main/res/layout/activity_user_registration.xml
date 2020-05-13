@@ -38,6 +38,50 @@
                     android:textSize="@dimen/body_txt_size" />
 
 
+                <EditText
+                    android:id="@+id/name_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/pg_margin"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="@dimen/pg_margin"
+                    android:ems="10"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="@string/name"
+                    android:textSize="@dimen/sub_hdng_size"
+                    android:inputType="textPersonName"/>
+
+                <EditText
+                    android:id="@+id/age_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/pg_margin"
+                    android:layout_marginEnd="@dimen/pg_margin"
+                    android:ems="10"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="@string/age"
+                    android:textSize="@dimen/sub_hdng_size"
+                    android:inputType="number"/>
+
+                <EditText
+                    android:id="@+id/gender_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/pg_margin"
+                    android:layout_marginEnd="@dimen/pg_margin"
+                    android:layout_marginBottom="40dp"
+                    android:ems="10"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="@string/gender"
+                    android:textSize="@dimen/sub_hdng_size"
+                    android:inputType="text"/>
+
+
+
+
                 <Button
                     android:id="@+id/btn_nxt_rgstr"
                     android:layout_width="match_parent"
