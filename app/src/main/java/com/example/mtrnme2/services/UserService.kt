@@ -3,9 +3,7 @@ package com.example.mtrnme2.services
 import com.example.mtrnme2.models.NewUserResponse
 import com.example.mtrnme2.models.User
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface UserService {
 
@@ -14,5 +12,12 @@ interface UserService {
 
     @PUT("api/v1/user")
     fun updateUserInfo(@Body infoUser: User): Call<NewUserResponse>
+
+    @GET("api/v1/user")
+    fun getUser(): Call<NewUserResponse>
+
+    @DELETE("api/v1/user")
+    fun removeUser(): Call<NewUserResponse>
+
 
 }

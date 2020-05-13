@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_user_registration.*
 class UserRegistration : AppCompatActivity() {
 
     var uname : String?=null
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
