@@ -1,0 +1,2 @@
+rootProject.name='MTRNME2'
+include ':app'

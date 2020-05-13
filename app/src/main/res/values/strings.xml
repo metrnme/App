@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MTRNME2</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="come_up_with_something_new">Come up with something new...</string>
+    <string name="register">Register</string>
+    <string name="uno_momento">Uno Momento...</string>
+    <string name="help_us_put_you_in_our_sustem">Help us put you in our sustem.</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
+    <string name="please_select_user_type">Please select user type</string>
+    <string name="usertype">U S E R T Y P E</string>
+    <string name="musician">Musician</string>
+    <string name="listener">Listener</string>
+</resources>
