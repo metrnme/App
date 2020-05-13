@@ -8,15 +8,17 @@ import android.view.ViewGroup
 
 import com.example.mtrnme2.R
 
-
-class HomeFragment : Fragment() {
-
+/**
+ * A simple [Fragment] subclass.
+ */
+class SearchFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
+
 }
