@@ -51,45 +51,15 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 })
+            }else{
+                Toast.makeText(this@MainActivity, "Empty", Toast.LENGTH_SHORT).show()
             }
-
-
         }
-
-        /*     btn_rgstr.setOnClickListener{
-                 val newUser = User()
-                 newUser.username = uname_txt.text.toString()
-
-                 val userService:UserService = ServiceBuilder.buildservice(UserService::class.java)
-                 val requestCall: Call<User> = userService.addUser(newUser)
-
-
-                 requestCall.enqueue(object: Callback<User> {
-
-                     override fun onResponse(call: Call<User>, response: Response<User>) {
-                         if (response.isSuccessful) {
-                             finish() // Move back to DestinationListActivity
-                             var newlyCreatedDestination = response.body() // Use it or ignore it
-                             Toast.makeText(applicationContext,"Successfully Added", Toast.LENGTH_SHORT).show()
-                         } else {
-                             Toast.makeText(applicationContext,"Failed to add item 0", Toast.LENGTH_SHORT).show()
-                         }
-                     }
-
-                     override fun onFailure(call: Call<User>, t: Throwable) {
-                         Toast.makeText(applicationContext, "Failed to add item 1", Toast.LENGTH_SHORT).show()
-                     }
-                 })
-             }
-     */
-
     }
-
     private fun checkValidations(): Boolean {
         if (uname_txt.text.isNullOrEmpty()){
             return false
         }
-
         return true
     }
 }
