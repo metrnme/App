@@ -1,5 +1,6 @@
 package com.example.mtrnme2.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -22,12 +23,9 @@ class SelectUserType : AppCompatActivity() {
         setContentView(R.layout.activity_select_user_type)
 
         btn_done.setOnClickListener {
-            if (savedInstanceState == null) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.icontainer, InstrumentFragment.newInstance())
-                    .commitNow()
+            val intent = Intent(this@SelectUserType, AddInstrumentsActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    }
 }

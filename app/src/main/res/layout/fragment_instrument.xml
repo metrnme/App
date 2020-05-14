@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/icontainer"
     tools:context=".fragments.InstrumentFragment">
 
 
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/add_instruments"
         android:textSize="@dimen/hdng_txt_size"
-        android:fontFamily="@font/nunito_extrabold"
+        android:fontFamily="@font/nunito_bold"
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginStart="@dimen/pg_margin"
         android:layout_marginEnd="@dimen/pg_margin" />
