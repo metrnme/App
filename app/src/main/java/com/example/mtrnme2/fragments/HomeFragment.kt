@@ -12,9 +12,11 @@ import com.example.mtrnme2.R
 class HomeFragment : Fragment() {
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+//<<<<<<< UI
+//=======
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,10 +27,13 @@ class HomeFragment : Fragment() {
 
         return view
     }
+//<<<<<<< UI
+//=======
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
 
-    }
+//    }
 
+//>>>>>>> master
 }

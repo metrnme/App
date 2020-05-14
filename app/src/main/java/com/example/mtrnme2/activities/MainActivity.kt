@@ -55,6 +55,11 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Empty", Toast.LENGTH_SHORT).show()
             }
         }
+
+        btn_lgn.setOnClickListener{
+            val intent = Intent(this@MainActivity, DashboardActivity::class.java)
+            startActivity(intent)
+        }
     }
     private fun checkValidations(): Boolean {
         if (uname_txt.text.isNullOrEmpty()){
