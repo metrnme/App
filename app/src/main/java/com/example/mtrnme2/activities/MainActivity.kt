@@ -81,13 +81,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 })
-            }else{
-                Toast.makeText(this@MainActivity, "Empty", Toast.LENGTH_SHORT).show()
             }
         }
     }
     private fun checkValidations(): Boolean {
         if (uname_txt.text.isNullOrEmpty()){
+            Toast.makeText(this@MainActivity, "Username is empty!", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
