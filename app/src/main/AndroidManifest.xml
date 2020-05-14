@@ -13,11 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.AddInstruments"></activity>
+        <activity android:name=".activities.AddInstrumentsActivity"></activity>
+        <activity android:name=".activities.AddInstruments" />
         <activity android:name=".activities.DashboardActivity" />
-        <activity android:name=".activities.TrackActivity">
-
-        </activity>
+        <activity android:name=".activities.TrackActivity"></activity>
 
         <service
             android:name=".services.UserInfoService"
@@ -30,7 +29,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".activities.SelectUserType" />
         <activity android:name=".activities.UserRegistration" />
