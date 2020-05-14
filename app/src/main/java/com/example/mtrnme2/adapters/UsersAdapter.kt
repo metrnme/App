@@ -9,7 +9,6 @@ class UsersAdapter(data : MutableList<User>) : BaseQuickAdapter<User, BaseViewHo
     override fun convert(helper: BaseViewHolder?, item: User?) {
         helper!!.setText(R.id.name_tv, item!!.name)
         helper.setText(R.id.uname_tv, item.username)
-
         helper.addOnClickListener(R.id.dots)
     }
 
