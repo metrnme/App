@@ -55,7 +55,7 @@ class UserRegistration : AppCompatActivity() {
                                 startActivity(intent)
                             }
                         }
-                    });
+                    })
                 }
 
             }

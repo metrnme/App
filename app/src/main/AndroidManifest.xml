@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.DashboardActivity"></activity>
+        <activity android:name=".activities.AddInstruments"></activity>
+        <activity android:name=".activities.DashboardActivity" />
 
         <service
             android:name=".services.UserInfoService"
