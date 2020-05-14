@@ -1,17 +1,33 @@
 package com.example.mtrnme2.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.mtrnme2.R
+import com.example.mtrnme2.fragments.InstrumentFragment
 import com.example.mtrnme2.services.UserService
+import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_select_user_type.*
+
 
 class SelectUserType : AppCompatActivity() {
-    var uname : String?=null
-    var userService : UserService?=null
+    var uname: String? = null
+    var userService: UserService? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_user_type)
+
+        btn_done.setOnClickListener {
+            if (savedInstanceState == null) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.icontainer, InstrumentFragment.newInstance())
+                    .commitNow()
+        }
+    }
+
     }
 }

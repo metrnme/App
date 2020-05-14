@@ -45,7 +45,7 @@ dependencies {
     // GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
 
-    //Recyclerview
+    //Recyclerview I added this recyclerview adapter library
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 
     // Logging
