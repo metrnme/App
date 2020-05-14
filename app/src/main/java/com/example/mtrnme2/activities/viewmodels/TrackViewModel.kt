@@ -5,6 +5,8 @@ import com.example.mtrnme2.models.Track
 
 class TrackViewModel : ViewModel() {
 
+
+    /*This function  will return a track list. You can get this list either from network or from offline database. It Returns a mutable list of track model*/
     fun getTracks() : MutableList<Track>{
         var listOfTracks = mutableListOf<Track>()
         listOfTracks.add(Track("1", "Fly me to the moon", "https://google.com", "johndoe", "23"))
