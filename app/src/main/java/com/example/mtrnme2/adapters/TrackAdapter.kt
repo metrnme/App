@@ -8,7 +8,7 @@ import com.example.mtrnme2.models.Track
 class TrackAdapter (data : MutableList<Track>) : BaseQuickAdapter<Track, BaseViewHolder>(R.layout.single_track_layout, data) {
     override fun convert(helper: BaseViewHolder?, item: Track?) {
 
-        /*Help contains  many mehtods like settext , set imageresource etc It will help you populate view from data behtreeen janab!*/
+        /*Help contains  many mehtods like settext , set imageresource etc It will help you populate view from data*/
         helper!!.setText(R.id.title, item!!.name)
         helper!!.setText(R.id.duration, item!!.likes)
         helper!!.setText(R.id.description, item!!.username)

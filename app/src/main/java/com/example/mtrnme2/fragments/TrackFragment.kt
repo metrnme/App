@@ -62,7 +62,7 @@ class TrackFragment : Fragment() {
                 view: View?,
                 position: Int
             ) {
-                /* This is the click listener. You can play files based on this got it */
+                /* This is the click listener. You can play files based on this*/
                 playTrack(viewModel.getTracks()[position].url)
             }
 

@@ -22,4 +22,17 @@
     <string name="search">Search</string>
     <string name="library">Library</string>
     <string name="select_instruments">Select Instruments</string>
+    <string name="m_t_r_n_m_e">M T R N M E</string>
+    <string name="please_enter_username">Please Enter Username</string>
+    <string name="s_e_a_r_c_h">S E A R C H</string>
+    <string name="jutt_daa_muqaabla">Jutt Daa Muqaabla</string>
+    <string name="more_options">More options</string>
+    <string name="umais_ameen">Umais Ameen</string>
+    <string name="skrillexcited">skrillexcited</string>
+    <string name="bass_guitar">Bass Guitar</string>
+    <string name="str">STR</string>
+    <string name="add_instrument">add instrument</string>
+    <string name="add_instruments">Add Instruments</string>
+    <string name="select_instruments_that_you_play_learning_to_play">Select instruments that you play/learning to play...</string>
+    <string name="proceed">Proceed</string>
 </resources>
