@@ -11,8 +11,6 @@ class UserViewModel:ViewModel() {
         listOfUsers.add(User("6ix", "something21"))
         listOfUsers.add(User("xae-12", "something2"))
         listOfUsers.add(User("kys", "something3"))
-
-
         return listOfUsers
     }
 }

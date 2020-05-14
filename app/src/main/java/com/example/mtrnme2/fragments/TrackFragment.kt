@@ -46,16 +46,23 @@ class TrackFragment : Fragment() {
     ): View {
 
         //Here wer are inflating views on a canvas
-        return inflater.inflate(R.layout.track_fragment, container, false)
+        return inflater.inflate(R.layout.track_fragment, container,false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TrackViewModel::class.java)
+        trkAdapter = TrackAdapter(viewModel.getSampleTracks())
+        tracks.layoutManager = LinearLayoutManager(context)
 
-        ///Initiating instance of viewmodel
-        //viewModel = ViewModelProvider(this).get(TrackViewModel::class.java)
+        //Then we are attaching a custom adapter to it.
+        tracks.adapter = trkAdapter
 
-        getTracks()
+        trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
+
+        }
+
+//          getTracks()
         // Here wer are initiating reference to adpater with data we have of tracks
 
     }
@@ -86,7 +93,6 @@ class TrackFragment : Fragment() {
                             for(i in responsebody){
                                 listOfTracks.add(i)
                             }
-
 
                             trkAdapter = TrackAdapter(response.body()!!)
 

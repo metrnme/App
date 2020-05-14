@@ -14,12 +14,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.AddInstrumentsActivity"></activity>
-        <activity android:name=".activities.AddInstruments" />
         <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.TrackActivity"></activity>
 
         <service
-            android:name=".services.UserInfoService"
+            android:name=".services.UserService"
             android:enabled="true"
             android:exported="false" />
 

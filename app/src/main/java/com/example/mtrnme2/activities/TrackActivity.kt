@@ -28,7 +28,7 @@ class TrackActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, TrackFragment.newInstance())
+                .replace(R.id.tcontainer, TrackFragment.newInstance())
                 .commitNow()
         }
     }

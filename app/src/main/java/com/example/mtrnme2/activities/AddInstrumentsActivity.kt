@@ -22,9 +22,7 @@ class AddInstrumentsActivity : AppCompatActivity() {
             uname = intent?.extras?.getString("uname", null)
             usertype = intent?.extras?.getBoolean("usertype", false)
             if (!usertype!!){
-                startActivity(Intent(this@AddInstrumentsActivity, DashboardActivity::class.java))
-                finish()
-                return
+               // startActivity(Intent(this@AddInstrumentsActivity, DashboardActivity::class.java))
             }
 
             Toast.makeText(this, uname, Toast.LENGTH_SHORT).show()
@@ -40,7 +38,7 @@ class AddInstrumentsActivity : AppCompatActivity() {
             fragment.arguments = b*/
 
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, InstrumentFragment.newInstance())
+                .replace(R.id.icontainer, InstrumentFragment.newInstance())
                 .commitNow()
         }
     }

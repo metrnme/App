@@ -82,7 +82,7 @@ class InstrumentFragment : Fragment() {
                 if (response.isSuccessful || response.body() != null) {
                     var responsebody: AllInstrumentResponse = response.body()!!
                     Log.e(
-                        "app:User Info Response",
+                        "app:All Instruments Response",
                         "Response Body : $responsebody"
                     )
                     //Should get all Instruments from here

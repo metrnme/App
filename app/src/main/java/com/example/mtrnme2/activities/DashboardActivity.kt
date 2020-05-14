@@ -1,5 +1,6 @@
 package com.example.mtrnme2.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -27,7 +28,8 @@ class DashboardActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.Library_ic->{
-                replaceFragment(TrackFragment())
+                val intent = Intent(this@DashboardActivity, TrackActivity::class.java)
+                startActivity(intent)
             }
 
         }
@@ -39,7 +41,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        replaceFragment(TrackFragment())
+        replaceFragment(HomeFragment())
     }
     private fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
