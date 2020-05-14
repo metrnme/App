@@ -57,8 +57,33 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_lgn.setOnClickListener{
-            val intent = Intent(this@MainActivity, DashboardActivity::class.java)
-            startActivity(intent)
+            if (checkValidations()){
+                var getUserCall : Call<NewUserResponse> = userService?.getUser(User(username = uname_txt.text.toString()))!!
+
+                getUserCall.enqueue(object : Callback<NewUserResponse>{
+                    override fun onFailure(call: Call<NewUserResponse>, t: Throwable) {
+                        Toast.makeText(this@MainActivity, "Error Occurred : ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onResponse(
+                        call: Call<NewUserResponse>,
+                        response: Response<NewUserResponse>
+                    ) {
+                        Log.e("app Network Response", "Response Body : " + response.body())
+
+                        if (response.isSuccessful || response.body()!=null){
+                            var responsebody : NewUserResponse = response.body()!!
+                            Log.e("app New User Response", "Response Body : " + responsebody.message)
+                            val intent = Intent(this@MainActivity, DashboardActivity::class.java)
+                            intent.putExtra("uname", uname_txt.text.toString())
+                            startActivity(intent)
+                        }
+                    }
+
+                })
+            }else{
+                Toast.makeText(this@MainActivity, "Empty", Toast.LENGTH_SHORT).show()
+            }
         }
     }
     private fun checkValidations(): Boolean {

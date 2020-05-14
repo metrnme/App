@@ -14,7 +14,7 @@ interface UserService {
     fun updateUserInfo(@Body infoUser: User): Call<NewUserResponse>
 
     @GET("api/v1/user")
-    fun getUser(): Call<NewUserResponse>
+    fun getUser(@Body infoUser: User): Call<NewUserResponse>
 
     @DELETE("api/v1/user")
     fun removeUser(): Call<NewUserResponse>
