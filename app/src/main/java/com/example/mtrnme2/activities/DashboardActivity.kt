@@ -38,9 +38,8 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
+        replaceFragment(TrackFragment())
     }
     private fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()

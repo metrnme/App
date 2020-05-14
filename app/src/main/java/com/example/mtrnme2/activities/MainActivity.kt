@@ -6,8 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.mtrnme2.R
-import com.example.mtrnme2.models.NewUserResponse
+import com.example.mtrnme2.models.GenericResponse
 import com.example.mtrnme2.models.User
+import com.example.mtrnme2.models.UserInfoResponse
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.UserService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,21 +28,21 @@ class MainActivity : AppCompatActivity() {
 
         btn_rgstr.setOnClickListener{
             if (checkValidations()){
-                var addUserCall : Call<NewUserResponse> = userService?.addUser(User(username = uname_txt.text.toString()))!!
+                var addUserCall : Call<GenericResponse> = userService?.addUser(User(username = uname_txt.text.toString()))!!
 
-                addUserCall.enqueue(object : Callback<NewUserResponse>{
-                    override fun onFailure(call: Call<NewUserResponse>, t: Throwable) {
+                addUserCall.enqueue(object : Callback<GenericResponse>{
+                    override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
                         Toast.makeText(this@MainActivity, "Error Occurred : ${t.message}", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onResponse(
-                        call: Call<NewUserResponse>,
-                        response: Response<NewUserResponse>
+                        call: Call<GenericResponse>,
+                        response: Response<GenericResponse>
                     ) {
                         Log.e("app Network Response", "Response Body : " + response.body())
 
                         if (response.isSuccessful || response.body()!=null){
-                            var responsebody : NewUserResponse = response.body()!!
+                            var responsebody : GenericResponse = response.body()!!
                             Log.e("app New User Response", "Response Body : " + responsebody.message)
 
                             val intent = Intent(this@MainActivity, UserRegistration::class.java)
@@ -58,22 +59,22 @@ class MainActivity : AppCompatActivity() {
 
         btn_lgn.setOnClickListener{
             if (checkValidations()){
-                var getUserCall : Call<NewUserResponse> = userService?.getUser(User(username = uname_txt.text.toString()))!!
+                var getUserCall : Call<UserInfoResponse> = userService?.getUser(uname_txt.text.toString())!!
 
-                getUserCall.enqueue(object : Callback<NewUserResponse>{
-                    override fun onFailure(call: Call<NewUserResponse>, t: Throwable) {
+                getUserCall.enqueue(object : Callback<UserInfoResponse>{
+                    override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
                         Toast.makeText(this@MainActivity, "Error Occurred : ${t.message}", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onResponse(
-                        call: Call<NewUserResponse>,
-                        response: Response<NewUserResponse>
+                        call: Call<UserInfoResponse>,
+                        response: Response<UserInfoResponse>
                     ) {
                         Log.e("app Network Response", "Response Body : " + response.body())
 
                         if (response.isSuccessful || response.body()!=null){
-                            var responsebody : NewUserResponse = response.body()!!
-                            Log.e("app New User Response", "Response Body : " + responsebody.message)
+                            val responsebody : UserInfoResponse = response.body()!!
+                            Log.e("app New User Response", "Response Body : " + responsebody.username)
                             val intent = Intent(this@MainActivity, DashboardActivity::class.java)
                             intent.putExtra("uname", uname_txt.text.toString())
                             startActivity(intent)

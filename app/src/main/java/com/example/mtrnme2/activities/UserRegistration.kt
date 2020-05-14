@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.mtrnme2.R
-import com.example.mtrnme2.models.NewUserResponse
+import com.example.mtrnme2.models.GenericResponse
 import com.example.mtrnme2.models.User
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.UserService
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user_registration.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,18 +35,18 @@ class UserRegistration : AppCompatActivity() {
             //We add bio information over here.
             if(checkValidations()) {
                     val update =User(username = uname!!,name= name_txt.text.toString(), age= age_txt.text.toString().toInt() ,gender= gender_txt.text.toString())
-                    var updateUserInfo : Call<NewUserResponse> = userService?.updateUserInfo(update)!!
-                    updateUserInfo.enqueue(object : Callback<NewUserResponse>{
-                        override fun onFailure(call: Call<NewUserResponse>, t: Throwable) {
+                    var updateUserInfo : Call<GenericResponse> = userService?.updateUserInfo(update)!!
+                    updateUserInfo.enqueue(object : Callback<GenericResponse>{
+                        override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
                             Toast.makeText(this@UserRegistration, "Error Occurred : ${t.message}", Toast.LENGTH_SHORT).show()
                         }
                         override fun onResponse(
-                            call: Call<NewUserResponse>,
-                            response: Response<NewUserResponse>
+                            call: Call<GenericResponse>,
+                            response: Response<GenericResponse>
                         ) {
                             Log.e("app:Network Response", "Response Body : " + response.errorBody())
                             if (response.isSuccessful || response.body()!=null){
-                                var responsebody : NewUserResponse = response.body()!!
+                                var responsebody : GenericResponse = response.body()!!
                                 Log.e("app:User Info Response", "Response Body : " + responsebody.message)
 
                                 val intent = Intent(this@UserRegistration, SelectUserType::class.java)
@@ -57,10 +56,7 @@ class UserRegistration : AppCompatActivity() {
                         }
                     })
                 }
-
             }
-
-
         }
 
     }

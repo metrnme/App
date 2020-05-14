@@ -1,18 +1,18 @@
 package com.example.mtrnme2.activities.viewmodels
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
-import com.example.mtrnme2.models.Instrument
+import com.example.mtrnme2.fragments.InstrumentFragment
+import com.example.mtrnme2.models.AllInstrumentResponse
+import com.example.mtrnme2.models.AllInstrumentResponseItem
+import com.example.mtrnme2.services.InstrumentService
+import com.example.mtrnme2.services.ServiceBuilder
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class InstrumentViewModel : ViewModel() {
-    fun getInstruments(): MutableList<Instrument> {
-        var listOfInstruments = mutableListOf<Instrument>()
-        listOfInstruments.add(Instrument("Bass Guitar", "STR"))
-        listOfInstruments.add(Instrument("Drums", "PER"))
-        listOfInstruments.add(Instrument("Electric Guitar", "STR"))
-        listOfInstruments.add(Instrument("Violin", "STR"))
-        listOfInstruments.add(Instrument("Cajón Drums", "PER"))
 
 
-        return listOfInstruments
-    }
 }
