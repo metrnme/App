@@ -17,7 +17,7 @@ import retrofit2.Response
 * This is a dummy track activity. You can do any network calls here and then transfer them to fragment
 * */
 class TrackActivity : AppCompatActivity() {
-    var TrackService: TrackService? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

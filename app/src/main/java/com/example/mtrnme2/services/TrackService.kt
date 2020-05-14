@@ -5,6 +5,6 @@ import retrofit2.http.*
 import com.example.mtrnme2.models.AllTrackResponse
 interface TrackService {
 
-    @GET("api/v1/inst")
+    @GET("api/v1/user/trk")
     fun getAllTracks(): Call<AllTrackResponse>
 }

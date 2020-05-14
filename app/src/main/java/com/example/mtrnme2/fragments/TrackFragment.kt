@@ -17,7 +17,7 @@ import com.example.mtrnme2.R
 import com.example.mtrnme2.activities.viewmodels.TrackViewModel
 import com.example.mtrnme2.adapters.TrackAdapter
 import com.example.mtrnme2.models.AllTrackResponse
-import com.example.mtrnme2.models.Track
+import com.example.mtrnme2.models.AllTrackResponseItem
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
 import kotlinx.android.synthetic.main.track_fragment.*
@@ -29,7 +29,7 @@ import retrofit2.Response
 class TrackFragment : Fragment() {
 
     //This is an instance of Track Adapter
-    var tracksAdapter : TrackAdapter ?=null
+    var trkAdapter : TrackAdapter ?=null
 
     companion object {
 
@@ -53,84 +53,69 @@ class TrackFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         ///Initiating instance of viewmodel
-        viewModel = ViewModelProvider(this).get(TrackViewModel::class.java)
-      //  tracksAdapter = TrackAdapter(TrackViewModel.getTracks())
+        //viewModel = ViewModelProvider(this).get(TrackViewModel::class.java)
 
-        tracksAdapter!!.setOnItemChildClickListener(object : BaseQuickAdapter.OnItemChildClickListener{
-            override fun onItemChildClick(
-                adapter: BaseQuickAdapter<*, *>?,
-                view: View?,
-                position: Int
-            ) {
-                /* This is the click listener. You can play files based on this*/
-                playTrack(viewModel.getTracks()[position].url)
-            }
-
-        })
-      //  getTracks()
+        getTracks()
         // Here wer are initiating reference to adpater with data we have of tracks
 
     }
 
-    private fun getTracks() {
-        var TrackService: TrackService? = null
-        TrackService = ServiceBuilder.buildTrackService()
-        var getTracks: Call<AllTrackResponse> = TrackService?.getAllTracks()!!
-        getTracks.enqueue(object : Callback<AllTrackResponse> {
-            override fun onFailure(call: Call<AllTrackResponse>, t: Throwable) {
-                Toast.makeText(
-                    context!!,
-                    "Error Occurred : ${t.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+    fun getTracks(): MutableList<AllTrackResponseItem> {
+                var listOfTracks  = mutableListOf<AllTrackResponseItem>()
+                var TrackService: TrackService? = null
+                TrackService = ServiceBuilder.buildTrackService()
+                var getTracks: Call<AllTrackResponse> = TrackService?.getAllTracks()!!
+                getTracks.enqueue(object : Callback<AllTrackResponse> {
+                    override fun onFailure(call: Call<AllTrackResponse>, t: Throwable) {
+                        Log.e("app: Failed to load Instrument Data","Error Occurred : ${t.message}")
+                    }
+                    override fun onResponse(
+                        call: Call<AllTrackResponse>,
+                        response: Response<AllTrackResponse>
+                    ) {
 
-            override fun onResponse(
-                call: Call<AllTrackResponse>,
-                response: Response<AllTrackResponse>
-            ) {
-                // Log.e("app:Network Response", "Response Body : " + response.errorBody())
-                if (response.isSuccessful || response.body() != null) {
-                    var responsebody: AllTrackResponse = response.body()!!
-                    Log.e(
-                        "app:User Info Response",
-                        "Response Body : " + responsebody.toString()
-                    )
-                    //Should get all Instruments from here
+                        // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                        if (response.isSuccessful || response.body() != null) {
+                            var responsebody: AllTrackResponse = response.body()!!
+                            Log.e(
+                                "app:User Info Response",
+                                "Response Body : $responsebody"
+                            )
+                            //Should get all Instruments from here
 
-                    tracksAdapter = TrackAdapter(response.body()!!)
+                            for(i in responsebody){
+                                listOfTracks.add(i)
+                            }
 
-                    // This is recyclerview. First we are initiating a layout orientation
-                    tracks.layoutManager = LinearLayoutManager(context)
 
-                    //Then we are attaching a custom adapter to it.
-                    tracks.adapter = tracksAdapter
+                            trkAdapter = TrackAdapter(response.body()!!)
 
-                    tracksAdapter!!.setOnItemChildClickListener(object : BaseQuickAdapter.OnItemChildClickListener{
-                        override fun onItemChildClick(
-                            adapter: BaseQuickAdapter<*, *>?,
-                            view: View?,
-                            position: Int
-                        ) {
-                            /* This is the click listener. You can play files based on this*/
-                            playTrack(viewModel.getTracks()[position].url)
+                            // This is recyclerview. First we are initiating a layout orientation
+                            tracks.layoutManager = LinearLayoutManager(context)
+
+                            //Then we are attaching a custom adapter to it.
+                            tracks.adapter = trkAdapter
+
+                            trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
+
+                            }
                         }
+                    }
+                })
 
-                    })
-                }
+                return listOfTracks
             }
-        })
     }
 
 
-    fun playTrack(url : String)
-    {
-        var media = MediaPlayer();
-        media.setDataSource(context!!, Uri.parse(url))
+
+    //fun playTrack(url : String)
+    //{
+      //  var media = MediaPlayer();
+       // media.setDataSource(context!!, Uri.parse(url))
 
         /*Got it? Yes got it Thank you so much!!!!! THis was awesume, i'll do the rest of it and all Great. DOnehogaya
         * */
-    }
+    //}
 
 
-}

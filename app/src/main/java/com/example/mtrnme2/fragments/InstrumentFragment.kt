@@ -39,7 +39,7 @@ class InstrumentFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*var username = arguments!!.getString("username")*/
+    //    var username = arguments!!.getString("username")
     }
 
     override fun onCreateView(
@@ -54,8 +54,6 @@ class InstrumentFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         ///Initiating instance of viewmodel
-        viewModel = ViewModelProvider(this).get(InstrumentViewModel::class.java)
-
         getInstruments()
 
         // Here wer are initiating reference to adpater with data we have of tracks
