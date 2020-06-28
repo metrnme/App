@@ -14,7 +14,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.AddInstrumentsActivity"></activity>
-        <activity android:name=".activities.DashboardActivity" />
+        <activity android:name=".activities.DashboardActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activities.TrackActivity"></activity>
 
         <service
@@ -23,11 +30,6 @@
             android:exported="false" />
 
         <activity android:name=".activities.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activities.SelectUserType" />
         <activity android:name=".activities.UserRegistration" />

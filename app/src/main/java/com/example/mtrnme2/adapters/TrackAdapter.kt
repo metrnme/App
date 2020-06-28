@@ -10,10 +10,10 @@ class TrackAdapter (data : MutableList<AllTrackResponseItem>) : BaseQuickAdapter
     override fun convert(helper: BaseViewHolder?, item: AllTrackResponseItem?) {
 
         /*Help contains  many mehtods like settext , set imageresource etc It will help you populate view from data*/
-        helper!!.setText(R.id.tname, item!!.name)
-        helper!!.setText(R.id.likes, item!!.likes)
-        helper!!.setText(R.id.username, item!!.username)
-        helper!!.setText(R.id.url,item!!.url)
+        helper!!.setText(R.id.tname, item!!.name.toString())
+        helper!!.setText(R.id.likes, item!!.likes.toString())
+        helper!!.setText(R.id.username, item!!.username.toString())
+        helper!!.setText(R.id.url,item!!.url.toString())
 //        helper.addOnClickListener(R.id.more)
     }
 }

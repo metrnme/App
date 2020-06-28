@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.mtrnme2.R
 import com.example.mtrnme2.fragments.HomeFragment
 import com.example.mtrnme2.fragments.SearchFragment
+import com.example.mtrnme2.fragments.SettingsFragment
 import com.example.mtrnme2.fragments.TrackFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -30,11 +31,30 @@ class DashboardActivity : AppCompatActivity() {
             R.id.Library_ic->{
                 val intent = Intent(this@DashboardActivity, TrackActivity::class.java)
                 startActivity(intent)
+                return@OnNavigationItemSelectedListener true
+            }
+
+            R.id.Settings_ic->{
+                replaceFragment(SettingsFragment())
+                Log.d("app:Print1", "Settings Is Pressed")
+                return@OnNavigationItemSelectedListener true
             }
 
         }
         false
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

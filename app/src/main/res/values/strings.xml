@@ -35,4 +35,5 @@
     <string name="add_instruments">Add Instruments</string>
     <string name="select_instruments_that_you_play_learning_to_play">Select instruments that you play/learning to play...</string>
     <string name="proceed">Proceed</string>
+    <string name="settings">Settings</string>
 </resources>
