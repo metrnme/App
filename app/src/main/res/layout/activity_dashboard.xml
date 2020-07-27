@@ -32,7 +32,7 @@
         android:id="@+id/FAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#B6B6B6"
+        android:backgroundTint="@color/fab"
         android:clickable="true"
         android:src="@drawable/ic_file_upload_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
