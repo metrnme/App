@@ -51,22 +51,22 @@ class TrackFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(TrackViewModel::class.java)
-        trkAdapter = TrackAdapter(viewModel.getSampleTracks())
-        tracks.layoutManager = LinearLayoutManager(context)
+        //viewModel = ViewModelProvider(this).get(TrackViewModel::class.java)
+     //   trkAdapter = TrackAdapter(viewModel.getSampleTracks())
+     //   tracks.layoutManager = LinearLayoutManager(context)
 
         //Then we are attaching a custom adapter to it.
-        tracks.adapter = trkAdapter
+       // tracks.adapter = trkAdapter
 
-        trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
+        //trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
 
-        }
+        //}
 
-//          getTracks()
+         getTracks()
         // Here wer are initiating reference to adpater with data we have of tracks
 
     }
-
+    // Uses Retrofit Track Service and Populates the View to Return
     fun getTracks(): MutableList<AllTrackResponseItem> {
                 var listOfTracks  = mutableListOf<AllTrackResponseItem>()
                 var TrackService: TrackService? = null
@@ -74,7 +74,7 @@ class TrackFragment : Fragment() {
                 var getTracks: Call<AllTrackResponse> = TrackService?.getAllTracks()!!
                 getTracks.enqueue(object : Callback<AllTrackResponse> {
                     override fun onFailure(call: Call<AllTrackResponse>, t: Throwable) {
-                        Log.e("app: Failed to load Instrument Data","Error Occurred : ${t.message}")
+                        Log.e("app: Failed to load Track Data","Error Occurred : ${t.message}")
                     }
                     override fun onResponse(
                         call: Call<AllTrackResponse>,
@@ -85,7 +85,7 @@ class TrackFragment : Fragment() {
                         if (response.isSuccessful || response.body() != null) {
                             var responsebody: AllTrackResponse = response.body()!!
                             Log.e(
-                                "app:User Info Response",
+                                "app:Track Info Response",
                                 "Response Body : $responsebody"
                             )
                             //Should get all Instruments from here

@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.mtrnme2.R
-import com.example.mtrnme2.fragments.HomeFragment
-import com.example.mtrnme2.fragments.SearchFragment
-import com.example.mtrnme2.fragments.SettingsFragment
-import com.example.mtrnme2.fragments.TrackFragment
+import com.example.mtrnme2.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
@@ -19,7 +16,7 @@ class DashboardActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {item->
         when(item.itemId){
             R.id.Home_ic->{
-                replaceFragment(HomeFragment())
+                replaceFragment(PlayerFragment())
                 Log.d("app:Print1", "Home Is Pressed")
                 return@OnNavigationItemSelectedListener true
             }
@@ -29,9 +26,12 @@ class DashboardActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.Library_ic->{
-                val intent = Intent(this@DashboardActivity, TrackActivity::class.java)
-                startActivity(intent)
+                replaceFragment(TrackFragment())
+                Log.d("app:Print1", "Track Fragment Is Pressed")
                 return@OnNavigationItemSelectedListener true
+               //val intent = Intent(this@DashboardActivity, TrackActivity::class.java)
+               // startActivity(intent)
+               // return@OnNavigationItemSelectedListener true
             }
 
             R.id.Settings_ic->{
@@ -63,6 +63,7 @@ class DashboardActivity : AppCompatActivity() {
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         replaceFragment(HomeFragment())
     }
+
     private fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer, fragment)

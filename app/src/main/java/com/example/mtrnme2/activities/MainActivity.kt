@@ -1,9 +1,11 @@
 package com.example.mtrnme2.activities
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.mtrnme2.R
 import com.example.mtrnme2.models.GenericResponse
@@ -27,6 +29,10 @@ class MainActivity : AppCompatActivity() {
         userService = ServiceBuilder.buildservice()
 
         btn_rgstr.setOnClickListener{
+
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
+
             if (checkValidations()){
                 var addUserCall : Call<GenericResponse> = userService?.addUser(User(username = uname_txt.text.toString()))!!
 
@@ -45,19 +51,31 @@ class MainActivity : AppCompatActivity() {
                             var responsebody : GenericResponse = response.body()!!
                             Log.e("app New User Response", "Response Body : " + responsebody.message)
 
-                            val intent = Intent(this@MainActivity, UserRegistration::class.java)
-                            intent.putExtra("uname", uname_txt.text.toString())
-                            startActivity(intent)
+                            if(responsebody.message[9] != 'a') {
+
+                                val intent = Intent(this@MainActivity, UserRegistration::class.java)
+                                intent.putExtra("uname", uname_txt.text.toString())
+                                startActivity(intent)
+                            }
+
+                            else {
+                                Toast.makeText(this@MainActivity, "Username already exists!", Toast.LENGTH_SHORT).show()
+
+                            }
                         }
                     }
 
                 })
             }else{
-                Toast.makeText(this@MainActivity, "Empty", Toast.LENGTH_SHORT).show()
+               // Toast.makeText(this@MainActivity, "Empty", Toast.LENGTH_SHORT).show()
             }
         }
 
         btn_lgn.setOnClickListener{
+
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
+
             if (checkValidations()){
                 var getUserCall : Call<UserInfoResponse> = userService?.getUser(uname_txt.text.toString())!!
 
@@ -72,12 +90,19 @@ class MainActivity : AppCompatActivity() {
                     ) {
                         Log.e("app Network Response", "Response Body : " + response.body())
 
-                        if (response.isSuccessful || response.body()!=null){
+                        if (response.isSuccessful && response.body()!=null){
                             val responsebody : UserInfoResponse = response.body()!!
                             Log.e("app New User Response", "Response Body : " + responsebody.username)
                             val intent = Intent(this@MainActivity, DashboardActivity::class.java)
                             intent.putExtra("uname", uname_txt.text.toString())
-                            startActivity(intent)
+
+                            if (responsebody.username != null) {
+                                startActivity(intent)
+                            }
+                            else
+                            {
+                                Toast.makeText(this@MainActivity, "Enter a Registered Username", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
 

@@ -1,8 +1,6 @@
 package com.example.mtrnme2.services
 
-import com.example.mtrnme2.models.GenericResponse
-import com.example.mtrnme2.models.User
-import com.example.mtrnme2.models.UserInfoResponse
+import com.example.mtrnme2.models.*
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -24,4 +22,7 @@ interface UserService {
 
     @POST("api/v1/user/inst")
     fun addUserInstruments(@Body userDetails:User): Call<GenericResponse>
+
+    @GET("api/v1/users")
+    fun getAllUsers(): Call<AllUserResponse>
 }

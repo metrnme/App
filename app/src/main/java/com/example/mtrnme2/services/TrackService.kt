@@ -8,3 +8,9 @@ interface TrackService {
     @GET("api/v1/user/trk")
     fun getAllTracks(): Call<AllTrackResponse>
 }
+
+
+//mujhe sirf yeh json to kotlin data class wala tareekaa bataa dou, let me try to do it ab.
+//lol
+//okay?
+//sure

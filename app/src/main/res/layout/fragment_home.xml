@@ -10,11 +10,12 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton5"
+        android:id="@+id/FAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="320dp"
         android:layout_marginTop="540dp"
+        android:backgroundTint="#B6B6B6"
         android:clickable="true"
         android:src="@drawable/ic_file_upload_black_24dp" />
 </FrameLayout>
