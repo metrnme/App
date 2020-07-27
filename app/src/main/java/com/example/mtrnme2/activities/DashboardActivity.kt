@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.mtrnme2.R
 import com.example.mtrnme2.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : AppCompatActivity() {
@@ -61,12 +62,19 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        replaceFragment(HomeFragment())
+        replaceFragment(PlayerFragment())
+
+        FAB.setOnClickListener{
+            replaceFragment(UploadFragment())
+        }
+
     }
 
     private fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer, fragment)
+        fragmentTransaction.addToBackStack(null)
+
         fragmentTransaction.commit()
     }
 }

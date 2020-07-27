@@ -9,7 +9,9 @@ import android.view.ViewGroup
 
 import com.example.mtrnme2.R
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_upload.*
 
 
 class HomeFragment : Fragment() {
@@ -24,11 +26,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        FAB.setOnClickListener { view ->
-            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+
         }
     }
 
-}

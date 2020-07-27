@@ -12,9 +12,10 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:navGraph="@navigation/navigation"
         app:defaultNavHost="true"
-        />
+        app:navGraph="@navigation/navigation"
+        tools:layout_editor_absoluteX="-27dp"
+        tools:layout_editor_absoluteY="-25dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btm_view"
@@ -27,6 +28,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/fab"
+        android:clickable="true"
+        android:src="@drawable/ic_file_upload_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/myNavHostFragment"
+        app:layout_constraintVertical_bias="0.884" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

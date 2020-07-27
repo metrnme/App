@@ -1,16 +1,12 @@
 package com.example.mtrnme2.fragments
 
-import android.media.MediaPlayer
-import android.net.Uri
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.mtrnme2.R
@@ -24,6 +20,7 @@ import kotlinx.android.synthetic.main.track_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 /*This is Track Fragment. You will do all operations here like handling data , deleting data but through view model to make fragment clean*/
 class TrackFragment : Fragment() {
@@ -102,15 +99,19 @@ class TrackFragment : Fragment() {
                             //Then we are attaching a custom adapter to it.
                             tracks.adapter = trkAdapter
 
-                            trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
 
-                            }
+                            trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
+                                 Log.d("MTRNME-track"  , "onItemChildClick: ")
+
+                             }
                         }
                     }
                 })
 
                 return listOfTracks
             }
+
+
     }
 
 
