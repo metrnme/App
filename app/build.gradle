@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mtrnme2"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -51,6 +51,10 @@ dependencies {
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+
+    def filePicker = "v8.0.19"
+
+    implementation "com.github.TutorialsAndroid:FilePicker:$filePicker"
 
     //AWS Amplify
     implementation 'com.amplifyframework:core:1.1.1'
