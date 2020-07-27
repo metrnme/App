@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/track"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.TrackFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Tracks"
+        android:textSize="@dimen/hdng_txt_size"
+        android:fontFamily="@font/nunito_bold"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin" />
 
+    <!--Just a simple recyclerview . Nothing is attached yet-->
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/tracks"
         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
+

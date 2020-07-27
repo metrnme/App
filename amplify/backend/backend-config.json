@@ -1,0 +1,15 @@
+{
+	"auth": {
+		"mtrnme39405d00": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"storage": {
+		"S3mtrnme": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

@@ -21,6 +21,7 @@
             android:layout_marginEnd="@dimen/pg_margin"
             android:fontFamily="@font/nunito_bold"
             android:text="@string/enter_username"
+            android:textColor="@color/colorAccent"
             android:textSize="@dimen/hdng_txt_size" />
 
         <TextView
@@ -31,6 +32,7 @@
             android:layout_marginEnd="@dimen/pg_margin"
             android:fontFamily="@font/nunito_light"
             android:text="@string/come_up_with_something_new"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="@dimen/body_txt_size" />
 
         <EditText
@@ -38,12 +40,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginStart="@dimen/pg_margin"
-            android:layout_marginTop="@dimen/offset_wide"
+            android:layout_marginTop="80dp"
             android:layout_marginEnd="@dimen/pg_margin"
-            android:layout_marginBottom="40dp"
             android:ems="10"
             android:fontFamily="@font/nunito_light"
+            android:hint="@string/u_s_e_r_n_a_m_e"
+            android:textColorHint="@color/hint"
+            android:singleLine="true"
+            android:textColor="#FFFFFF"
             android:textSize="@dimen/sub_hdng_size" />
 
         <Button
@@ -52,8 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/pg_margin"
             android:layout_marginEnd="@dimen/pg_margin"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/register" />
+            android:fontFamily="@font/nunito_light"
+            android:text="@string/register"
+            android:textColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/btn_lgn"
@@ -61,8 +68,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/pg_margin"
             android:layout_marginEnd="@dimen/pg_margin"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/login" />
+            android:fontFamily="@font/nunito_light"
+            android:text="@string/login"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pg_margin"
+            android:layout_marginTop="@dimen/offset_wide"
+            android:layout_marginEnd="@dimen/pg_margin"
+            android:fontFamily="@font/nunito_light"
+            android:gravity="center"
+            android:text="@string/m_t_r_n_m_e"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
 
 
     </LinearLayout>
