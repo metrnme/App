@@ -9,11 +9,11 @@ android {
 
     defaultConfig {
         applicationId "com.example.mtrnme2"
-        minSdkVersion 25
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,7 +29,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -49,6 +52,11 @@ dependencies {
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
 
+    //AWS Amplify
+    implementation 'com.amplifyframework:core:1.1.1'
+    implementation 'com.amplifyframework:aws-storage-s3:1.1.1'
+    implementation 'com.amplifyframework:aws-auth-cognito:1.1.1'
+
     // GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
 
@@ -60,4 +68,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
 
+    // MultiDex
+    implementation 'com.android.support:multidex:1.0.3'
 }
