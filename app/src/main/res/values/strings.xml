@@ -37,4 +37,7 @@
     <string name="proceed">Proceed</string>
     <string name="settings">Settings</string>
     <string name="u_s_e_r_n_a_m_e">u s e r n a m e</string>
+
+    <string name="put_yourself_out_there">Put yourself out there...</string>
+    <string name="upload_track">Upload Track</string>
 </resources>
