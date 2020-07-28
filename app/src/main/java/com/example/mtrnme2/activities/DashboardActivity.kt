@@ -4,30 +4,38 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.mtrnme2.R
 import com.example.mtrnme2.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.fragment_upload.*
 
 class DashboardActivity : AppCompatActivity() {
 
+    private var counter = 0
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {item->
         when(item.itemId){
             R.id.Home_ic->{
-                replaceFragment(PlayerFragment())
+                /*replaceFragment(PlayerFragment())*/
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_home)
                 Log.d("app:Print1", "Home Is Pressed")
                 return@OnNavigationItemSelectedListener true
             }
             R.id.Search_ic->{
-                replaceFragment(SearchFragment())
+                /*replaceFragment(SearchFragment())*/
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_search)
                 Log.d("app:Print1", "Search Is Pressed")
                 return@OnNavigationItemSelectedListener true
             }
             R.id.Library_ic->{
-                replaceFragment(TrackFragment())
+                /*replaceFragment(TrackFragment())*/
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_track)
                 Log.d("app:Print1", "Track Fragment Is Pressed")
                 return@OnNavigationItemSelectedListener true
                //val intent = Intent(this@DashboardActivity, TrackActivity::class.java)
@@ -36,7 +44,8 @@ class DashboardActivity : AppCompatActivity() {
             }
 
             R.id.Settings_ic->{
-                replaceFragment(SettingsFragment())
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_settings)
+                // replaceFragment(SettingsFragment())
                 Log.d("app:Print1", "Settings Is Pressed")
                 return@OnNavigationItemSelectedListener true
             }
@@ -47,6 +56,8 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        FAB.show()
+        counter-=1
         super.onResume()
     }
 
@@ -61,14 +72,21 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        val navigationController = findNavController(R.id.myNavHostFragment)
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        replaceFragment(PlayerFragment())
-
+        navigationController.navigate(R.id.nav_home)
         FAB.setOnClickListener{
-            replaceFragment(UploadFragment())
-        }
+            if(counter==0){
+                FAB.hide()
+                counter+=1
+            }
+            findNavController(R.id.myNavHostFragment).navigate(R.id.nav_upload)
 
+
+        }
     }
+
 
     private fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()

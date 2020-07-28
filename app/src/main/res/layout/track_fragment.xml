@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="All Tracks"
+        android:textColor="@color/colorAccent"
+        android:layout_marginBottom="@dimen/pg_margin"
         android:textSize="@dimen/hdng_txt_size"
         android:fontFamily="@font/nunito_bold"
         android:layout_marginTop="@dimen/top_margin"

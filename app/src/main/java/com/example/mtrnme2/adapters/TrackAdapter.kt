@@ -14,6 +14,6 @@ class TrackAdapter (data : MutableList<AllTrackResponseItem>) : BaseQuickAdapter
         helper!!.setText(R.id.likes, item!!.likes.toString())
         helper!!.setText(R.id.username, item!!.username.toString())
         helper!!.setText(R.id.url,item!!.url.toString())
-//        helper.addOnClickListener(R.id.more)
+        helper.addOnClickListener(R.id.more, R.id.track_cons)
     }
 }

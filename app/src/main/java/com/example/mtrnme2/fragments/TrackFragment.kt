@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.mtrnme2.R
@@ -16,6 +17,7 @@ import com.example.mtrnme2.models.AllTrackResponse
 import com.example.mtrnme2.models.AllTrackResponseItem
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.track_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +25,7 @@ import retrofit2.Response
 
 
 /*This is Track Fragment. You will do all operations here like handling data , deleting data but through view model to make fragment clean*/
-class TrackFragment : Fragment() {
+class TrackFragment : BaseFragment() {
 
     //This is an instance of Track Adapter
     var trkAdapter : TrackAdapter ?=null
@@ -71,7 +73,7 @@ class TrackFragment : Fragment() {
                 var getTracks: Call<AllTrackResponse> = TrackService?.getAllTracks()!!
                 getTracks.enqueue(object : Callback<AllTrackResponse> {
                     override fun onFailure(call: Call<AllTrackResponse>, t: Throwable) {
-                        Log.e("app: Failed to load Track Data","Error Occurred : ${t.message}")
+                        Log.e("app:","Error Occurred : ${t.message}")
                     }
                     override fun onResponse(
                         call: Call<AllTrackResponse>,
@@ -99,11 +101,21 @@ class TrackFragment : Fragment() {
                             //Then we are attaching a custom adapter to it.
                             tracks.adapter = trkAdapter
 
-
                             trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
-                                 Log.d("MTRNME-track"  , "onItemChildClick: ")
+                                when(view.id){
+                                    R.id.more->{
+                                        showToast("More")
+                                    }
 
-                             }
+                                    R.id.track_cons->{
+                                        var navigator = findNavController()
+                                        assert(navigator!=null)
+                                        var bundle = Bundle()
+                                        bundle.putString("data", Gson().toJson(response.body()!![position], AllTrackResponseItem::class.java))
+                                        navigator.navigate(R.id.nav_player, bundle)
+                                    }
+                                }
+                            }
                         }
                     }
                 })
