@@ -8,12 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.amplifyframework.core.Amplify
 import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
+import com.example.mtrnme2.R
 import com.example.mtrnme2.databinding.FragmentUploadBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.io.File
 
 
@@ -21,10 +26,12 @@ class UploadFragment : Fragment() {
     private lateinit var binding: FragmentUploadBinding
     private lateinit var dialog: FilePickerDialog
     var properties = DialogProperties()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        properties.selection_type = DialogConfigs.FILE_SELECT;
+        properties.selection_type = DialogConfigs.FILE_SELECT
         dialog = FilePickerDialog(this.context, properties)
+
 
     }
 

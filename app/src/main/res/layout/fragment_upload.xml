@@ -78,7 +78,7 @@
                 android:fontFamily="@font/nunito_light"
                 android:hint="Genre(s)"
                 android:inputType="text"
-                android:textSize="@dimen/sub_hdng_size" />
+                android:textSize="@dimen/sub_hdng_size"/>
 
             <EditText
                 android:id="@+id/inst_txt"
