@@ -63,19 +63,23 @@ class SearchFragment : Fragment() {
         //yeh kyaa chuss hai?
 
         // usersAdapter!!.setOnItemChildClickListener { adapter, view, position ->
-        var x=R.id.srchbar.toString()
-        Log.d("app:Search",x )
-        getUsers()
+        btn_search_users.setOnClickListener {
+
+            var SearchUser=srchbar.text.toString()
+            Log.d("app:Search",SearchUser )
+            getUsers(SearchUser)
+
+        }
     }
 
-    fun getUsers(): MutableList<AllUserResponseItem> {
+    fun getUsers(SearchUser:String): MutableList<AllUserResponseItem> {
         var listOfUsers = mutableListOf<AllUserResponseItem>()
         var UserService: UserService? = null
         UserService = ServiceBuilder.buildservice()
         var getUsers: Call<AllUserResponse> = UserService?.getAllUsers()!!
         getUsers.enqueue(object : Callback<AllUserResponse> {
             override fun onFailure(call: Call<AllUserResponse>, t: Throwable) {
-                Log.e("app: Failed to load Track Data", "Error Occurred : ${t.message}")
+                Log.e("User Err", "Error Occurred : ${t.message}")
             }
 
             override fun onResponse(
@@ -93,10 +97,12 @@ class SearchFragment : Fragment() {
                     //Should get all Instruments from here
 
                     for (i in responsebody) {
-                        listOfUsers.add(i)
+                        if(i.username.contains(SearchUser, ignoreCase = true)) {
+                            listOfUsers.add(i)
+                        }
                     }
 
-                    usersAdapter = UsersAdapter(response.body()!!)
+                    usersAdapter = UsersAdapter(listOfUsers!!)
 
                     // This is recyclerview. First we are initiating a layout orientation
                     users.layoutManager = LinearLayoutManager(context)

@@ -2,12 +2,14 @@ package com.example.mtrnme2.fragments
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.amplifyframework.core.Amplify
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
 import com.example.mtrnme2.models.AllTrackResponseItem
 import com.example.mtrnme2.states.PlayerState
@@ -44,6 +46,7 @@ class PlayerFragment : Fragment() {
         globalMusicData = Gson().fromJson(arguments?.getString("data"), AllTrackResponseItem::class.java)
 
         binding.title.text = globalMusicData?.name.toString()
+        var trackId = globalMusicData!!.track_id;
         var myGenre = globalMusicData!!.genre;
         var DisplayGenre="";
         for(i in myGenre){
@@ -54,6 +57,10 @@ class PlayerFragment : Fragment() {
         for(i in myInst){
             DisplayInst=DisplayInst+" "+i
         }
+        var track_url="";
+        Amplify.Storage.getUrl(globalMusicData!!.url.toString(),
+            { result -> track_url=result.url.toString() },
+            { error -> Log.e("error",error.message) })
 
         binding.inst.text = DisplayInst
         binding.genre.text = DisplayGenre
@@ -64,12 +71,15 @@ class PlayerFragment : Fragment() {
                 if (p1) {
                     currentPlayerState = PlayerState.PLAYING
                     mediaPlayer = MediaPlayer()
-                    mediaPlayer?.setDataSource(globalMusicData!!.url.toString())
-                    mediaPlayer?.prepareAsync()
-                    //mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                    mediaPlayer?.setOnPreparedListener { p0 ->
-                        p0?.start()
-                        binding.progressView.visibility = View.GONE
+
+                    if(track_url!="") {
+                        mediaPlayer?.setDataSource(track_url)
+                        mediaPlayer?.prepareAsync()
+                        //mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                        mediaPlayer?.setOnPreparedListener { p0 ->
+                            p0?.start()
+                            binding.progressView.visibility = View.GONE
+                        }
                     }
                 } else {
                     binding.progressView.visibility = View.GONE
