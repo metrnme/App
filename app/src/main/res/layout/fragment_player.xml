@@ -12,6 +12,15 @@
         android:layout_height="match_parent"
         tools:context=".fragments.PlayerFragment">
 
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="@dimen/top_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +31,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/hdng_txt_size"
             android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/title" />
@@ -30,7 +39,54 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pg_margin_wide"
+            android:layout_marginEnd="@dimen/pg_margin_wide"
             app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:layout_marginTop="15dp"
+            android:id="@+id/player_info"
+            android:weightSum="3"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/top_margin"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_txt_size"
+                android:id="@+id/genre"
+                android:layout_weight="1"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/top_margin"
+                android:gravity="right"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_txt_size"
+                android:id="@+id/inst"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/player_info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
@@ -75,6 +131,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
