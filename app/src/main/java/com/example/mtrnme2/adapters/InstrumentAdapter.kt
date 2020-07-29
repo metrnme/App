@@ -10,5 +10,8 @@ class InstrumentAdapter(data: MutableList<AllInstrumentResponseItem>) : BaseQuic
     override fun convert(helper: BaseViewHolder?, item: AllInstrumentResponseItem?) {
         helper!!.setText(R.id.iname, item!!.name)
         helper.setText(R.id.itype, item.i_type)
+        helper.addOnClickListener(R.id.i_check, R.id.cl_inst)
+
+
     }
 }

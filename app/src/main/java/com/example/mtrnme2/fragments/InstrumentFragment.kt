@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.mtrnme2.R
@@ -14,9 +16,13 @@ import com.example.mtrnme2.activities.viewmodels.InstrumentViewModel
 import com.example.mtrnme2.adapters.InstrumentAdapter
 import com.example.mtrnme2.models.AllInstrumentResponse
 import com.example.mtrnme2.models.AllInstrumentResponseItem
+import com.example.mtrnme2.models.AllTrackResponseItem
 import com.example.mtrnme2.services.InstrumentService
 import com.example.mtrnme2.services.ServiceBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_instrument.*
+import kotlinx.android.synthetic.main.inst_layout.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,9 +30,10 @@ import retrofit2.Response
 /**
  * A simple [Fragment] subclass.
  */
-class InstrumentFragment : Fragment() {
+class InstrumentFragment : BaseFragment() {
 
-    var instAdapter : InstrumentAdapter?=null
+    var instAdapter: InstrumentAdapter? = null
+    var instrumento: String = ""
 
     companion object {
 
@@ -37,10 +44,10 @@ class InstrumentFragment : Fragment() {
     private lateinit var viewModel: InstrumentViewModel
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    //    var username = arguments!!.getString("username")
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//       var username = arguments!!.getString("username")
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,20 +66,23 @@ class InstrumentFragment : Fragment() {
         // Here wer are initiating reference to adpater with data we have of tracks
 
 
-
     }
 
 
-
     fun getInstruments(): MutableList<AllInstrumentResponseItem> {
-        var listOfInstruments  = mutableListOf<AllInstrumentResponseItem>()
+
+        var listOfInstruments = mutableListOf<AllInstrumentResponseItem>()
+
         var InstrumentService: InstrumentService? = null
+
         InstrumentService = ServiceBuilder.buildInstrumentService()
+
         var getInstruments: Call<AllInstrumentResponse> = InstrumentService?.getInstruments()!!
         getInstruments.enqueue(object : Callback<AllInstrumentResponse> {
             override fun onFailure(call: Call<AllInstrumentResponse>, t: Throwable) {
-                Log.e("app: Failed to load Instrument Data","Error Occurred : ${t.message}")
+                Log.e("app: Failed to load", "Error Occurred : ${t.message}")
             }
+
             override fun onResponse(
                 call: Call<AllInstrumentResponse>,
                 response: Response<AllInstrumentResponse>
@@ -82,15 +92,15 @@ class InstrumentFragment : Fragment() {
                 if (response.isSuccessful || response.body() != null) {
                     var responsebody: AllInstrumentResponse = response.body()!!
                     Log.e(
-                        "app:All Instruments Response",
+                        "Instruments Response",
                         "Response Body : $responsebody"
                     )
                     //Should get all Instruments from here
-                    for(i in responsebody){
+                    for (i in responsebody) {
                         listOfInstruments.add(i)
                     }
 
-                    instAdapter = InstrumentAdapter(listOfInstruments)
+                    instAdapter = InstrumentAdapter(response.body()!!)
 
                     // This is recyclerview. First we are initiating a layout orientation
                     instruments.layoutManager = LinearLayoutManager(context)
@@ -98,7 +108,28 @@ class InstrumentFragment : Fragment() {
                     //Then we are attaching a custom adapter to it.
                     instruments.adapter = instAdapter
 
-                    instAdapter!!.setOnItemChildClickListener { adapter, view, position ->
+                    instAdapter!!.setOnItemChildClickListener() { adapter, view, position ->
+
+
+                        when (view.id) {
+
+//                            R.id.cl_inst -> {
+////
+//                                showToast(iname.text.toString())
+//                            }
+
+                            R.id.i_check -> {
+                                if (i_check.isChecked) {
+//                                    instrumento += iname
+                                    showToast(iname.text.toString())
+
+                                }
+//                                        instrumento += R.id.iname.toChar()
+//                                        Log.d("clicked", instrumento)
+//                                        showToast(instrumento)
+                            }
+                        }
+
 
                     }
                 }

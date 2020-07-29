@@ -22,9 +22,8 @@ class AddInstrumentsActivity : AppCompatActivity() {
             uname = intent?.extras?.getString("uname", null)
             usertype = intent?.extras?.getBoolean("usertype", false)
             if (!usertype!!){
-               // startActivity(Intent(this@AddInstrumentsActivity, DashboardActivity::class.java))
+               startActivity(Intent(this@AddInstrumentsActivity, DashboardActivity::class.java))
             }
-
             Toast.makeText(this, uname, Toast.LENGTH_SHORT).show()
             if (uname == null) {
                 return
@@ -36,7 +35,6 @@ class AddInstrumentsActivity : AppCompatActivity() {
             var b = Bundle();
             b.putString("username", username)
             fragment.arguments = b*/
-
             supportFragmentManager.beginTransaction()
                 .replace(R.id.icontainer, InstrumentFragment.newInstance())
                 .commitNow()

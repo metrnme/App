@@ -23,7 +23,7 @@ import retrofit2.Response
 class SelectUserType : AppCompatActivity() {
     var uname: String? = null
     var userService: UserService? = null
-
+    var usertype= false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +31,12 @@ class SelectUserType : AppCompatActivity() {
         radioGroup.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
                 val radio: RadioButton = findViewById(checkedId)
+                if(radio.text=="Musician"){
+                    usertype=true
+                }
+                if(radio.text=="Listener"){
+                    usertype=false
+                }
                 Toast.makeText(applicationContext," On checked change : ${radio.text}",
                     Toast.LENGTH_SHORT).show()
             })
@@ -39,8 +45,7 @@ class SelectUserType : AppCompatActivity() {
     private fun radio_button_click(view: View){
         // Get the clicked radio button instance
         val radio: RadioButton = findViewById(radioGroup.checkedRadioButtonId)
-        Toast.makeText(applicationContext,"On click : ${radio.text}",
-            Toast.LENGTH_SHORT).show()
+
     }
 
     private fun addListenerOnButton(){
@@ -51,20 +56,20 @@ class SelectUserType : AppCompatActivity() {
                 return
             }
 
-
             var id: Int = radioGroup.checkedRadioButtonId
             if (id!=-1){ // If any radio button checked from radio group
                 // Get the instance of radio button using id
                 val radio:RadioButton = findViewById(id)
-                var usertype= false
+
                 if(radio.text=="Musician"){
-                    usertype=true;
+                    usertype=true
                 }
                 if(radio.text=="Listener"){
-                    usertype=false;
+                    usertype=false
                 }
                 Toast.makeText(applicationContext,"On button click : ${radio.text}",
                     Toast.LENGTH_SHORT).show()
+                Log.d("Counter",usertype.toString())
                 SubmitButton(usertype)
             }else{
                 // If no radio button checked in this radio group
@@ -103,11 +108,19 @@ class SelectUserType : AppCompatActivity() {
                                 "app:User Info Response",
                                 "Response Body : " + responsebody.message
                             )
-                            val intent =
-                                Intent(this@SelectUserType, AddInstrumentsActivity::class.java)
                             intent.putExtra("uname", uname)
                             intent.putExtra("usertype",type)
-                            startActivity(intent)
+                            if(usertype==true) {
+                                val intent =
+                                    Intent(this@SelectUserType, AddInstrumentsActivity::class.java)
+
+                                startActivity(intent)
+                            }else{
+
+                                val intent2 =
+                                    Intent(this@SelectUserType, DashboardActivity::class.java)
+                                startActivity(intent2)
+                            }
                         }
                     }
                 })
