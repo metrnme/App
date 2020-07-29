@@ -15,18 +15,22 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         >
-        <activity android:name=".activities.AddInstrumentsActivity"></activity>
-        <activity android:name=".activities.DashboardActivity" >
+        <activity android:name=".activities.AddInstrumentsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activities.DashboardActivity" >
 
 
         </activity>
 
-        <activity android:name=".activities.TrackActivity"></activity>
+        <activity android:name=".activities.TrackActivity">
+
+
+        </activity>
 
 
 
