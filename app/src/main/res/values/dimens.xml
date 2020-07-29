@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="pg_margin">16dp</dimen>
+    <dimen name="pg_margin_wide">30dp</dimen>
     <dimen name="top_margin">24dp</dimen>
     <dimen name="hdng_txt_size">36sp</dimen>
     <dimen name="offset_wide">120dp</dimen>
     <dimen name="sub_hdng_size">24sp</dimen>
     <dimen name="body_txt_size">18sp</dimen>
+    <dimen name="small_txt_size">12sp</dimen>
+
 </resources>

@@ -44,7 +44,19 @@ class PlayerFragment : Fragment() {
         globalMusicData = Gson().fromJson(arguments?.getString("data"), AllTrackResponseItem::class.java)
 
         binding.title.text = globalMusicData?.name.toString()
+        var myGenre = globalMusicData!!.genre;
+        var DisplayGenre="";
+        for(i in myGenre){
+            DisplayGenre=DisplayGenre+" "+i
+        }
+        var myInst = globalMusicData!!.inst_used;
+        var DisplayInst="";
+        for(i in myInst){
+            DisplayInst=DisplayInst+" "+i
+        }
 
+        binding.inst.text = DisplayInst
+        binding.genre.text = DisplayGenre
         binding.playTrack.setOnCheckedChangeListener(object :
             CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
