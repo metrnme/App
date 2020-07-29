@@ -1,5 +1,6 @@
 package com.example.mtrnme2.fragments
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -17,23 +18,36 @@ import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
 import com.example.mtrnme2.R
+import com.example.mtrnme2.activities.UserRegistration
 import com.example.mtrnme2.databinding.FragmentUploadBinding
+import com.example.mtrnme2.models.TrackUpload
+import com.example.mtrnme2.models.GenericResponse
+import com.example.mtrnme2.services.ServiceBuilder
+import com.example.mtrnme2.services.TrackService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_upload.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
+import kotlin.random.Random
 
 
-class UploadFragment : Fragment() {
+class UploadFragment : BaseFragment() {
     private lateinit var binding: FragmentUploadBinding
     private lateinit var dialog: FilePickerDialog
     var properties = DialogProperties()
-
+    var trackService : TrackService?=null
+    var trackKey = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         properties.selection_type = DialogConfigs.FILE_SELECT
         dialog = FilePickerDialog(this.context, properties)
-
+        trackService = ServiceBuilder.buildTrackService()
+        trackKey = (0..100000).random().toString()
 
     }
 
@@ -54,6 +68,7 @@ class UploadFragment : Fragment() {
                     "File Selected: ${it.size} has been selected",
                     Toast.LENGTH_SHORT
                 ).show()
+                trackKey+=name_txt.text.toString()
                 uploadFile(it[0].toString())
             }
             dialog.setTitle("Select a File")
@@ -62,6 +77,26 @@ class UploadFragment : Fragment() {
         }
 
         binding.fabUpl.setOnClickListener { view ->
+            var addTrack : Call<GenericResponse> = trackService?.uploadTrack(TrackUpload(name=name_txt.text.toString(), url=trackKey, username="meffi", image_url="haha", genre = listOf("one", "two", "three", "four"), inst_used=listOf("one", "two", "three", "four")))!!
+            addTrack.enqueue(object : Callback<GenericResponse> {
+                override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                    showToast("Failed to Upload Track")
+                }
+
+                override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+                ) {
+                    Log.e("app Network Response", "Response Body : " + response.body())
+
+                    if (response.isSuccessful || response.body()!=null){
+                        var responsebody : GenericResponse = response.body()!!
+                        Log.e("Track Uploaded", "Response Body : " + responsebody.message)
+
+                    }
+                }
+
+            })
             Snackbar.make(view, "UPLOAD!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .show()
@@ -69,11 +104,12 @@ class UploadFragment : Fragment() {
 
     }
 
+
     private fun uploadFile(path: String) {
         val fileToUpload = File(path)
         Log.e("File Path", fileToUpload.absolutePath)
         Amplify.Storage.uploadFile(
-            "Example Key",
+            trackKey,
             fileToUpload,
             { result ->
                 Toast.makeText(

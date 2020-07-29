@@ -1,12 +1,17 @@
 package com.example.mtrnme2.services
 
+import com.example.mtrnme2.models.*
 import retrofit2.Call
 import retrofit2.http.*
-import com.example.mtrnme2.models.AllTrackResponse
+
 interface TrackService {
 
     @GET("api/v1/user/trk")
     fun getAllTracks(): Call<AllTrackResponse>
+
+    @POST("api/v1/user/trk")
+    fun uploadTrack(@Body uploadTrack: TrackUpload): Call<GenericResponse>
+
 }
 
 
