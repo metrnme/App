@@ -13,141 +13,163 @@
         tools:context=".fragments.PlayerFragment">
 
         <TextView
+            android:id="@+id/metrnme_logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_marginTop="@dimen/pg_margin_wide"
-            android:ellipsize="marquee"
-            android:textColor="@color/colorAccent"
-            android:text="Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger "
-            app:layout_constraintTop_toTopOf="parent"
-            android:fontFamily="@font/nunito_light"
-            app:layout_constraintBottom_toTopOf="@id/img"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/pg_margin_wide"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="@dimen/pg_margin_wide"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:paddingBottom="@dimen/top_margin"
+            android:text="@string/m_t_r_n_m_e"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/comments"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="@dimen/pg_margin"
-            android:id="@+id/comments"/>
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pg_margin_wide"
+            android:layout_marginEnd="@dimen/pg_margin_wide"
+            android:ellipsize="marquee"
+            android:fontFamily="@font/nunito"
+            android:singleLine="true"
+            android:text="Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger "
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toTopOf="@id/img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/metrnme_logo" />
 
         <ImageView
             android:id="@+id/img"
             android:layout_width="350dp"
             android:layout_height="350dp"
-            android:layout_marginTop="@dimen/top_margin"
+            app:layout_constraintBottom_toTopOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/ic_launcher_background"
-            app:layout_constraintTop_toTopOf="@id/comments" />
+            app:layout_constraintTop_toBottomOf="@id/comments" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/pg_margin"
-            android:layout_marginTop="@dimen/top_margin"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/pg_margin"
-            android:fontFamily="@font/nunito_bold"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/body_txt_size_large"
+            android:fontFamily="@font/nunito"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/img"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/title" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/pg_margin"
-            android:layout_marginEnd="@dimen/pg_margin"
-            android:fontFamily="@font/nunito_bold"
             android:textColor="@color/white"
-            android:textSize="@dimen/body_txt_size"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/t_username" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img" />
+
+        <TextView
+            android:id="@+id/t_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pg_margin"
+            android:layout_marginEnd="@dimen/pg_margin"
+            android:fontFamily="@font/nunito_light"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/body_txt_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
 
         <LinearLayout
+            android:id="@+id/player_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/pg_margin_wide"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="@dimen/pg_margin_wide"
-            app:layout_constraintTop_toBottomOf="@+id/player_layout"
-            app:layout_constraintStart_toStartOf="parent"
+
+            android:orientation="horizontal"
+            android:weightSum="3"
             app:layout_constraintEnd_toEndOf="parent"
 
-            android:layout_marginTop="15dp"
-            android:id="@+id/player_info"
-            android:weightSum="3"
-
-            android:orientation="horizontal">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_layout">
 
             <TextView
+                android:id="@+id/genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/top_margin"
+                android:layout_weight="1"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="@color/white"
-                android:textSize="@dimen/small_txt_size"
-                android:id="@+id/genre"
-                android:layout_weight="1"/>
+                android:textSize="@dimen/small_txt_size" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
 
             <TextView
+                android:id="@+id/inst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/top_margin"
-                android:gravity="right"
+                android:layout_weight="1"
                 android:fontFamily="@font/nunito_bold"
+                android:gravity="end"
                 android:textColor="@color/white"
-                android:textSize="@dimen/small_txt_size"
-                android:id="@+id/inst"
-                android:layout_weight="1"/>
+                android:textSize="@dimen/small_txt_size" />
 
         </LinearLayout>
 
 
         <LinearLayout
+            android:id="@+id/player_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/t_username"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
 
-            android:layout_marginTop="15dp"
-            android:id="@+id/player_layout"
             android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
 
-            android:orientation="horizontal">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/t_username">
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <ImageView
+                android:id="@+id/stop_track"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_stop"
-                android:id="@+id/stop_track" />
+                app:srcCompat="@drawable/ic_stop" />
 
             <ToggleButton
+                android:id="@+id/play_track"
                 android:layout_width="50dp"
-                android:textOff=""
-                android:textOn=""
-                android:background="@drawable/play_pause_states"
                 android:layout_height="50dp"
-                android:id="@+id/play_track" />
+                android:background="@drawable/play_pause_states"
+                android:textOff=""
+                android:textOn="" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
 

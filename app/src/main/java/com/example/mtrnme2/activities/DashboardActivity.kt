@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.fragment_upload.*
+import android.view.View.GONE
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -72,6 +73,7 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
 
         val navigationController = findNavController(R.id.myNavHostFragment)
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)

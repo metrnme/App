@@ -48,6 +48,7 @@ class PlayerFragment : Fragment() {
         globalMusicData = Gson().fromJson(arguments?.getString("data"), AllTrackResponseItem::class.java)
 
         binding.title.text = globalMusicData?.name.toString()
+        binding.tUsername.text = globalMusicData?.username.toString()
         var trackId = globalMusicData!!.track_id;
         var imgKey = globalMusicData!!.image_url;
         var imageurl=""
