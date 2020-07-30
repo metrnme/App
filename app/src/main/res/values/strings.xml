@@ -20,7 +20,6 @@
     <string name="login">Login</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
-    <string name="library">Library</string>
     <string name="select_instruments">Select Instruments</string>
     <string name="m_t_r_n_m_e">M T R N M E</string>
     <string name="please_enter_username">Please Enter Username</string>
@@ -42,4 +41,5 @@
     <string name="upload_track">Upload Track</string>
     <string name="checked">checked!</string>
     <string name="chenk" />
+    <string name="library">Library</string>
 </resources>

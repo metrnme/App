@@ -1,5 +1,6 @@
 package com.example.mtrnme2.fragments
 
+import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
@@ -10,21 +11,24 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.amplifyframework.core.Amplify
+import com.bumptech.glide.Glide
+import com.example.mtrnme2.R
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
 import com.example.mtrnme2.models.AllTrackResponseItem
 import com.example.mtrnme2.states.PlayerState
 import com.google.gson.Gson
+import java.io.File
+import java.net.URL
+
 
 class PlayerFragment : Fragment() {
     private lateinit var binding: FragmentPlayerBinding
     private var currentPlayerState: PlayerState = PlayerState.STARTED
     private var mediaPlayer: MediaPlayer? = null
-
     companion object {
         fun getNewInstance(): PlayerFragment {
             return PlayerFragment()
         }
-
         private var globalMusicData : AllTrackResponseItem?=null
     }
 
@@ -40,13 +44,27 @@ class PlayerFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         globalMusicData = Gson().fromJson(arguments?.getString("data"), AllTrackResponseItem::class.java)
 
         binding.title.text = globalMusicData?.name.toString()
         var trackId = globalMusicData!!.track_id;
+        var imgKey = globalMusicData!!.image_url;
+        var imageurl=""
+        Amplify.Storage.getUrl(imgKey,
+            { result -> imageurl=result.url.toString() },
+            { error -> Log.e("error",error.message) })
+
+        Glide.with(this)
+            .load(imageurl) // image url
+            .placeholder(R.drawable.ic_launcher_background) // any placeholder to load at start
+            .error(R.drawable.ic_launcher_foreground)  // any image in case of error
+            .override(350, 350) // resizing
+            .into(binding.img);
+
+
+
         var myGenre = globalMusicData!!.genre;
         var DisplayGenre="";
         for(i in myGenre){
@@ -64,6 +82,7 @@ class PlayerFragment : Fragment() {
 
         binding.inst.text = DisplayInst
         binding.genre.text = DisplayGenre
+
         binding.playTrack.setOnCheckedChangeListener(object :
             CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {

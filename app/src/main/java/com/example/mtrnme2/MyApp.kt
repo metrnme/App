@@ -14,9 +14,9 @@ class MyApp : Application() {
             Amplify.addPlugin(AWSCognitoAuthPlugin())
             Amplify.addPlugin(AWSS3StoragePlugin())
             Amplify.configure(applicationContext)
-            Log.i("mtrnme2", "Initialized Amplify")
+            Log.i("Amplify", "Initialized Amplify")
         } catch (error: AmplifyException) {
-            Log.e("mtrnme2", "Could not initialize Amplify", error)
+            Log.e("Amplify", "Could not initialize Amplify", error)
         }
     }
 }
