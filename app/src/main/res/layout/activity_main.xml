@@ -50,7 +50,7 @@
             android:textColorHint="@color/hint"
             android:singleLine="true"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/sub_hdng_size" />
+            android:textSize="@dimen/body_txt_size_large" />
 
         <Button
             android:id="@+id/btn_rgstr"

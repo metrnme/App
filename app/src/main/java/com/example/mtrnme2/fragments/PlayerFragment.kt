@@ -76,8 +76,8 @@ class PlayerFragment : Fragment() {
 
         Glide.with(this)
             .load(imageurl) // image url
-            .placeholder(R.drawable.ic_launcher_background) // any placeholder to load at start
-            .error(R.drawable.ic_launcher_foreground)  // any image in case of error
+            .placeholder(R.drawable.album_art_background) // any placeholder to load at start
+            .error(R.drawable.album_art_error)  // any image in case of error
             .override(350, 350) // resizing
             .into(binding.img);
 
@@ -109,7 +109,7 @@ class PlayerFragment : Fragment() {
             if (mediaPlayer != null) {
                 mediaPlayer?.stop()
             }else{
-                Toast.makeText(context!!, "Media is null. Please provide", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Media is null. Please provide", Toast.LENGTH_SHORT).show()
             }
         }
     }

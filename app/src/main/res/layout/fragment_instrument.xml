@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/select_instruments_that_you_play_learning_to_play"
-        android:textSize="@dimen/sub_hdng_size"
+        android:textSize="@dimen/body_txt_size_large"
         android:fontFamily="@font/nunito_extralight"
         android:layout_marginStart="@dimen/pg_margin"
         android:layout_marginEnd="@dimen/pg_margin" />

@@ -12,6 +12,22 @@
         android:layout_height="match_parent"
         tools:context=".fragments.PlayerFragment">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_marginTop="@dimen/pg_margin_wide"
+            android:ellipsize="marquee"
+            android:textColor="@color/colorAccent"
+            android:text="Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger "
+            app:layout_constraintTop_toTopOf="parent"
+            android:fontFamily="@font/nunito_light"
+            app:layout_constraintBottom_toTopOf="@id/img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="@dimen/pg_margin"
+            android:id="@+id/comments"/>
+
         <ImageView
             android:id="@+id/img"
             android:layout_width="350dp"
@@ -20,7 +36,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:src="@drawable/ic_launcher_background"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/comments" />
 
         <TextView
             android:layout_width="match_parent"
@@ -30,19 +46,33 @@
             android:layout_marginEnd="@dimen/pg_margin"
             android:fontFamily="@font/nunito_bold"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/hdng_txt_size"
+            android:textSize="@dimen/body_txt_size_large"
             android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/img"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/title" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pg_margin"
+            android:layout_marginEnd="@dimen/pg_margin"
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body_txt_size"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/t_username" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/pg_margin_wide"
             android:layout_marginEnd="@dimen/pg_margin_wide"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/player_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
@@ -81,23 +111,11 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_marginTop="10dp"
-            android:ellipsize="marquee"
-            android:textColor="@color/white"
-            android:text="Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger "
-            app:layout_constraintTop_toBottomOf="@id/player_info"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/comments"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/comments"
+            app:layout_constraintTop_toBottomOf="@+id/t_username"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
