@@ -23,8 +23,8 @@ class DashboardActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.Home_ic->{
                 /*replaceFragment(PlayerFragment())*/
-                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_home)
-                Log.d("app:Print1", "Home Is Pressed")
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_playlist)
+                Log.d("app:Print1", "Playlist Is Pressed")
                 return@OnNavigationItemSelectedListener true
             }
             R.id.Search_ic->{
