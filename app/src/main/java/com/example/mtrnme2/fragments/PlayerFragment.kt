@@ -52,16 +52,10 @@ class PlayerFragment : Fragment() {
         var imgKey = globalMusicData!!.image_url;
         var imageurl=""
         Amplify.Storage.getUrl(imgKey,
-            { result -> imageurl=result.url.toString() },
+            { result ->
+                imageurl=result.url.toString()
+            },
             { error -> Log.e("error",error.message) })
-
-        Glide.with(this)
-            .load(imageurl) // image url
-            .placeholder(R.drawable.ic_launcher_background) // any placeholder to load at start
-            .error(R.drawable.ic_launcher_foreground)  // any image in case of error
-            .override(350, 350) // resizing
-            .into(binding.img);
-
         var myGenre = globalMusicData!!.genre;
         var DisplayGenre="";
         for(i in myGenre){
@@ -75,35 +69,40 @@ class PlayerFragment : Fragment() {
         var track_url="";
         Amplify.Storage.getUrl(globalMusicData!!.url.toString(),
             { result -> track_url=result.url.toString() },
-            { error -> Log.e("error",error.message) })
+            { error -> Log.e("error",error.message.toString()) })
 
         binding.inst.text = DisplayInst
         binding.genre.text = DisplayGenre
 
-        binding.playTrack.setOnCheckedChangeListener(object :
-            CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
-                binding.progressView.visibility = View.VISIBLE
-                if (p1) {
-                    currentPlayerState = PlayerState.PLAYING
-                    mediaPlayer = MediaPlayer()
+        Glide.with(this)
+            .load(imageurl) // image url
+            .placeholder(R.drawable.ic_launcher_background) // any placeholder to load at start
+            .error(R.drawable.ic_launcher_foreground)  // any image in case of error
+            .override(350, 350) // resizing
+            .into(binding.img);
 
-                    if(track_url!="") {
-                        mediaPlayer?.setDataSource(track_url)
-                        mediaPlayer?.prepareAsync()
-                        //mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                        mediaPlayer?.setOnPreparedListener { p0 ->
-                            p0?.start()
-                            binding.progressView.visibility = View.GONE
-                        }
+
+        binding.playTrack.setOnCheckedChangeListener { p0, p1 ->
+            binding.progressView.visibility = View.VISIBLE
+            if (p1) {
+                currentPlayerState = PlayerState.PLAYING
+                mediaPlayer = MediaPlayer()
+
+                if(track_url!="") {
+                    mediaPlayer?.setDataSource(track_url)
+                    mediaPlayer?.prepareAsync()
+                    //mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                    mediaPlayer?.setOnPreparedListener { p0 ->
+                        p0?.start()
+                        binding.progressView.visibility = View.GONE
                     }
-                } else {
-                    binding.progressView.visibility = View.GONE
-                    currentPlayerState = PlayerState.PAUSED
-                    mediaPlayer?.pause()
                 }
+            } else {
+                binding.progressView.visibility = View.GONE
+                currentPlayerState = PlayerState.PAUSED
+                mediaPlayer?.pause()
             }
-        })
+        }
 
         binding.stopTrack.setOnClickListener {
             currentPlayerState = PlayerState.STOPPED

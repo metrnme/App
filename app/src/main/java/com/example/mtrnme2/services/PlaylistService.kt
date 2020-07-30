@@ -15,5 +15,9 @@ interface PlaylistService {
 
     @DELETE("api/v1/play")
     fun deletePlaylist(@Body deletePlaylist: playlistID):Call<GenericResponse>
+
+    @POST("api/v1/play_t")
+    fun getPlaylistTracks(@Body getPlaylistTracks: List<Int>): Call<AllTrackResponse>
+
 }
 

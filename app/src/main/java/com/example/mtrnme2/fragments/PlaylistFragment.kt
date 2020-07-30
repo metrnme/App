@@ -48,6 +48,35 @@ class PlaylistFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         getPlaylists()
     }
+    fun getPlaylistTracks(playlisttracks:List<Int>):MutableList<AllTrackResponseItem>{
+        var listOfPlaylistTracks = mutableListOf<AllTrackResponseItem>()
+        var PlaylistService: PlaylistService? = null
+        PlaylistService = ServiceBuilder.buildPlaylistService()
+        var getTrackPlaylist: Call<AllTrackResponse> = PlaylistService.getPlaylistTracks(getPlaylistTracks = playlisttracks)
+        getTrackPlaylist.enqueue(object : Callback<AllTrackResponse> {
+            override fun onFailure(call: Call<AllTrackResponse>, t: Throwable) {
+                Log.e("app:", "Error Occurred : ${t.message}")
+            }
+            override fun onResponse(
+                call: Call<AllTrackResponse>,
+                response: Response<AllTrackResponse>
+            ) {
+                if (response.isSuccessful || response.body() != null) {
+                    var responsebody: AllTrackResponse = response.body()!!
+                    Log.e(
+                        "app:Track Info Response",
+                        "Response Body : $responsebody"
+                    )
+                    //Should get all Instruments from here
+                    for (i in responsebody) {
+                        listOfPlaylistTracks.add(i)
+                    }
+                }
+            }
+
+        })
+        return listOfPlaylistTracks
+    }
 
     fun getPlaylists(): MutableList<AllPlaylistResponseItem> {
         var listOfPlaylist = mutableListOf<AllPlaylistResponseItem>()
@@ -93,13 +122,13 @@ class PlaylistFragment : BaseFragment() {
 
                             R.id.playlist_cons -> {
                                 showToast("Playlist Clicked")
-                                var playlist_tracks=listOfPlaylist[position].track_list
-
-                            var navigator = findNavController()
-                            assert(navigator!=null)
-                            var bundle = Bundle()
-                            bundle.putString("data", Gson().toJson(listOfPlaylist[position], AllTrackResponseItem::class.java))
-                            navigator.navigate(R.id.nav_player, bundle)
+//                                var playlist_tracks=listOfPlaylist[position].track_list
+//                                var listOfPlaylistTracks=getPlaylistTracks(playlist_tracks)
+//                                var navigator = findNavController()
+//                                assert(navigator!=null)
+//                                var bundle = Bundle()
+//                                bundle.putString("data", Gson().toJson(listOfPlaylistTracks, AllTrackResponseItem::class.java))
+//                                navigator.navigate(R.id.nav_track, bundle)
                             }
                         }
                     }
