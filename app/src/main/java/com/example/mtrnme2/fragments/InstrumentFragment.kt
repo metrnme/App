@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mtrnme2.R
 import com.example.mtrnme2.activities.viewmodels.InstrumentViewModel
 import com.example.mtrnme2.adapters.InstrumentAdapter
+import com.example.mtrnme2.interfaces.InstrumentInterface
 import com.example.mtrnme2.models.AllInstrumentResponse
 import com.example.mtrnme2.models.AllInstrumentResponseItem
 import com.example.mtrnme2.models.AllTrackResponseItem
@@ -30,10 +31,11 @@ import retrofit2.Response
 /**
  * A simple [Fragment] subclass.
  */
-class InstrumentFragment : BaseFragment() {
+class InstrumentFragment : BaseFragment() , InstrumentInterface {
 
     var instAdapter: InstrumentAdapter? = null
     var instrumento: String = ""
+    var listOfInstrument : ArrayList<String> = arrayListOf()
 
     companion object {
 
@@ -102,40 +104,31 @@ class InstrumentFragment : BaseFragment() {
 
                     instAdapter = InstrumentAdapter(response.body()!!)
 
+                    instAdapter?.setCalls(this@InstrumentFragment)
+
                     // This is recyclerview. First we are initiating a layout orientation
                     instruments.layoutManager = LinearLayoutManager(context)
 
                     //Then we are attaching a custom adapter to it.
                     instruments.adapter = instAdapter
-
-                    instAdapter!!.setOnItemChildClickListener() { adapter, view, position ->
-
-
-                        when (view.id) {
-
-//                            R.id.cl_inst -> {
-////
-//                                showToast(iname.text.toString())
-//                            }
-
-                            R.id.i_check -> {
-                                if (i_check.isChecked) {
-//                                    instrumento += iname
-                                    showToast(iname.text.toString())
-
-                                }
-//                                        instrumento += R.id.iname.toChar()
-//                                        Log.d("clicked", instrumento)
-//                                        showToast(instrumento)
-                            }
-                        }
-
-
-                    }
                 }
             }
         })
 
         return listOfInstruments
     }
+
+    override fun onCheckChanged(
+        viewID: View,
+        position: Int,
+        isChecked: Boolean,
+        data: MutableList<AllInstrumentResponseItem>
+    ) {
+        when(viewID.id){
+            R.id.i_check->{
+                showToast(data[position].name)
+            }
+        }
+    }
+
 }

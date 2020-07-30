@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     var userService : UserService?=null
 
@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
 
                                 val intent = Intent(this@MainActivity, UserRegistration::class.java)
                                 intent.putExtra("uname", uname_txt.text.toString())
+//                              appData.userID = "Muhammad Zubair"
+
                                 startActivity(intent)
                             }
 

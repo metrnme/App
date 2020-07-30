@@ -6,10 +6,13 @@ import com.amplifyframework.AmplifyException
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
+import com.preference.PowerPreference
 
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        PowerPreference.init(this)
+
         try {
             Amplify.addPlugin(AWSCognitoAuthPlugin())
             Amplify.addPlugin(AWSS3StoragePlugin())

@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mtrnme2.R
 import com.example.mtrnme2.activities.viewmodels.TrackViewModel
@@ -12,6 +14,7 @@ import com.example.mtrnme2.adapters.PlaylistAdapter
 import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_playlist.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -90,11 +93,13 @@ class PlaylistFragment : BaseFragment() {
 
                             R.id.playlist_cons -> {
                                 showToast("Playlist Clicked")
-//                            var navigator = findNavController()
-//                            assert(navigator!=null)
-//                            var bundle = Bundle()
-//                            bundle.putString("data", Gson().toJson(response.body()!![position], AllTrackResponseItem::class.java))
-//                            navigator.navigate(R.id.nav_player, bundle)
+                                var playlist_tracks=listOfPlaylist[position].track_list
+
+                            var navigator = findNavController()
+                            assert(navigator!=null)
+                            var bundle = Bundle()
+                            bundle.putString("data", Gson().toJson(listOfPlaylist[position], AllTrackResponseItem::class.java))
+                            navigator.navigate(R.id.nav_player, bundle)
                             }
                         }
                     }

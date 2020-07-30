@@ -1,6 +1,5 @@
 package com.example.mtrnme2.fragments
 
-import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
@@ -17,8 +16,6 @@ import com.example.mtrnme2.databinding.FragmentPlayerBinding
 import com.example.mtrnme2.models.AllTrackResponseItem
 import com.example.mtrnme2.states.PlayerState
 import com.google.gson.Gson
-import java.io.File
-import java.net.URL
 
 
 class PlayerFragment : Fragment() {
@@ -34,6 +31,7 @@ class PlayerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -41,6 +39,7 @@ class PlayerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPlayerBinding.inflate(inflater)
+        binding.comments.isSelected = true
         return binding.root
     }
 
@@ -62,8 +61,6 @@ class PlayerFragment : Fragment() {
             .error(R.drawable.ic_launcher_foreground)  // any image in case of error
             .override(350, 350) // resizing
             .into(binding.img);
-
-
 
         var myGenre = globalMusicData!!.genre;
         var DisplayGenre="";

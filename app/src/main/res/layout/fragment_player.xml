@@ -21,6 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,13 +81,23 @@
 
         </LinearLayout>
 
-
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_marginTop="10dp"
+            android:ellipsize="marquee"
+            android:textColor="@color/white"
+            android:text="Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger "
+            app:layout_constraintTop_toBottomOf="@id/player_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/comments"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/player_info"
+            app:layout_constraintTop_toBottomOf="@+id/comments"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
