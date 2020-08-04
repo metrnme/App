@@ -49,7 +49,7 @@
                     android:ems="10"
                     android:fontFamily="@font/nunito_light"
                     android:hint="@string/name"
-                    android:textSize="@dimen/sub_hdng_size"
+                    android:textSize="@dimen/body_txt_size_large"
                     android:inputType="textPersonName"/>
 
                 <EditText
@@ -62,7 +62,7 @@
                     android:ems="10"
                     android:fontFamily="@font/nunito_light"
                     android:hint="@string/age"
-                    android:textSize="@dimen/sub_hdng_size"
+                    android:textSize="@dimen/body_txt_size_large"
                     android:inputType="number"/>
 
                 <EditText
@@ -76,7 +76,7 @@
                     android:ems="10"
                     android:fontFamily="@font/nunito_light"
                     android:hint="@string/gender"
-                    android:textSize="@dimen/sub_hdng_size"
+                    android:textSize="@dimen/body_txt_size_large"
                     android:inputType="text"/>
 
 

@@ -20,8 +20,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class SelectUserType : AppCompatActivity() {
-    var uname: String? = null
+class SelectUserType : BaseActivity() {
+    var uname: String? = appData.username
     var userService: UserService? = null
     var usertype= false
 
@@ -49,8 +49,6 @@ class SelectUserType : AppCompatActivity() {
     }
 
     private fun addListenerOnButton(){
-        if (intent.extras!=null) {
-            uname = intent?.extras?.getString("uname", null)
             Toast.makeText(this, uname, Toast.LENGTH_SHORT).show()
             if (uname == null) {
                 return
@@ -70,13 +68,14 @@ class SelectUserType : AppCompatActivity() {
                 Toast.makeText(applicationContext,"On button click : ${radio.text}",
                     Toast.LENGTH_SHORT).show()
                 Log.d("Counter",usertype.toString())
+
                 SubmitButton(usertype)
             }else{
                 // If no radio button checked in this radio group
                 Toast.makeText(applicationContext,"On button click : nothing selected",
                     Toast.LENGTH_SHORT).show()
             }
-        }
+
     }
     private fun SubmitButton(type:Boolean){
         btn_done.setOnClickListener {
@@ -106,11 +105,11 @@ class SelectUserType : AppCompatActivity() {
                             var responsebody: GenericResponse = response.body()!!
                             Log.e(
                                 "app:User Info Response",
-                                "Response Body : " + responsebody.message
-                            )
-                            intent.putExtra("uname", uname)
-                            intent.putExtra("usertype",type)
-                            if(usertype==true) {
+                                "Response Body : " + responsebody.message.toString())
+
+                            }
+                            appData.musician=usertype
+                            if(usertype) {
                                 val intent =
                                     Intent(this@SelectUserType, AddInstrumentsActivity::class.java)
 
@@ -123,7 +122,7 @@ class SelectUserType : AppCompatActivity() {
                             }
                         }
                     }
-                })
+                )
             }
         }
 }

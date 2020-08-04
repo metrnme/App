@@ -41,22 +41,39 @@ class UploadFragment : BaseFragment() {
     private lateinit var dialog: FilePickerDialog
     var properties = DialogProperties()
     var trackService : TrackService?=null
+    var imgPath = ""
+    var trackPath = ""
     var trackKey = ""
+    var imgKey = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         properties.selection_type = DialogConfigs.FILE_SELECT
         dialog = FilePickerDialog(this.context, properties)
         trackService = ServiceBuilder.buildTrackService()
-        trackKey = (0..100000).random().toString()
 
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.btnBrowseart.setOnClickListener { view ->
             Snackbar.make(view, "BROWSE!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .show()
+            dialog.setDialogSelectionListener {
+
+
+                Toast.makeText(
+                    this.context,
+                    "File Selected: ${it.size} has been selected",
+                    Toast.LENGTH_SHORT
+                ).show()
+                imgKey=name_txt.text.toString()
+                imgKey+=(0..100000).random().toString()+"image"
+                uploadFile(imgKey,it[0].toString())
+
+            }
+            dialog.setTitle("Select a File")
+            dialog.show()
+
         }
 
         binding.btnBrowseaudio.setOnClickListener { view ->
@@ -68,8 +85,10 @@ class UploadFragment : BaseFragment() {
                     "File Selected: ${it.size} has been selected",
                     Toast.LENGTH_SHORT
                 ).show()
-                trackKey+=name_txt.text.toString()
-                uploadFile(it[0].toString())
+                trackKey=name_txt.text.toString()
+                trackKey+=(0..100000).random().toString()
+                trackPath=it[0].toString()
+                uploadFile(trackKey,it[0].toString())
             }
             dialog.setTitle("Select a File")
             dialog.show()
@@ -77,7 +96,7 @@ class UploadFragment : BaseFragment() {
         }
 
         binding.fabUpl.setOnClickListener { view ->
-            var addTrack : Call<GenericResponse> = trackService?.uploadTrack(TrackUpload(name=name_txt.text.toString(), url=trackKey, username="meffi", image_url="haha", genre = listOf("one", "two", "three", "four"), inst_used=listOf("one", "two", "three", "four")))!!
+            var addTrack : Call<GenericResponse> = trackService?.uploadTrack(TrackUpload(name=name_txt.text.toString(), url=trackKey, username="meffi", image_url=imgKey, genre = listOf("Psychedelic", "Funk", "Soul"), inst_used=listOf("Drums", "Guitars", "Vocals")))!!
             addTrack.enqueue(object : Callback<GenericResponse> {
                 override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
                     showToast("Failed to Upload Track")
@@ -105,11 +124,11 @@ class UploadFragment : BaseFragment() {
     }
 
 
-    private fun uploadFile(path: String) {
+    private fun uploadFile(key:String,path: String) {
         val fileToUpload = File(path)
         Log.e("File Path", fileToUpload.absolutePath)
         Amplify.Storage.uploadFile(
-            trackKey,
+            key,
             fileToUpload,
             { result ->
                 Toast.makeText(
@@ -158,6 +177,7 @@ class UploadFragment : BaseFragment() {
         binding = FragmentUploadBinding.inflate(inflater)
         return binding.root
     }
+
 
     companion object {
         fun getNewInstance(): UploadFragment {

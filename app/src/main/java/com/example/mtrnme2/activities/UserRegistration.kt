@@ -15,17 +15,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserRegistration : AppCompatActivity() {
+class UserRegistration : BaseActivity() {
 
-    var uname : String?=null
+    var uname : String = appData.username;
     var userService : UserService?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_registration)
 
-        if (intent.extras!=null){
-            uname = intent?.extras?.getString("uname", null)
+
             Toast.makeText(this,uname,Toast.LENGTH_SHORT).show()
             if (uname==null){
                 return
@@ -34,7 +33,8 @@ class UserRegistration : AppCompatActivity() {
             btn_nxt_rgstr.setOnClickListener{
             //We add bio information over here.
             if(checkValidations()) {
-                    val update =User(username = uname!!,name= name_txt.text.toString(), age= age_txt.text.toString().toInt() ,gender= gender_txt.text.toString())
+                    val update =User(username = appData.username,name= name_txt.text.toString(), age= age_txt.text.toString().toInt() ,gender= gender_txt.text.toString())
+                    appData.name=name_txt.text.toString();
                     var updateUserInfo : Call<GenericResponse> = userService?.updateUserInfo(update)!!
                     updateUserInfo.enqueue(object : Callback<GenericResponse>{
                         override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
@@ -50,14 +50,13 @@ class UserRegistration : AppCompatActivity() {
                                 Log.e("app:User Info Response", "Response Body : " + responsebody.message)
 
                                 val intent = Intent(this@UserRegistration, SelectUserType::class.java)
-                                intent.putExtra("uname", uname)
                                 startActivity(intent)
                             }
                         }
                     })
                 }
             }
-        }
+
 
     }
     private fun checkValidations(): Boolean {

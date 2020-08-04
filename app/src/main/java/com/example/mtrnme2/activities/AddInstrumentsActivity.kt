@@ -15,9 +15,6 @@ class AddInstrumentsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_instruments)
-        /*Here we are loading fragment in a FrameLayout*/
-
-        // Before loading fragment , you can do anything like add logic to whether load data from network or database
         if (intent.extras!=null) {
             uname = intent?.extras?.getString("uname", null)
             usertype = intent?.extras?.getBoolean("usertype", false)

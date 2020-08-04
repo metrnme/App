@@ -24,6 +24,9 @@ object ServiceBuilder {
     public fun buildTrackService(): TrackService {
         return retrofit.create(TrackService::class.java)
     }
+    public fun buildPlaylistService(): PlaylistService {
+        return retrofit.create(PlaylistService::class.java)
+    }
 
     
 }

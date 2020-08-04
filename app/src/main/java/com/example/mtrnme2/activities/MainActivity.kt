@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     var userService : UserService?=null
 
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                             if(responsebody.message[9] != 'a') {
 
                                 val intent = Intent(this@MainActivity, UserRegistration::class.java)
-                                intent.putExtra("uname", uname_txt.text.toString())
+                                appData.username =  uname_txt.text.toString();
                                 startActivity(intent)
                             }
 
@@ -97,6 +97,9 @@ class MainActivity : AppCompatActivity() {
                             intent.putExtra("uname", uname_txt.text.toString())
 
                             if (responsebody.username != null) {
+                                appData.username =  responsebody.username;
+                                appData.musician = responsebody.isMusician;
+                                appData.name = responsebody.name;
                                 startActivity(intent)
                             }
                             else

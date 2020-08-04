@@ -125,16 +125,3 @@ class TrackFragment : BaseFragment() {
 
 
     }
-
-
-
-    //fun playTrack(url : String)
-    //{
-      //  var media = MediaPlayer();
-       // media.setDataSource(context!!, Uri.parse(url))
-
-        /*Got it? Yes got it Thank you so much!!!!! THis was awesume, i'll do the rest of it and all Great. DOnehogaya
-        * */
-    //}
-
-

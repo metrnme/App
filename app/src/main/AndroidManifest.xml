@@ -16,18 +16,13 @@
         android:requestLegacyExternalStorage="true"
         >
         <activity android:name=".activities.AddInstrumentsActivity">
+
+
         </activity>
 
       <activity android:name=".activities.DashboardActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.DashboardActivity" >
-
-        </activity>
+      </activity>
 
         <activity android:name=".activities.TrackActivity">
 
@@ -37,6 +32,11 @@
 
 
         <activity android:name=".activities.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
 
 
