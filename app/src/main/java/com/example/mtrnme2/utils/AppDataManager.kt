@@ -2,25 +2,20 @@ package com.example.mtrnme2.utils
 
 class AppDataManager : SessionHelper {
     private var sessionManager = SessionManager()
-    override var userName: String
-        get() = sessionManager.userName
+    override var username: String
+        get() = sessionManager.username
         set(value) {
-            sessionManager.userName = value
+            sessionManager.username = value
         }
-    override var userPassword: String
-        get() = sessionManager.userPassword
+    override var name: String
+        get() = sessionManager.name
         set(value) {
-            sessionManager.userPassword = value
+            sessionManager.name = value
         }
-    override var userEmail: String
-        get() = sessionManager.userEmail
+    override var musician: Boolean
+        get() = sessionManager.musician
         set(value) {
-            sessionManager.userEmail = value
-        }
-    override var userID: String
-        get() = sessionManager.userID
-        set(value) {
-            sessionManager.userID = value
+            sessionManager.musician = value
         }
 
 }

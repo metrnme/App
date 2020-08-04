@@ -7,8 +7,8 @@
     <string name="help_us_put_you_in_our_sustem">Help us put you in our sustem.</string>
     <string name="next">Next</string>
     <string name="done">Done</string>
-    <string name="please_select_user_type">Please select user type</string>
-    <string name="usertype">U S E R T Y P E</string>
+    <string name="please_select_user_type">Select Musician if you wish to upload your own pre-produced tracks. Select Listener if you simply wish to explore tracks by other artists</string>
+    <string name="usertype">Choose Type</string>
     <string name="musician">Musician</string>
     <string name="listener">Listener</string>
     <string name="name">Name</string>
@@ -42,4 +42,8 @@
     <string name="checked">checked!</string>
     <string name="chenk" />
     <string name="library">Library</string>
+    <string name="upload">UPLOAD</string>
+    <string name="follow">FOLLOW</string>
+    <string name="follow_button">Follow Button</string>
+    <string name="upload_button">Upload Button</string>
 </resources>

@@ -16,16 +16,15 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.fragment_upload.*
 import android.view.View.GONE
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : BaseActivity() {
 
-    private var counter = 0
+    private var isMusician = appData.musician
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {item->
         when(item.itemId){
             R.id.Home_ic->{
-                /*replaceFragment(PlayerFragment())*/
-                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_playlist)
-                Log.d("app:Print1", "Playlist Is Pressed")
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_home)
+                Log.d("app:Print1", "Home Is Pressed")
                 return@OnNavigationItemSelectedListener true
             }
             R.id.Search_ic->{
@@ -57,9 +56,13 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        FAB.show()
-        counter-=1
+
         super.onResume()
+        if (isMusician){
+            FAB.show()
+        } else {
+            FAB.hide()
+        }
     }
 
     override fun onPause() {
@@ -79,13 +82,7 @@ class DashboardActivity : AppCompatActivity() {
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navigationController.navigate(R.id.nav_home)
         FAB.setOnClickListener{
-            if(counter==0){
-                FAB.hide()
-                counter+=1
-            }
             findNavController(R.id.myNavHostFragment).navigate(R.id.nav_upload)
-
-
         }
     }
 

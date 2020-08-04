@@ -1,8 +1,7 @@
 package com.example.mtrnme2.utils
 
 object Constants {
-    var userName : String = "USERNAME"
-    var userPassword : String = "USER_PASSWORD"
-    var userEmail : String = "USER_EMAIL"
-    var userID : String = "USER_ID"
+    var username : String = "USERNAME"
+    var name : String = "USER_NAME"
+    var musician : String = "MUSICIAN_TYPE"
 }

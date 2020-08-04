@@ -54,9 +54,7 @@ class MainActivity : BaseActivity() {
                             if(responsebody.message[9] != 'a') {
 
                                 val intent = Intent(this@MainActivity, UserRegistration::class.java)
-                                intent.putExtra("uname", uname_txt.text.toString())
-//                              appData.userID = "Muhammad Zubair"
-
+                                appData.username =  uname_txt.text.toString();
                                 startActivity(intent)
                             }
 
@@ -99,6 +97,9 @@ class MainActivity : BaseActivity() {
                             intent.putExtra("uname", uname_txt.text.toString())
 
                             if (responsebody.username != null) {
+                                appData.username =  responsebody.username;
+                                appData.musician = responsebody.isMusician;
+                                appData.name = responsebody.name;
                                 startActivity(intent)
                             }
                             else

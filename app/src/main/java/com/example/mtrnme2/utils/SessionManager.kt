@@ -3,16 +3,13 @@ import com.preference.PowerPreference
 
 class SessionManager() : SessionHelper {
     var prefs = PowerPreference.getDefaultFile()
-    override var userName: String
-        get() = prefs.getString(Constants.userName)
-        set(value) {prefs.putString(Constants.userName, value)}
-    override var userPassword: String
-        get() = prefs.getString(Constants.userPassword)
-        set(value) {prefs.putString(Constants.userPassword, value)}
-    override var userEmail: String
-        get() = prefs.getString(Constants.userEmail)
-        set(value) {prefs.putString(Constants.userEmail, value)}
-    override var userID: String
-        get() = prefs.getString(Constants.userID)
-        set(value) {prefs.putString(Constants.userID, value)}
+    override var username: String
+        get() = prefs.getString(Constants.username)
+        set(value) {prefs.putString(Constants.username, value)}
+    override var name: String
+        get() = prefs.getString(Constants.name)
+        set(value) {prefs.putString(Constants.name, value)}
+    override var musician: Boolean
+        get() = prefs.getBoolean(Constants.musician)
+        set(value) {prefs.putBoolean(Constants.musician, value)}
 }

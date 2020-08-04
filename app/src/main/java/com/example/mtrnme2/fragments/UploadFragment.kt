@@ -178,6 +178,7 @@ class UploadFragment : BaseFragment() {
         return binding.root
     }
 
+
     companion object {
         fun getNewInstance(): UploadFragment {
             return UploadFragment()

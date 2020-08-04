@@ -1,5 +1,6 @@
 package com.example.mtrnme2.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,12 +13,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.mtrnme2.R
+import com.example.mtrnme2.activities.DashboardActivity
+import com.example.mtrnme2.activities.SelectUserType
 import com.example.mtrnme2.activities.viewmodels.InstrumentViewModel
 import com.example.mtrnme2.adapters.InstrumentAdapter
 import com.example.mtrnme2.interfaces.InstrumentInterface
-import com.example.mtrnme2.models.AllInstrumentResponse
-import com.example.mtrnme2.models.AllInstrumentResponseItem
-import com.example.mtrnme2.models.AllTrackResponseItem
+import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.InstrumentService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -34,7 +35,7 @@ import retrofit2.Response
 class InstrumentFragment : BaseFragment() , InstrumentInterface {
 
     var instAdapter: InstrumentAdapter? = null
-    var instrumento: String = ""
+    var listOfaddedInstruments: ArrayList<String> = arrayListOf()
     var listOfInstrument : ArrayList<String> = arrayListOf()
 
     companion object {
@@ -45,11 +46,6 @@ class InstrumentFragment : BaseFragment() , InstrumentInterface {
 
     private lateinit var viewModel: InstrumentViewModel
 
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//       var username = arguments!!.getString("username")
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,9 +61,38 @@ class InstrumentFragment : BaseFragment() , InstrumentInterface {
         ///Initiating instance of viewmodel
         getInstruments()
 
+
         // Here wer are initiating reference to adpater with data we have of tracks
 
+        btn_select_instruments.setOnClickListener {
+            var InstrumentService: InstrumentService? = null
 
+            InstrumentService = ServiceBuilder.buildInstrumentService()
+
+            var addInstruments: Call<GenericResponse> = InstrumentService?.addInstrument(AddUserInstruments(username = appData.username,instruments = listOfaddedInstruments))!!
+            addInstruments.enqueue(object : Callback<GenericResponse> {
+                override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                    Log.e("app: Failed to load", "Error Occurred : ${t.message}")
+                }
+
+                override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+                ) {
+
+                    // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                    if (response.isSuccessful || response.body() != null) {
+                        var responsebody: GenericResponse = response.body()!!
+                        Log.e(
+                            "Instruments Response",
+                            "Response Body : $responsebody"
+                        )
+                    }
+                }
+            })
+            val intent = Intent(this.context, DashboardActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -127,6 +152,9 @@ class InstrumentFragment : BaseFragment() , InstrumentInterface {
         when(viewID.id){
             R.id.i_check->{
                 showToast(data[position].name)
+                if(!listOfInstrument.contains(data[position].name)) {
+                    listOfaddedInstruments.add(data[position].name)
+                }
             }
         }
     }
