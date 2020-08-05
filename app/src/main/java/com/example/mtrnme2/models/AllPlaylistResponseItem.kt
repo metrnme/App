@@ -6,6 +6,6 @@ data class AllPlaylistResponseItem(
     val p_type: String,
     val pl_id: Int,
     val timestamp: TimestampX,
-    val track_list: List<Int>,
+    val track_list: ArrayList<Int>,
     val username: String
 )

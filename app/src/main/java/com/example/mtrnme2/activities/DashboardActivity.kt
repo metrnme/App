@@ -23,7 +23,7 @@ class DashboardActivity : BaseActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {item->
         when(item.itemId){
             R.id.Home_ic->{
-                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_home)
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_track)
                 Log.d("app:Print1", "Home Is Pressed")
                 return@OnNavigationItemSelectedListener true
             }
@@ -35,7 +35,7 @@ class DashboardActivity : BaseActivity() {
             }
             R.id.Library_ic->{
                 /*replaceFragment(TrackFragment())*/
-                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_track)
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_playlist)
                 Log.d("app:Print1", "Track Fragment Is Pressed")
                 return@OnNavigationItemSelectedListener true
                //val intent = Intent(this@DashboardActivity, TrackActivity::class.java)
@@ -80,7 +80,7 @@ class DashboardActivity : BaseActivity() {
 
         val navigationController = findNavController(R.id.myNavHostFragment)
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        navigationController.navigate(R.id.nav_home)
+        navigationController.navigate(R.id.nav_track)
         FAB.setOnClickListener{
             findNavController(R.id.myNavHostFragment).navigate(R.id.nav_upload)
         }
