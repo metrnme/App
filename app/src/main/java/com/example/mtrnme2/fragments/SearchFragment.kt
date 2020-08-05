@@ -63,7 +63,7 @@ class SearchFragment : BaseFragment() {
 
         //Then we are attaching a custom adapter to it.
         //tracks.adapter = usersAdapter
-        //yeh kyaa chuss hai?
+
 
         // usersAdapter!!.setOnItemChildClickListener { adapter, view, position ->
         btn_search_users.setOnClickListener {

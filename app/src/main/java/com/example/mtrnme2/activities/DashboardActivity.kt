@@ -1,20 +1,12 @@
 package com.example.mtrnme2.activities
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.mtrnme2.R
-import com.example.mtrnme2.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.fragment_upload.*
-import android.view.View.GONE
 
 class DashboardActivity : BaseActivity() {
 

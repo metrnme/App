@@ -9,7 +9,9 @@ import com.example.mtrnme2.models.AllTrackResponseItem
 class TrackAdapter (data : MutableList<AllTrackResponseItem>) : BaseQuickAdapter<AllTrackResponseItem, BaseViewHolder>(R.layout.single_track_layout, data) {
     override fun convert(helper: BaseViewHolder?, item: AllTrackResponseItem?) {
 
-        /*Help contains  many mehtods like settext , set imageresource etc It will help you populate view from data*/
+        /*Help contains  many methods like settext,
+        set imageresource etc It will help populating the view from data*/
+
         helper!!.setText(R.id.tname, item!!.name.toString())
         helper!!.setText(R.id.likes, item!!.likes.toString())
         helper!!.setText(R.id.username, item!!.username.toString())
