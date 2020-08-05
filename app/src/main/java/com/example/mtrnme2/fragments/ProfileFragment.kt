@@ -44,7 +44,13 @@ class ProfileFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         ProfileFragment.globalMusicData = Gson().fromJson(arguments?.getString("data"), AllUserResponseItem::class.java)
-        binding.unameView.text= globalMusicData!!.name
+        binding.nameTxt.text= globalMusicData!!.name
+        binding.unameTxt.text= globalMusicData!!.username
+        var inst:String = ""
+        for (i in globalMusicData!!.inst){
+           inst += "  $i"
+        }
+        binding.instTxt.text = inst
         binding.contactString.text = globalMusicData!!.bio
         var imageurl=""
         Amplify.Storage.getUrl(globalMusicData!!.imgUrl,
