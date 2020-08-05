@@ -41,7 +41,8 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/radioGroup">
+            android:id="@+id/radioGroup"
+            android:checkedButton="@id/radioButton1">
 
             <RadioButton
                 android:id="@+id/radioButton2"
@@ -51,7 +52,7 @@
                 android:layout_marginTop="160dp"
                 android:layout_marginEnd="@dimen/pg_margin"
                 android:layout_marginBottom="20dp"
-                android:checked="true"
+
                 android:fontFamily="@font/nunito_light"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
@@ -64,11 +65,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/pg_margin"
                 android:layout_marginEnd="@dimen/pg_margin"
-                android:checked="false"
+
                 android:fontFamily="@font/nunito_light"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:text="@string/listener"
+
                 android:textSize="24sp" />
 
         </RadioGroup>
