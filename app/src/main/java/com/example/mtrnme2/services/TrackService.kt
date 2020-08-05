@@ -15,6 +15,8 @@ interface TrackService {
     @POST("api/v1/t_comment")
     fun getTrackComments(@Body trackID: trackID): Call<TrackComments>
 
+    @POST("api/v1/user/user_trk")
+    fun getUserTracks(@Body userName: userName) : Call<AllTrackResponse>
 }
 
 
