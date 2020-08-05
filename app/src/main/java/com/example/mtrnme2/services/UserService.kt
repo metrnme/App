@@ -18,7 +18,7 @@ interface UserService {
     fun getUser(@Field("username") username : String) : Call<UserInfoResponse>
 
     @POST("api/v1/usertype")
-    fun setUserType(@Body userDetails: User): Call<GenericResponse>
+    fun setUserType(@Body userDetails: UserType): Call<GenericResponse>
 
     @POST("api/v1/user/inst")
     fun addUserInstruments(@Body userDetails:User): Call<GenericResponse>

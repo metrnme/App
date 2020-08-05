@@ -7,17 +7,16 @@ import android.widget.Toast
 import com.example.mtrnme2.R
 import com.example.mtrnme2.fragments.InstrumentFragment
 
-class AddInstrumentsActivity : AppCompatActivity() {
-    var uname: String? = null
-    var usertype: Boolean? = null
+class AddInstrumentsActivity : BaseActivity() {
+    var uname: String? = appData.username
+    var usertype: Boolean? = appData.musician
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_instruments)
-        if (intent.extras!=null) {
-            uname = intent?.extras?.getString("uname", null)
-            usertype = intent?.extras?.getBoolean("usertype", false)
+            uname = appData.username
+            usertype = appData.musician
             if (!usertype!!){
                startActivity(Intent(this@AddInstrumentsActivity, DashboardActivity::class.java))
             }
@@ -25,7 +24,6 @@ class AddInstrumentsActivity : AppCompatActivity() {
             if (uname == null) {
                 return
             }
-        }
 
         if (savedInstanceState == null) {
             /*var fragment = InstrumentFragment.newInstance();
