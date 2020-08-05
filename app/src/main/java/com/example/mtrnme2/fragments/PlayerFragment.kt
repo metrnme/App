@@ -78,20 +78,10 @@ class PlayerFragment : BaseFragment() {
                             "Response Body : $responsebody"
                         )
                         //Should get all Comments
-                        //       listOfComments=responsebody
-
                         var commentString = ""
                         for (i in responsebody) {
-/*                            var x: String = i.content
-                            var y: String = i.username
-                            allComments.plus(x)
-                            allComments.plus("  @")
-                            allComments.plus(y)
-                            allComments.plus("   ")*/
-
                             var x: String = i.content
                             var y: String = i.username
-
                             commentString += "- ${x}"
                             commentString += "@ ${y}"
                         }
