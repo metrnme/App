@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestListener
 import com.example.mtrnme2.R
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
 import com.example.mtrnme2.models.AllTrackResponseItem
@@ -24,10 +25,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class PlayerFragment : Fragment() {
+class PlayerFragment : BaseFragment() {
     private lateinit var binding: FragmentPlayerBinding
     private var currentPlayerState: PlayerState = PlayerState.STARTED
     private var mediaPlayer: MediaPlayer? = null
+    var imageurl = ""
 
     companion object {
         fun getNewInstance(): PlayerFragment {
@@ -77,13 +79,28 @@ class PlayerFragment : Fragment() {
                         )
                         //Should get all Comments
                         //       listOfComments=responsebody
+
+                        var commentString = ""
                         for (i in responsebody) {
-                            var x: String = i.content
+/*                            var x: String = i.content
                             var y: String = i.username
                             allComments.plus(x)
                             allComments.plus("  @")
                             allComments.plus(y)
-                            allComments.plus("   ")
+                            allComments.plus("   ")*/
+
+                            var x: String = i.content
+                            var y: String = i.username
+
+                            commentString += "- ${x}"
+                            commentString += "@ ${y}"
+                        }
+
+                        if(commentString.isNullOrEmpty()){
+                            binding.comments.text = "No Comments Available"
+                        }else{
+                            binding.comments.text = commentString
+                            binding.comments.isSelected = true
                         }
                     }
                 }
@@ -101,18 +118,23 @@ class PlayerFragment : Fragment() {
         binding.tUsername.text = globalMusicData?.username.toString()
         var trackId = globalMusicData!!.track_id;
         var imgKey = globalMusicData!!.image_url;
-        var imageurl = ""
+
         var allComments: String = getAllComments(trackId) //ArrayList<TrackCommentsItem>
 
         Amplify.Storage.getUrl(imgKey,
             { result ->
                 imageurl = result.url.toString()
-                Glide.with(this)
+                showLog(imageurl)
+
+                imageurl = "https://lh3.googleusercontent.com/6UgEjh8Xuts4nwdWzTnWH8QtLuHqRMUB7dp24JYVE2xcYzq4HA8hFfcAbU-R-PC_9uA1=w288-h288-n-rw"
+                /*Glide.with(this)
                     .load(imageurl) // image url
                     .placeholder(R.drawable.album_art_background) // any placeholder to load at start
                     .error(R.drawable.album_art_error)  // any image in case of error
                     .override(350, 350) // resizing
-                    .into(binding.img);
+                    .into(binding.img);*/
+
+
             },
             { error -> Log.e("error", error.message) })
         var myGenre = globalMusicData!!.genre;
@@ -120,6 +142,14 @@ class PlayerFragment : Fragment() {
         for (i in myGenre) {
             DisplayGenre = DisplayGenre + " " + i
         }
+
+
+        Glide.with(binding.img.context)
+                .load(imageurl) // image url
+                .error(R.drawable.album_art_error)
+                .centerCrop()
+                .placeholder(R.drawable.album_art_background) // any placeholder to load at start / any image in case of error esizing
+                .into(binding.img)
         var myInst = globalMusicData!!.inst_used;
         var DisplayInst = "";
         for (i in myInst) {
