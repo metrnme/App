@@ -1,11 +1,11 @@
 package com.example.mtrnme2.models
 
 data class AllPlaylistResponseItem(
-    val _id: IdX,
+    val _id: Id,
     val name: String,
     val p_type: String,
     val pl_id: Int,
-    val timestamp: TimestampX,
-    val track_list: List<Int>,
+    val timestamp: Timestamp,
+    val track_list: ArrayList<Int>,
     val username: String
 )

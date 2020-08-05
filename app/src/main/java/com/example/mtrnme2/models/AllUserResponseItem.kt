@@ -7,6 +7,8 @@ data class AllUserResponseItem(
     val gender: String,
     val inst: List<Any>,
     val isMusician: Boolean,
+    val bio : String,
+    val imgUrl : String,
     val name: String,
     val username: String
 )
