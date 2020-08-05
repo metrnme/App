@@ -7,16 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.example.mtrnme2.R
 import com.example.mtrnme2.activities.viewmodels.UserViewModel
 import com.example.mtrnme2.adapters.UsersAdapter
+import com.example.mtrnme2.models.AllTrackResponseItem
 import com.example.mtrnme2.models.AllUserResponse
 import com.example.mtrnme2.models.AllUserResponseItem
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.UserService
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +28,7 @@ import retrofit2.Response
 /**
  * A simple [Fragment] subclass.
  */
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment() {
 
     var usersAdapter: UsersAdapter? = null
 
@@ -110,15 +113,21 @@ class SearchFragment : Fragment() {
                     //Then we are attaching a custom adapter to it.
                     users.adapter = usersAdapter
 
-                    usersAdapter!!.setOnItemChildClickListener { adapter, view, position ->
-                    //yeh tracks kahaan se aarahay thay?
+                    usersAdapter!!.setOnItemClickListener { adapter, view, position ->
+                        when(view.id){
+                            R.id.user_cons->{
+                                showToast(listOfUsers[position].name.toString()+" Clicked")
+                                var navigator = findNavController()
+                                assert(navigator!=null)
+                                var bundle = Bundle()
+                                bundle.putString("data", Gson().toJson(listOfUsers[position], AllUserResponseItem::class.java))
+                                navigator.navigate(R.id.nav_profile, bundle)
+                            }
+                        }
                     }
                 }
             }
-        })//YAYAYAY AB SAMAJH AAJAAYE Geee
-        //This is too much work for today.
-        //Tenkssss!
-        //FollowApi check karnay lagaa hun
+        })
 
         return listOfUsers
     }

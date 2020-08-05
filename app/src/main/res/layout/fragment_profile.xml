@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
     <TextView
-        android:id="@+id/uname_view"
+        android:id="@+id/name_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/pg_margin"
@@ -24,15 +29,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/inst_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:layout_marginBottom="@dimen/pg_margin_wide"
+        android:fontFamily="@font/nunito"
+        android:gravity="center"
+        android:text="@string/instruments"
+        android:textColor="@color/white"
+        android:textSize="@dimen/body_txt_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.108" />
+
     <ImageView
         android:id="@+id/img_profile"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:layout_constraintBottom_toTopOf="@id/uname_view"
+        app:layout_constraintBottom_toTopOf="@id/name_txt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/uname_view"
+        app:layout_constraintTop_toBottomOf="@id/name_txt"
         app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/uname_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:layout_marginBottom="@dimen/pg_margin_wide"
+        android:fontFamily="@font/nunito_bold"
+        android:gravity="center"
+        android:paddingTop="@dimen/top_margin"
+        android:text="Username"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/body_txt_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.434" />
 
     <TextView
         android:id="@+id/contact_string"
@@ -42,7 +86,7 @@
         android:layout_marginEnd="@dimen/pg_margin"
         android:fontFamily="@font/nunito"
         android:gravity="center"
-        android:text="{User Info String Goes Here} Maximum Length: 128 Characters"
+        android:text="@string/user_bio"
         android:textColor="@color/white"
         android:textSize="@dimen/body_txt_size"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,20 +119,7 @@
 
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/follow_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/follow_button"
-        android:text="@string/follow"
-        app:icon="@drawable/ic_baseline_contacts_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.94"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

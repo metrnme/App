@@ -9,19 +9,30 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
 import com.example.mtrnme2.R
+import com.example.mtrnme2.adapters.TrackAdapter
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
-import com.example.mtrnme2.models.AllTrackResponseItem
+import com.example.mtrnme2.models.*
+import com.example.mtrnme2.services.ServiceBuilder
+import com.example.mtrnme2.services.TrackService
 import com.example.mtrnme2.states.PlayerState
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.track_fragment.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.reflect.Type
 
 
 class PlayerFragment : Fragment() {
     private lateinit var binding: FragmentPlayerBinding
     private var currentPlayerState: PlayerState = PlayerState.STARTED
     private var mediaPlayer: MediaPlayer? = null
+
     companion object {
         fun getNewInstance(): PlayerFragment {
             return PlayerFragment()
@@ -42,7 +53,44 @@ class PlayerFragment : Fragment() {
         binding.comments.isSelected = true
         return binding.root
     }
+    fun getAllComments(id:Int) : String {
+     //   var listOfComments  = ArrayList<TrackCommentsItem>()
+        var allComments : String= " "
+        var TrackService: TrackService? = null
+        TrackService = ServiceBuilder.buildTrackService()
+        var getTrackComment: Call<TrackComments> = TrackService?.getTrackComments(trackID(track_id = id))!!
+        getTrackComment.enqueue(
+            object : Callback<TrackComments> {
+                override fun onFailure(call: Call<TrackComments>, t: Throwable) {
+                    Log.e("app:","Error Occurred : ${t.message}")
+                }
+                override fun onResponse(
+                    call: Call<TrackComments>,
+                    response: Response<TrackComments>
+                ) {
 
+                    if (response.isSuccessful || response.body() != null) {
+                        var responsebody: TrackComments = response.body()!!
+                        Log.d(
+                            "Comment",
+                            "Response Body : $responsebody"
+                        )
+                        //Should get all Comments
+                 //       listOfComments=responsebody
+                        for (i in responsebody){
+                            var x:String=i.content
+                            var y:String=i.username
+                            allComments.plus(x)
+                            allComments.plus("  @")
+                            allComments.plus(y)
+                            allComments.plus("   ")
+                        }
+                    }
+                }
+            }
+        )
+        return allComments
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         globalMusicData = Gson().fromJson(arguments?.getString("data"), AllTrackResponseItem::class.java)
@@ -52,6 +100,8 @@ class PlayerFragment : Fragment() {
         var trackId = globalMusicData!!.track_id;
         var imgKey = globalMusicData!!.image_url;
         var imageurl=""
+        var allComments : String = getAllComments(trackId) //ArrayList<TrackCommentsItem>
+
         Amplify.Storage.getUrl(imgKey,
             { result ->
                 imageurl=result.url.toString()
@@ -82,6 +132,8 @@ class PlayerFragment : Fragment() {
             .override(350, 350) // resizing
             .into(binding.img);
 
+        Log.d("Comments",allComments)
+        binding.comments.text = allComments
 
         binding.playTrack.setOnCheckedChangeListener { p0, p1 ->
             binding.progressView.visibility = View.VISIBLE

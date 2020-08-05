@@ -56,7 +56,7 @@ class PlaylistFragment : BaseFragment() {
         var getTrackPlaylist: Call<AllTrackResponse> = PlaylistService.getPlaylistTracks(getPlaylistTracks = playlisttracks)
         getTrackPlaylist.enqueue(object : Callback<AllTrackResponse> {
             override fun onFailure(call: Call<AllTrackResponse>, t: Throwable) {
-                Log.e("app:", "Error Occurred : ${t.message}")
+                Log.e("Playlist Tracks", "Error Occurred : ${t.message}")
             }
             override fun onResponse(
                 call: Call<AllTrackResponse>,
@@ -65,7 +65,7 @@ class PlaylistFragment : BaseFragment() {
                 if (response.isSuccessful || response.body() != null) {
                     var responsebody: AllTrackResponse = response.body()!!
                     Log.e(
-                        "app:Track Info Response",
+                        "Playlist Tracks",
                         "Response Body : $responsebody"
                     )
                     //Should get all Instruments from here
@@ -129,6 +129,7 @@ class PlaylistFragment : BaseFragment() {
                               var bundle = Bundle()
                               bundle.putString("data", Gson().toJson(allTracks, AllTrackResponseItem::class.java))
                               navigator.navigate(R.id.nav_track, bundle)
+
                             }
                         }
                     }
