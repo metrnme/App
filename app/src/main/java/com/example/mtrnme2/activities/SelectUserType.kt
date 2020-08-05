@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.example.mtrnme2.R
 import com.example.mtrnme2.models.GenericResponse
 import com.example.mtrnme2.models.User
+import com.example.mtrnme2.models.UserType
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.UserService
 import kotlinx.android.synthetic.main.activity_select_user_type.*
@@ -19,9 +20,7 @@ import retrofit2.Response
 
 
 class SelectUserType : BaseActivity() {
-    var uname: String? = appData.username
     var userService: UserService? = null
-    var usertype= false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,27 +29,24 @@ class SelectUserType : BaseActivity() {
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
                 val radio: RadioButton = findViewById(checkedId)
                 if(radio.text=="Musician"){
-                    usertype=true
+                    appData.musician=true
                 }
                 if(radio.text=="Listener"){
-                    usertype=false
+                    appData.musician=false
                 }
                 Toast.makeText(applicationContext," On checked change : ${radio.text}",
                     Toast.LENGTH_SHORT).show()
-                Log.d("meep",usertype.toString())
             })
         addListenerOnButton()
     }
-    private fun radio_button_click(view: View){
-        // Get the clicked radio button instance
-        val radio: RadioButton = findViewById(radioGroup.checkedRadioButtonId)
-
-    }
+//    private fun radio_button_click(view: View){
+//        // Get the clicked radio button instance
+//        val radio: RadioButton = findViewById(radioGroup.checkedRadioButtonId)
+//
+//    }
 
     private fun addListenerOnButton(){
-
-            Toast.makeText(this, uname, Toast.LENGTH_SHORT).show()
-            if (uname == null) {
+            if (appData.username == null) {
                 return
             }
 
@@ -60,31 +56,34 @@ class SelectUserType : BaseActivity() {
                 val radio:RadioButton = findViewById(id)
 
                 if(radio.text=="Musician"){
-                    usertype=true
+                    appData.musician=true
                 }
                 if(radio.text=="Listener"){
-                    usertype=false
+                    appData.musician =false
                 }
                 Toast.makeText(applicationContext,"On button click : ${radio.text}",
                     Toast.LENGTH_SHORT).show()
-                Log.d("Counter",usertype.toString())
+                Log.d("Counter",appData.musician.toString())
 
-                SubmitButton(usertype)
+                SubmitButton()
             }else{
                 // If no radio button checked in this radio group
                 Toast.makeText(applicationContext,"On button click : nothing selected",
                     Toast.LENGTH_SHORT).show()
 
+
+
+
             }
 
     }
-    private fun SubmitButton(type:Boolean){
+    private fun SubmitButton(){
         btn_done.setOnClickListener {
             //We add bio information over here.
                 userService = ServiceBuilder.buildservice()
-                val update = User(
-                    username = uname!!,
-                    usertype = type
+                val update = UserType(
+                    username = appData.username,
+                    usertype = appData.musician
                 )
                 var setUserType: Call<GenericResponse> =
                     userService?.setUserType(update)!!
@@ -105,12 +104,11 @@ class SelectUserType : BaseActivity() {
                         if (response.isSuccessful || response.body() != null) {
                             var responsebody: GenericResponse = response.body()!!
                             Log.e(
-                                "app:User Info Response",
+                                "UserType",
                                 "Response Body : " + responsebody.message.toString())
 
                             }
-                            appData.musician=usertype
-                            if(usertype) {
+                            if(appData.musician) {
                                 val intent =
                                     Intent(this@SelectUserType, AddInstrumentsActivity::class.java)
 
