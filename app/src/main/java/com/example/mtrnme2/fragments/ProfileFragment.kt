@@ -81,7 +81,7 @@ class ProfileFragment : BaseFragment() {
         var listOfTracks  = mutableListOf<AllTrackResponseItem>()
         var TrackService: TrackService? = null
         TrackService = ServiceBuilder.buildTrackService()
-        var getTracks: Call<AllTrackResponse> = TrackService?.getUserTracks(userName(username = appData.username))!!
+        var getTracks: Call<AllTrackResponse> = TrackService?.getUserTracks(userName(username = globalMusicData!!.username))!!
         getTracks.enqueue(object : Callback<AllTrackResponse> {
             override fun onFailure(call: Call<AllTrackResponse>, t: Throwable) {
                 Log.e("app:","Error Occurred : ${t.message}")
