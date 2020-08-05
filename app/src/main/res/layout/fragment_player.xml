@@ -39,6 +39,7 @@
             android:ellipsize="marquee"
             android:fontFamily="@font/nunito"
             android:singleLine="true"
+            android:gravity="center"
             android:text="Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger Hello buddy Good music!!! @JohnDoe Wao Good Music @Roger "
             android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toTopOf="@id/img"
