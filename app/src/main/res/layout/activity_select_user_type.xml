@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".activities.SelectUserType">
 
-
     <LinearLayout
+        android:id="@+id/ll_usertype"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/hdng_rgstr"
+            android:id="@+id/type_tv"
+            android:textColor="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/pg_margin"
@@ -25,6 +27,8 @@
 
         <TextView
             android:id="@+id/textView2"
+            android:justificationMode="inter_word"
+            android:layout_marginTop="@dimen/pg_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/pg_margin"
@@ -34,44 +38,58 @@
             android:textSize="@dimen/body_txt_size" />
 
 
-        <RadioButton
-            android:id="@+id/radioButton2"
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/pg_margin"
-            android:layout_marginTop="120dp"
-            android:layout_marginEnd="@dimen/pg_margin"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="@font/nunito_light"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@string/musician"
-            android:textSize="24sp" />
+            android:layout_height="match_parent"
+            android:id="@+id/radioGroup">
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/pg_margin"
-            android:layout_marginEnd="@dimen/pg_margin"
-            android:layout_marginBottom="100dp"
-            android:fontFamily="@font/nunito_light"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@string/listener"
-            android:textSize="24sp" />
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/pg_margin"
+                android:layout_marginTop="160dp"
+                android:layout_marginEnd="@dimen/pg_margin"
+                android:layout_marginBottom="20dp"
+                android:checked="true"
+                android:fontFamily="@font/nunito_light"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/musician"
+                android:textSize="24sp" />
 
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/pg_margin"
+                android:layout_marginEnd="@dimen/pg_margin"
+                android:checked="false"
+                android:fontFamily="@font/nunito_light"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/listener"
+                android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/btn_done"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/pg_margin"
-            android:layout_marginEnd="@dimen/pg_margin"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/done" />
-
+        </RadioGroup>
 
     </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:fontFamily="@font/nunito_bold"
+        android:text="@string/done"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_usertype"
+        app:layout_constraintVertical_bias="0.893" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

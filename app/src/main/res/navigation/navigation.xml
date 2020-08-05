@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.mtrnme2.fragments.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/nav_search" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/nav_settings" />
+        <action
+            android:id="@+id/action_homeFragment_to_trackFragment"
+            app:destination="@id/nav_track" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.example.mtrnme2.fragments.SearchFragment"
+        android:label="Search Tracks"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_nav_search_to_nav_profile"
+            app:destination="@id/nav_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.mtrnme2.fragments.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/nav_player"
+        android:name="com.example.mtrnme2.fragments.PlayerFragment"
+        android:label="Player">
+        <argument
+            android:name="url"
+            android:defaultValue="null"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_track"
+        android:name="com.example.mtrnme2.fragments.TrackFragment"
+        android:label="Tracks"
+        tools:layout="@layout/track_fragment">
+        <action
+            android:id="@+id/action_trackFragment_to_playerFragment"
+            app:destination="@id/nav_player" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_upload"
+        android:name="com.example.mtrnme2.fragments.UploadFragment"
+        android:label="nav_upload" />
+    <fragment
+        android:id="@+id/nav_playlist"
+        android:name="com.example.mtrnme2.fragments.PlaylistFragment"
+        android:label="nav_playlist"
+        tools:layout="@layout/fragment_playlist" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.mtrnme2.fragments.ProfileFragment"
+        android:label="Profile" />
+</navigation>

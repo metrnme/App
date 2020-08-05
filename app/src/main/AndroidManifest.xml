@@ -12,11 +12,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <service
-            android:name=".services.UserInfoService"
-            android:enabled="true"
-            android:exported="false"></service>
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
+        >
+        <activity android:name=".activities.AddInstrumentsActivity">
+
+
+        </activity>
+
+      <activity android:name=".activities.DashboardActivity" >
+
+
+      </activity>
+
+        <activity android:name=".activities.TrackActivity">
+
+
+        </activity>
+
+
 
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
@@ -24,6 +38,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+
         </activity>
         <activity android:name=".activities.SelectUserType" />
         <activity android:name=".activities.UserRegistration" />
