@@ -34,6 +34,7 @@ class TrackFragment : BaseFragment() {
 
         /*THis is to make new instance of this Track Fragment*/
         fun newInstance() = TrackFragment()
+ //       private var globalMusicData : AllTrackResponse?=null
     }
 
     // This is an instance of view model of Track Fragment
@@ -60,8 +61,35 @@ class TrackFragment : BaseFragment() {
         //trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
 
         //}
+       //If we are coming from Playlist to Track
+/*
+        if(true){
+        TrackFragment.globalMusicData = Gson().fromJson(arguments?.getString("data"), AllTrackResponse::class.java)
+        trkAdapter = TrackAdapter(globalMusicData!!)
+        tracks.layoutManager = LinearLayoutManager(context)
+        tracks.adapter = trkAdapter
+        trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+                R.id.more -> {
+                    showToast("More")
+                }
+                R.id.track_cons -> {
+                    var navigator = findNavController()
+                    assert(navigator != null)
+                    var bundle = Bundle()
+                    bundle.putString(
+                        "data",
+                        Gson().toJson(globalMusicData!![position], AllTrackResponseItem::class.java)
+                    )
+                    navigator.navigate(R.id.nav_player, bundle)
+                }
+            }
+        }
+        }else {
 
-         getTracks()
+ */
+            getTracks()
+        //}
         // Here wer are initiating reference to adpater with data we have of tracks
 
     }

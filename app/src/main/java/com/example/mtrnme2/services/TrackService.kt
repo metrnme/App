@@ -12,6 +12,9 @@ interface TrackService {
     @POST("api/v1/user/trk")
     fun uploadTrack(@Body uploadTrack: TrackUpload): Call<GenericResponse>
 
+    @POST("api/v1/t_comment")
+    fun getTrackComments(@Body trackID: trackID): Call<TrackComments>
+
 }
 
 

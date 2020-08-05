@@ -96,7 +96,7 @@ class UploadFragment : BaseFragment() {
         }
 
         binding.fabUpl.setOnClickListener { view ->
-            var addTrack : Call<GenericResponse> = trackService?.uploadTrack(TrackUpload(name=name_txt.text.toString(), url=trackKey, username="meffi", image_url=imgKey, genre = listOf("Psychedelic", "Funk", "Soul"), inst_used=listOf("Drums", "Guitars", "Vocals")))!!
+            var addTrack : Call<GenericResponse> = trackService?.uploadTrack(TrackUpload(name=name_txt.text.toString(), url=trackKey, username=appData.username, image_url=imgKey, genre = listOf("Psychedelic", "Funk", "Soul"), inst_used=listOf("Drums", "Guitars", "Vocals")))!!
             addTrack.enqueue(object : Callback<GenericResponse> {
                 override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
                     showToast("Failed to Upload Track")
