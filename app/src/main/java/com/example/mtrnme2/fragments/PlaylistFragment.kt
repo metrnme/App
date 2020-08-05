@@ -48,6 +48,7 @@ class PlaylistFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         getPlaylists()
     }
+
     fun getPlaylistTracks(playlisttracks:ArrayList<Int>):MutableList<AllTrackResponseItem>{
         var listOfPlaylistTracks = mutableListOf<AllTrackResponseItem>()
         var PlaylistService: PlaylistService? = null
@@ -122,13 +123,13 @@ class PlaylistFragment : BaseFragment() {
 
                             R.id.playlist_cons -> {
                                 showToast("Playlist Clicked")
-                                var playlist_tracks=listOfPlaylist[position].track_list
-                                var listOfPlaylistTracks=getPlaylistTracks(playlist_tracks)
-                                var navigator = findNavController()
-                                assert(navigator!=null)
-                                var bundle = Bundle()
-                                bundle.putString("data", Gson().toJson(listOfPlaylistTracks, AllTrackResponse::class.java))
-                                navigator.navigate(R.id.nav_track, bundle)
+                                var allTracks:MutableList<AllTrackResponseItem> = getPlaylistTracks(listOfPlaylist[position].track_list)
+                              var navigator = findNavController()
+                              assert(navigator!=null)
+                              var bundle = Bundle()
+                              bundle.putString("data", Gson().toJson(allTracks, AllTrackResponseItem::class.java))
+                              navigator.navigate(R.id.nav_track, bundle)
+
                             }
                         }
                     }

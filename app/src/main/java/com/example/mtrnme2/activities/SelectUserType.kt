@@ -7,14 +7,12 @@ import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.mtrnme2.R
 import com.example.mtrnme2.models.GenericResponse
 import com.example.mtrnme2.models.User
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.UserService
 import kotlinx.android.synthetic.main.activity_select_user_type.*
-import kotlinx.android.synthetic.main.activity_user_registration.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +37,7 @@ class SelectUserType : BaseActivity() {
                 }
                 Toast.makeText(applicationContext," On checked change : ${radio.text}",
                     Toast.LENGTH_SHORT).show()
+                Log.d("meep",usertype.toString())
             })
         addListenerOnButton()
     }
@@ -49,6 +48,7 @@ class SelectUserType : BaseActivity() {
     }
 
     private fun addListenerOnButton(){
+
             Toast.makeText(this, uname, Toast.LENGTH_SHORT).show()
             if (uname == null) {
                 return
@@ -74,6 +74,7 @@ class SelectUserType : BaseActivity() {
                 // If no radio button checked in this radio group
                 Toast.makeText(applicationContext,"On button click : nothing selected",
                     Toast.LENGTH_SHORT).show()
+
             }
 
     }

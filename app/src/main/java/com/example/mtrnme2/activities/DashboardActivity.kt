@@ -35,7 +35,7 @@ class DashboardActivity : BaseActivity() {
             }
             R.id.Library_ic->{
                 /*replaceFragment(TrackFragment())*/
-                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_track)
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_playlist)
                 Log.d("app:Print1", "Track Fragment Is Pressed")
                 return@OnNavigationItemSelectedListener true
                //val intent = Intent(this@DashboardActivity, TrackActivity::class.java)
