@@ -60,9 +60,21 @@
         android:id="@+id/nav_playlist"
         android:name="com.example.mtrnme2.fragments.PlaylistFragment"
         android:label="nav_playlist"
-        tools:layout="@layout/fragment_playlist" />
+        tools:layout="@layout/fragment_playlist" >
+        <action
+            android:id="@+id/action_nav_playlist_to_nav_playlist_tracks"
+            app:destination="@id/nav_playlist_tracks" />
+    </fragment>
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.mtrnme2.fragments.ProfileFragment"
         android:label="Profile" />
+    <fragment
+        android:id="@+id/nav_playlist_tracks"
+        android:name="com.example.mtrnme2.fragments.PlaylistTrackFragment"
+        android:label="Playlist Tracks" >
+        <action
+            android:id="@+id/action_nav_playlist_tracks_to_nav_player"
+            app:destination="@id/nav_player" />
+    </fragment>
 </navigation>

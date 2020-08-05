@@ -51,46 +51,7 @@ class TrackFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProvider(this).get(TrackViewModel::class.java)
-     //   trkAdapter = TrackAdapter(viewModel.getSampleTracks())
-     //   tracks.layoutManager = LinearLayoutManager(context)
-
-        //Then we are attaching a custom adapter to it.
-       // tracks.adapter = trkAdapter
-
-        //trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
-
-        //}
-       //If we are coming from Playlist to Track
-/*
-        if(true){
-        TrackFragment.globalMusicData = Gson().fromJson(arguments?.getString("data"), AllTrackResponse::class.java)
-        trkAdapter = TrackAdapter(globalMusicData!!)
-        tracks.layoutManager = LinearLayoutManager(context)
-        tracks.adapter = trkAdapter
-        trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
-            when (view.id) {
-                R.id.more -> {
-                    showToast("More")
-                }
-                R.id.track_cons -> {
-                    var navigator = findNavController()
-                    assert(navigator != null)
-                    var bundle = Bundle()
-                    bundle.putString(
-                        "data",
-                        Gson().toJson(globalMusicData!![position], AllTrackResponseItem::class.java)
-                    )
-                    navigator.navigate(R.id.nav_player, bundle)
-                }
-            }
-        }
-        }else {
-
- */
-            getTracks()
-        //}
-        // Here wer are initiating reference to adpater with data we have of tracks
+        getTracks()
 
     }
     // Uses Retrofit Track Service and Populates the View to Return

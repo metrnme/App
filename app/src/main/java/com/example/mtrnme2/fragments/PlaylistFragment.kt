@@ -5,17 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mtrnme2.R
 import com.example.mtrnme2.activities.viewmodels.TrackViewModel
 import com.example.mtrnme2.adapters.PlaylistAdapter
-import com.example.mtrnme2.models.*
+import com.example.mtrnme2.models.AllPlaylistResponse
+import com.example.mtrnme2.models.AllPlaylistResponseItem
+import com.example.mtrnme2.models.userName
 import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_playlist.*
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,37 +51,8 @@ class PlaylistFragment : BaseFragment() {
         getPlaylists()
     }
 
-    fun getPlaylistTracks(playlisttracks:ArrayList<Int>):MutableList<AllTrackResponseItem>{
-        var listOfPlaylistTracks = mutableListOf<AllTrackResponseItem>()
-        var PlaylistService: PlaylistService? = null
-        PlaylistService = ServiceBuilder.buildPlaylistService()
-        var getTrackPlaylist: Call<AllTrackResponse> = PlaylistService.getPlaylistTracks(getPlaylistTracks = playlisttracks)
-        getTrackPlaylist.enqueue(object : Callback<AllTrackResponse> {
-            override fun onFailure(call: Call<AllTrackResponse>, t: Throwable) {
-                Log.e("Playlist Tracks", "Error Occurred : ${t.message}")
-            }
-            override fun onResponse(
-                call: Call<AllTrackResponse>,
-                response: Response<AllTrackResponse>
-            ) {
-                if (response.isSuccessful || response.body() != null) {
-                    var responsebody: AllTrackResponse = response.body()!!
-                    Log.e(
-                        "Playlist Tracks",
-                        "Response Body : $responsebody"
-                    )
-                    //Should get all Instruments from here
-                    for (i in responsebody) {
-                        listOfPlaylistTracks.add(i)
-                    }
-                }
-            }
-
-        })
-        return listOfPlaylistTracks
-    }
-
-    fun getPlaylists(): MutableList<AllPlaylistResponseItem> {
+    fun getPlaylists(): MutableList<AllPlaylistResponseItem>
+    {
         var listOfPlaylist = mutableListOf<AllPlaylistResponseItem>()
         var PlaylistService: PlaylistService? = null
         PlaylistService = ServiceBuilder.buildPlaylistService()
@@ -122,14 +95,13 @@ class PlaylistFragment : BaseFragment() {
                             }
 
                             R.id.playlist_cons -> {
-                                showToast("Playlist Clicked")
-                                var allTracks:MutableList<AllTrackResponseItem> = getPlaylistTracks(listOfPlaylist[position].track_list)
+                              showToast("Playlist Clicked")
                               var navigator = findNavController()
                               assert(navigator!=null)
                               var bundle = Bundle()
-                              bundle.putString("data", Gson().toJson(allTracks, AllTrackResponseItem::class.java))
-                              navigator.navigate(R.id.nav_track, bundle)
-
+                              listOfPlaylist[position].track_list
+                              bundle.putString("data", Gson().toJson(listOfPlaylist[position],AllPlaylistResponseItem::class.java))
+                              navigator.navigate(R.id.nav_playlist_tracks, bundle)
                             }
                         }
                     }
@@ -141,5 +113,6 @@ class PlaylistFragment : BaseFragment() {
 
     }
 }
+
 
 
