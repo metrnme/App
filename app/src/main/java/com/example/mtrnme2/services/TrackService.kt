@@ -17,6 +17,17 @@ interface TrackService {
 
     @POST("api/v1/user/user_trk")
     fun getUserTracks(@Body userName: userName) : Call<AllTrackResponse>
+
+    @POST("api/v1/user/user_like_trk")
+    fun LikeaTrack(@Body likeModel: LikeModel): Call<GenericResponse>
+
+
+    @POST("api/v1/user/user_unlike_trk")
+    fun UnlikeaTrack(@Body likeModel: LikeModel): Call<GenericResponse>
+
+    @POST("api/v1/comment")
+    fun postComment(@Body commentModel: CommentModel): Call<GenericResponse>
+
 }
 
 

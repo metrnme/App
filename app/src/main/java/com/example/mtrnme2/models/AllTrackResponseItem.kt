@@ -8,5 +8,6 @@ data class AllTrackResponseItem(
     val likes: Int,
     val genre: List<String>,
     val image_url: String,
-    val inst_used: List<String>
+    val inst_used: List<String>,
+    val user_likes: List<String>
     )

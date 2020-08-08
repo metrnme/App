@@ -15,6 +15,9 @@ import com.example.mtrnme2.activities.viewmodels.TrackViewModel
 import com.example.mtrnme2.adapters.TrackAdapter
 import com.example.mtrnme2.models.AllTrackResponse
 import com.example.mtrnme2.models.AllTrackResponseItem
+import com.example.mtrnme2.models.GenericResponse
+import com.example.mtrnme2.models.updatePlaylist
+import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
 import com.google.gson.Gson
@@ -93,7 +96,9 @@ class TrackFragment : BaseFragment() {
                             trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
                                 when(view.id){
                                     R.id.more->{
-                                        showToast("More")
+                                        //Add to playlist
+                                        addtoPlaylist(listOfTracks[position].track_id)
+                                        showToast(listOfTracks[position].name)
                                     }
 
                                     R.id.track_cons->{
@@ -112,5 +117,33 @@ class TrackFragment : BaseFragment() {
                 return listOfTracks
             }
 
+    private fun addtoPlaylist(trackId: Int) {
+
+    //Get all playlist here for a user and show in dialog for them to
+    // select one of the playlist
+    //then add the track to that playlist this thing is missing right now
+    //we have to fixed the code after figuring out dialogs
+
+        var PlayistService: PlaylistService? = null
+        PlayistService = ServiceBuilder.buildPlaylistService()
+        var addTracktoPlaylist: Call<GenericResponse> = PlayistService?.updatePlaylist(updatePlaylist(playlist_id = 1, track_id = trackId))!!
+        addTracktoPlaylist.enqueue(object : Callback<GenericResponse> {
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("app:", "Error Occurred : ${t.message}")
+            }
+
+            override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+            ) {
+                var responsebody: GenericResponse = response.body()!!
+                Log.e(
+                        "Track2Playlist",
+                        "Response Body : $responsebody"
+                )
+                showToast("Track has been added to playlist")
+            }
+        })
 
     }
+}
