@@ -13,9 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestListener
 import com.example.mtrnme2.R
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
-import com.example.mtrnme2.models.AllTrackResponseItem
-import com.example.mtrnme2.models.TrackComments
-import com.example.mtrnme2.models.trackID
+import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
 import com.example.mtrnme2.states.PlayerState
@@ -111,6 +109,10 @@ class PlayerFragment : BaseFragment() {
 
         var allComments: String = getAllComments(trackId) //ArrayList<TrackCommentsItem>
 
+        //if below statement is true then show the heart button with red
+        //globalMusicData!!.user_likes.contains(appData.username)
+
+
         Amplify.Storage.getUrl(imgKey,
             { result ->
                 imageurl = result.url.toString()
@@ -190,5 +192,95 @@ class PlayerFragment : BaseFragment() {
                 ).show()
             }
         }
+
+        binding.likeTrack.setOnClickListener{
+            //Check the current state of the button lets suppose its 1
+            if(false){
+                unLike()
+            }else{
+                Like()
+            }
+        }
+        //Comment Track here
+        binding.commentTrack.setOnClickListener{
+            var Comment = "What a beautiful track @"+appData.username
+            postComment(Comment)
+        }
+
+    }
+
+    fun postComment(Comment:String){
+        //          Implement dialoag here and get comment and replace in network call
+        var TrackService: TrackService? = null
+        TrackService = ServiceBuilder.buildTrackService()
+        var like: Call<GenericResponse> = TrackService!!.postComment(CommentModel(comment = Comment,track_id = globalMusicData!!.track_id,username = appData.username))
+        like.enqueue(object : Callback<GenericResponse> {
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("app:","Error Occurred : ${t.message}")
+            }
+            override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+            ) {
+
+                // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                if (response.isSuccessful || response.body() != null) {
+                    var responsebody: GenericResponse = response.body()!!
+                    Log.e(
+                            "Track Liked!",
+                            "Response Body : $responsebody"
+                    )
+                }
+            }})
+
+    }
+    fun unLike(){
+        var TrackService: TrackService? = null
+        TrackService = ServiceBuilder.buildTrackService()
+        var unlike: Call<GenericResponse> = TrackService?.UnlikeaTrack(LikeModel(track_id = globalMusicData!!.track_id,username = appData.username))
+        unlike.enqueue(object : Callback<GenericResponse> {
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("app:","Error Occurred : ${t.message}")
+            }
+            override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+            ) {
+
+                // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                if (response.isSuccessful || response.body() != null) {
+                    var responsebody: GenericResponse = response.body()!!
+                    Log.e(
+                            "Track Unliked",
+                            "Response Body : $responsebody"
+                    )
+                }
+            }})
+
+    }
+    fun Like(){
+        //Like the Track here
+        var TrackService: TrackService? = null
+        TrackService = ServiceBuilder.buildTrackService()
+        var like: Call<GenericResponse> = TrackService?.LikeaTrack(LikeModel(track_id = globalMusicData!!.track_id,username = appData.username))
+        like.enqueue(object : Callback<GenericResponse> {
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("app:","Error Occurred : ${t.message}")
+            }
+            override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+            ) {
+
+                // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                if (response.isSuccessful || response.body() != null) {
+                    var responsebody: GenericResponse = response.body()!!
+                    Log.e(
+                            "Track Liked!",
+                            "Response Body : $responsebody"
+                    )
+                }
+            }})
+
     }
 }

@@ -4,13 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragments.PlayerFragment">
+
+
 
         <TextView
             android:id="@+id/metrnme_logo"
@@ -153,6 +154,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
+            <ImageButton
+                android:id="@+id/like_track"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_add_24"/>
+
             <ImageView
                 android:id="@+id/stop_track"
                 android:layout_width="50dp"
@@ -167,10 +175,18 @@
                 android:textOff=""
                 android:textOn="" />
 
+            <ImageButton
+                android:id="@+id/comment_track"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/abc_vector_test"/>
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
+
+
         </LinearLayout>
 
 

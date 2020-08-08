@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mtrnme2.R
@@ -17,7 +20,6 @@ import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_playlist.*
-import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +30,7 @@ class PlaylistFragment : BaseFragment() {
 
     var playAdapter: PlaylistAdapter? = null
 
+
     companion object {
 
         /*THis is to make new instance of this Track Fragment*/
@@ -36,7 +39,6 @@ class PlaylistFragment : BaseFragment() {
 
     // This is an instance of view model of Track Fragment
     private lateinit var viewModel: TrackViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +51,13 @@ class PlaylistFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         getPlaylists()
+
+        create_playlist_btn.setOnClickListener{
+            var navigator = findNavController()
+            assert(navigator!=null)
+            var bundle = Bundle()
+            navigator.navigate(R.id.nav_upload_playlist, bundle)
+        }
     }
 
     fun getPlaylists(): MutableList<AllPlaylistResponseItem>
