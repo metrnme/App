@@ -53,5 +53,6 @@
     <string name="set_profile_image">Set Profile Image</string>
     <string name="user_bio">User Bio</string>
     <string name="instruments">Instruments</string>
+    <string name="my_profile">My Profile</string>
 
 </resources>

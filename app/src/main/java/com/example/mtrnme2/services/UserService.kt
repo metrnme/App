@@ -13,9 +13,8 @@ interface UserService {
     @PUT("api/v1/user")
     fun updateUserInfo(@Body infoUser: User): Call<GenericResponse>
 
-    @FormUrlEncoded
     @POST("api/v1/user")
-    fun getUser(@Field("username") username : String) : Call<UserInfoResponse>
+    fun getUser(@Body User: userName) : Call<AllUserResponseItem>
 
     @POST("api/v1/usertype")
     fun setUserType(@Body userDetails: UserType): Call<GenericResponse>

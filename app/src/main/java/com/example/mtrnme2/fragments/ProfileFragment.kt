@@ -14,13 +14,13 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.mtrnme2.R
 import com.example.mtrnme2.adapters.TrackAdapter
 import com.example.mtrnme2.databinding.FragmentProfileBinding
-import com.example.mtrnme2.models.AllTrackResponse
-import com.example.mtrnme2.models.AllTrackResponseItem
-import com.example.mtrnme2.models.AllUserResponseItem
-import com.example.mtrnme2.models.userName
+import com.example.mtrnme2.models.*
+import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
 import com.google.gson.Gson
+import com.minibugdev.sheetselection.SheetSelection
+import com.minibugdev.sheetselection.SheetSelectionItem
 import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -60,20 +60,21 @@ class ProfileFragment : BaseFragment() {
         }
         binding.instTxt.text = inst
         binding.contactString.text = globalMusicData!!.bio
-        var imageurl = ""
+
         Amplify.Storage.getUrl(globalMusicData!!.imgUrl,
             { result ->
-                imageurl = result.url.toString()
+                var imageurl = result.url.toString()
+                Glide.with(this)
+                        .load(imageurl) // image url
+                        .placeholder(R.drawable.album_art_background) // any placeholder to load at start
+                        .error(R.drawable.album_art_error)  // any image in case of error
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .transform(CircleCrop())
+                        .into(binding.imgProfile)
             },
             { error -> Log.e("error", error.message) })
-        Glide.with(this)
-            .load(imageurl) // image url
-            .placeholder(R.drawable.album_art_background) // any placeholder to load at start
-            .error(R.drawable.album_art_error)  // any image in case of error
-            .skipMemoryCache(true)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .transform(CircleCrop())
-            .into(binding.imgProfile)
+
 
         getAllUserTracks()
     }
@@ -109,7 +110,53 @@ class ProfileFragment : BaseFragment() {
                     trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
                         when(view.id){
                             R.id.more->{
-                                showToast("More")
+                                //Add to playlist
+
+                                var listOfPlaylist = mutableListOf<AllPlaylistResponseItem>()
+                                var PlaylistService: PlaylistService? = null
+                                PlaylistService = ServiceBuilder.buildPlaylistService()
+                                var getPlaylist: Call<AllPlaylistResponse> = PlaylistService.getPlaylist(userName(username = appData.username))!!
+                                getPlaylist.enqueue(object : Callback<AllPlaylistResponse> {
+                                    override fun onFailure(call: Call<AllPlaylistResponse>, t: Throwable) {
+                                        Log.e("app:", "Error Occurred : ${t.message}")
+                                    }
+
+                                    override fun onResponse(
+                                            call: Call<AllPlaylistResponse>,
+                                            response: Response<AllPlaylistResponse>
+                                    ) {
+                                        // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                                        if (response.isSuccessful || response.body() != null) {
+                                            var responsebody: AllPlaylistResponse = response.body()!!
+                                            Log.e(
+                                                    "app:Track Info Response",
+                                                    "Response Body : $responsebody"
+                                            )
+                                            //Should get all Instruments from here
+
+                                            val playlists = responsebody
+
+                                            showLog(playlists.size.toString() + " Size")
+
+                                            val items = ArrayList<SheetSelectionItem>()
+
+                                            for(list in playlists){
+                                                items.add(SheetSelectionItem(list.pl_id.toString(), list.name, R.drawable.ic_check))
+                                            }
+                                            SheetSelection.Builder(context!!)
+                                                    .title("Choose Playlist")
+                                                    .items(items)
+                                                    .selectedPosition(2)
+                                                    .showDraggedIndicator(true)
+                                                    .searchEnabled(true)
+                                                    .onItemClickListener { item, playlistPosition ->
+                                                        addtoPlaylist(item.key.toInt(), listOfTracks[position].track_id)
+                                                        showToast(items[playlistPosition].key)
+                                                    }
+                                                    .show()
+                                        }
+                                    }
+                                })
                             }
 
                             R.id.track_cons->{
@@ -127,5 +174,35 @@ class ProfileFragment : BaseFragment() {
         })
 
         return listOfTracks
+    }
+
+    private fun addtoPlaylist(playlistId: Int,trackId: Int) {
+
+        //Get all playlist here for a user and show in dialog for them to
+        // select one of the playlist
+        //then add the track to that playlist this thing is missing right now
+        //we have to fixed the code after figuring out dialogs
+
+        var PlayistService: PlaylistService? = null
+        PlayistService = ServiceBuilder.buildPlaylistService()
+        var addTracktoPlaylist: Call<GenericResponse> = PlayistService?.updatePlaylist(updatePlaylist(playlist_id = playlistId, track_id = trackId))!!
+        addTracktoPlaylist.enqueue(object : Callback<GenericResponse> {
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("app:", "Error Occurred : ${t.message}")
+            }
+
+            override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+            ) {
+                var responsebody: GenericResponse = response.body()!!
+                Log.e(
+                        "Track2Playlist",
+                        "Response Body : $responsebody"
+                )
+                showToast("Track has been added to playlist")
+            }
+        })
+
     }
 }

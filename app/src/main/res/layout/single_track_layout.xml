@@ -51,14 +51,26 @@ THis is single tract layout which we will user in adapter
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
+    <ImageView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_thumb_15"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/likes"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
         android:id="@+id/likes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_10"
-        android:text="2:33"
+        android:text="xx"
         android:textColor="@android:color/white"
-        android:textSize="12sp"
+        android:textSize="14sp"
+        android:paddingStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/more"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +81,7 @@ THis is single tract layout which we will user in adapter
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_10"
-        android:src="@drawable/ic_more"
+        app:srcCompat="@drawable/ic_more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"

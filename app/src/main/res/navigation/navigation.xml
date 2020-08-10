@@ -33,7 +33,11 @@
         android:id="@+id/nav_settings"
         android:name="com.example.mtrnme2.fragments.SettingsFragment"
         android:label="Settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_nav_profile"
+            app:destination="@id/nav_profile" />
+    </fragment>
     <fragment
         android:id="@+id/nav_player"
         android:name="com.example.mtrnme2.fragments.PlayerFragment"
@@ -64,9 +68,7 @@
         <action
             android:id="@+id/action_nav_playlist_to_nav_playlist_tracks"
             app:destination="@id/nav_playlist_tracks" />
-        <action
-            android:id="@+id/action_nav_playlist_to_uploadPlaylistFragment"
-            app:destination="@id/nav_upload_playlist" />
+
     </fragment>
     <fragment
         android:id="@+id/nav_profile"
@@ -80,8 +82,6 @@
             android:id="@+id/action_nav_playlist_tracks_to_nav_player"
             app:destination="@id/nav_player" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_upload_playlist"
-        android:name="com.example.mtrnme2.fragments.UploadPlaylistFragment"
-        android:label="nav_upload_playlist" />
+
+
 </navigation>

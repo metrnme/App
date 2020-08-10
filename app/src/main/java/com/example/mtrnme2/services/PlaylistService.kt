@@ -4,7 +4,10 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface PlaylistService {
-    @POST("/api/v1/play_p")
+    @HTTP(method = "DELETE", path ="api/v1/play_t", hasBody = true)
+    fun deleteTrackPlaylist(@Body removeTrack: removeTrack):Call<GenericResponse>
+
+    @POST("api/v1/play_p")
     fun getPlaylist( @Body userName:userName): Call<AllPlaylistResponse>
 
     @POST("api/v1/play")
@@ -13,7 +16,7 @@ interface PlaylistService {
     @PUT("api/v1/play")
     fun updatePlaylist(@Body updatePlaylist: updatePlaylist): Call<GenericResponse>
 
-    @DELETE("api/v1/play")
+    @HTTP(method = "DELETE", path ="api/v1/play", hasBody = true)
     fun deletePlaylist(@Body deletePlaylist: playlistID):Call<GenericResponse>
 
     @POST("api/v1/play_t")

@@ -20,6 +20,7 @@ import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
 import com.example.mtrnme2.states.LikeState
 import com.example.mtrnme2.states.PlayerState
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -129,15 +130,13 @@ class PlayerFragment : BaseFragment() {
         Amplify.Storage.getUrl(imgKey,
             { result ->
                 imageurl = result.url.toString()
-                showLog(imageurl)
+                Glide.with(binding.img.context)
+                        .load(imageurl) // image url
+                        .error(R.drawable.album_art_error)
+                        .centerCrop()
+                        .placeholder(R.drawable.album_art_background) // any placeholder to load at start / any image in case of error esizing
+                        .into(binding.img)
 
-                imageurl = "https://lh3.googleusercontent.com/6UgEjh8Xuts4nwdWzTnWH8QtLuHqRMUB7dp24JYVE2xcYzq4HA8hFfcAbU-R-PC_9uA1=w288-h288-n-rw"
-                /*Glide.with(this)
-                    .load(imageurl) // image url
-                    .placeholder(R.drawable.album_art_background) // any placeholder to load at start
-                    .error(R.drawable.album_art_error)  // any image in case of error
-                    .override(350, 350) // resizing
-                    .into(binding.img);*/
 
 
             },
@@ -151,12 +150,6 @@ class PlayerFragment : BaseFragment() {
         }
 
 
-        Glide.with(binding.img.context)
-                .load(imageurl) // image url
-                .error(R.drawable.album_art_error)
-                .centerCrop()
-                .placeholder(R.drawable.album_art_background) // any placeholder to load at start / any image in case of error esizing
-                .into(binding.img)
         var myInst = globalMusicData!!.inst_used;
         var DisplayInst = "";
         for (i in myInst) {
@@ -233,21 +226,22 @@ class PlayerFragment : BaseFragment() {
         }
         //Comment Track here
         binding.commentTrack.setOnClickListener{
-            var Comment = "What a beautiful track @"+appData.username
-            showAlertAndGetComment()
+//           var Comment = "What a beautiful track @"+appData.username
+                showAlertAndGetComment()
 
-            postComment(Comment)
-        }
+//              postComment(Comment)
+       }
 
     }
 
     private fun showAlertAndGetComment() {
-        val builder = AlertDialog.Builder(context)
+        val builder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
         val view = View.inflate(context, R.layout.comment_layout, null)
 
-        builder.setTitle("Post Comment")
+        //builder.setTitle("Post Comment")
         builder.setCancelable(true)
         builder.setView(view)
+
         val commentText = view.findViewById<EditText>(R.id.comment_edit_text)
 
         builder.setPositiveButton("Submit Comment"

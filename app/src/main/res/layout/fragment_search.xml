@@ -41,7 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/pg_margin"
         android:layout_marginEnd="@dimen/pg_margin"
-        android:text="Search" />
+        android:text="Search"
+        android:textColor="@color/colorAccent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
