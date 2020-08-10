@@ -60,20 +60,21 @@ class ProfileFragment : BaseFragment() {
         }
         binding.instTxt.text = inst
         binding.contactString.text = globalMusicData!!.bio
-        var imageurl = ""
+
         Amplify.Storage.getUrl(globalMusicData!!.imgUrl,
             { result ->
-                imageurl = result.url.toString()
+                var imageurl = result.url.toString()
+                Glide.with(this)
+                        .load(imageurl) // image url
+                        .placeholder(R.drawable.album_art_background) // any placeholder to load at start
+                        .error(R.drawable.album_art_error)  // any image in case of error
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .transform(CircleCrop())
+                        .into(binding.imgProfile)
             },
             { error -> Log.e("error", error.message) })
-        Glide.with(this)
-            .load(imageurl) // image url
-            .placeholder(R.drawable.album_art_background) // any placeholder to load at start
-            .error(R.drawable.album_art_error)  // any image in case of error
-            .skipMemoryCache(true)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .transform(CircleCrop())
-            .into(binding.imgProfile)
+
 
         getAllUserTracks()
     }

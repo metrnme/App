@@ -18,6 +18,9 @@ interface TrackService {
     @POST("api/v1/user/user_trk")
     fun getUserTracks(@Body userName: userName) : Call<AllTrackResponse>
 
+    @HTTP(method = "DELETE", path ="api/v1/user/trk", hasBody = true)
+    fun deleteTrack(@Body removeTrack: removeTrack) : Call<GenericResponse>
+
     @POST("api/v1/user/user_like_trk")
     fun LikeaTrack(@Body likeModel: LikeModel): Call<GenericResponse>
 

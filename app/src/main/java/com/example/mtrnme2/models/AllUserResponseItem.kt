@@ -1,6 +1,7 @@
 package com.example.mtrnme2.models
 
 data class AllUserResponseItem(
+        val _id: Id,
     val age: Int,
     val followers: List<Any>,
     val following: List<Any>,

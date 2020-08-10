@@ -8,9 +8,7 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.mtrnme2.R
-import com.example.mtrnme2.models.GenericResponse
-import com.example.mtrnme2.models.User
-import com.example.mtrnme2.models.UserInfoResponse
+import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.UserService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -77,21 +75,20 @@ class MainActivity : BaseActivity() {
             imm.hideSoftInputFromWindow(it.windowToken, 0)
 
             if (checkValidations()){
-                var getUserCall : Call<UserInfoResponse> = userService?.getUser(uname_txt.text.toString())!!
-
-                getUserCall.enqueue(object : Callback<UserInfoResponse>{
-                    override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
+                var getUserCall : Call<AllUserResponseItem> = userService?.getUser(userName(username = uname_txt.text.toString()))!!
+                getUserCall.enqueue(object : Callback<AllUserResponseItem>{
+                    override fun onFailure(call: Call<AllUserResponseItem>, t: Throwable) {
                         Toast.makeText(this@MainActivity, "Error Occurred : ${t.message}", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onResponse(
-                        call: Call<UserInfoResponse>,
-                        response: Response<UserInfoResponse>
+                        call: Call<AllUserResponseItem>,
+                        response: Response<AllUserResponseItem>
                     ) {
                         Log.e("app Network Response", "Response Body : " + response.body())
 
                         if (response.isSuccessful && response.body()!=null){
-                            val responsebody : UserInfoResponse = response.body()!!
+                            val responsebody : AllUserResponseItem = response.body()!!
                             Log.e("app New User Response", "Response Body : " + responsebody.username)
                             val intent = Intent(this@MainActivity, DashboardActivity::class.java)
                             intent.putExtra("uname", uname_txt.text.toString())

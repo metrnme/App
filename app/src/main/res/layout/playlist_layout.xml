@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_marginTop="@dimen/pg_margin"
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Create a Playlist" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:layout_marginBottom="@dimen/pg_margin"
+        android:fontFamily="@font/nunito"
+        android:hint="Playlist Name"
+        android:id="@+id/playlist_edit_text"
+        />
+
+</LinearLayout>

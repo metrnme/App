@@ -15,7 +15,7 @@ class DashboardActivity : BaseActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {item->
         when(item.itemId){
             R.id.Home_ic->{
-                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_home)
+                findNavController(R.id.myNavHostFragment).navigate(R.id.nav_track)
                 Log.d("app:Print1", "Home Is Pressed")
                 return@OnNavigationItemSelectedListener true
             }

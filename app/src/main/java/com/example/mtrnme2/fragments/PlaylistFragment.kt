@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -14,11 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mtrnme2.R
 import com.example.mtrnme2.activities.viewmodels.TrackViewModel
 import com.example.mtrnme2.adapters.PlaylistAdapter
-import com.example.mtrnme2.models.AllPlaylistResponse
-import com.example.mtrnme2.models.AllPlaylistResponseItem
-import com.example.mtrnme2.models.userName
+import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.fragment_playlist.*
@@ -61,11 +61,15 @@ class PlaylistFragment : BaseFragment() {
         getPlaylists()
 
         create_playlist_btn.setOnClickListener{
-            var navigator = findNavController()
-            assert(navigator!=null)
-            var bundle = Bundle()
-            navigator.navigate(R.id.nav_upload_playlist, bundle)
+
+            showAlertAndGetPlaylist()
+//            var navigator = findNavController()
+//            assert(navigator!=null)
+//            var bundle = Bundle()
+//            navigator.navigate(R.id.nav_upload_playlist, bundle)
         }
+
+
 
 
 
@@ -77,6 +81,59 @@ class PlaylistFragment : BaseFragment() {
         }
 
 
+    }
+
+    private fun showAlertAndGetPlaylist() {
+        val builder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
+        val view = View.inflate(context, R.layout.playlist_layout, null)
+
+
+        builder.setCancelable(true)
+        builder.setView(view)
+
+        val playlistText = view.findViewById<EditText>(R.id.playlist_edit_text)
+
+        builder.setPositiveButton("Create Playlist"
+        ) { dialog, which ->
+            if(playlistText.text.isNullOrEmpty()){
+                showToast("Please provide a playlist name")
+                return@setPositiveButton
+            }
+
+            postPlaylist(playlistText.text.toString())
+            dialog.dismiss()
+        }
+
+        builder.create()
+        builder.show()
+    }
+
+    fun postPlaylist(pname : String){
+        var PlaylistService: PlaylistService? = null
+        PlaylistService = ServiceBuilder.buildPlaylistService()
+        var postPlaylist: Call<GenericResponse> = PlaylistService.postPlaylist(CreatePlaylist(name=pname,username = appData.username))!!
+        postPlaylist.enqueue(object : Callback<GenericResponse> {
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("app:", "Error Occurred : ${t.message}")
+            }
+
+            override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+            ) {
+
+                // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                if (response.isSuccessful || response.body() != null) {
+                    var responsebody: GenericResponse = response.body()!!
+                    Log.e(
+                            "CreatePlaylist",
+                            "Response Body : $responsebody"
+                    )
+                }
+            }
+
+        })
+        showToast("Playlist has been created!")
     }
 
     fun getPlaylists(): MutableList<AllPlaylistResponseItem>
@@ -130,6 +187,7 @@ class PlaylistFragment : BaseFragment() {
                               listOfPlaylist[position].track_list
                               bundle.putString("data", Gson().toJson(listOfPlaylist[position],AllPlaylistResponseItem::class.java))
                               navigator.navigate(R.id.nav_playlist_tracks, bundle)
+
                             }
                         }
                     }
