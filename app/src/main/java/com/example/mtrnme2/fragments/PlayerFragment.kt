@@ -20,6 +20,7 @@ import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
 import com.example.mtrnme2.states.LikeState
 import com.example.mtrnme2.states.PlayerState
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -233,21 +234,22 @@ class PlayerFragment : BaseFragment() {
         }
         //Comment Track here
         binding.commentTrack.setOnClickListener{
-            var Comment = "What a beautiful track @"+appData.username
-            showAlertAndGetComment()
+//           var Comment = "What a beautiful track @"+appData.username
+                showAlertAndGetComment()
 
-            postComment(Comment)
-        }
+//              postComment(Comment)
+       }
 
     }
 
     private fun showAlertAndGetComment() {
-        val builder = AlertDialog.Builder(context)
+        val builder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
         val view = View.inflate(context, R.layout.comment_layout, null)
 
-        builder.setTitle("Post Comment")
+        //builder.setTitle("Post Comment")
         builder.setCancelable(true)
         builder.setView(view)
+
         val commentText = view.findViewById<EditText>(R.id.comment_edit_text)
 
         builder.setPositiveButton("Submit Comment"

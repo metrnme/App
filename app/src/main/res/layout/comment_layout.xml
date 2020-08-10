@@ -6,11 +6,24 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_marginTop="@dimen/pg_margin"
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Post a Comment" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:layout_marginBottom="@dimen/pg_margin"
+        android:fontFamily="@font/nunito"
         android:hint="Write your Comment"
-        android:textColorHint="@color/browser_actions_bg_grey"
         android:id="@+id/comment_edit_text"
         />
 
