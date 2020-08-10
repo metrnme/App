@@ -35,8 +35,8 @@
         android:label="Settings"
         tools:layout="@layout/fragment_settings" >
         <action
-            android:id="@+id/action_nav_settings_to_nav_profile"
-            app:destination="@id/nav_profile" />
+            android:id="@+id/action_nav_settings_to_userProfileFragment"
+            app:destination="@id/nav_userprofile" />
     </fragment>
     <fragment
         android:id="@+id/nav_player"
@@ -82,6 +82,10 @@
             android:id="@+id/action_nav_playlist_tracks_to_nav_player"
             app:destination="@id/nav_player" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_userprofile"
+        android:name="com.example.mtrnme2.fragments.UserProfileFragment"
+        android:label="nav_userprofile" />
 
 
 </navigation>

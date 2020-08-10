@@ -46,7 +46,9 @@ class PlaylistTrackFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         PlaylistTrackFragment.globalMusicData = Gson().fromJson(arguments?.getString("data"), AllPlaylistResponseItem::class.java)
         Log.d("PlaylistTracks", globalMusicData!!.track_list.toString())
+        binding.pname.text= globalMusicData!!.name
         getPlaylistTracks(globalMusicData!!.track_list)
+
 
     }
 
