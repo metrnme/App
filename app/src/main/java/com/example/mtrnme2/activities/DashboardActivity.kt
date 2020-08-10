@@ -50,11 +50,6 @@ class DashboardActivity : BaseActivity() {
     override fun onResume() {
 
         super.onResume()
-        if (isMusician){
-            FAB.show()
-        } else {
-            FAB.hide()
-        }
     }
 
     override fun onPause() {
@@ -73,9 +68,7 @@ class DashboardActivity : BaseActivity() {
         val navigationController = findNavController(R.id.myNavHostFragment)
         btm_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navigationController.navigate(R.id.nav_track)
-        FAB.setOnClickListener{
-            findNavController(R.id.myNavHostFragment).navigate(R.id.nav_upload)
-        }
+
     }
 
 

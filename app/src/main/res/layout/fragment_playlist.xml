@@ -1,41 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".fragments.PlaylistFragment">
 
-
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll_library"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/library"
-        android:textColor="@color/colorAccent"
-        android:layout_marginBottom="@dimen/pg_margin"
-        android:textSize="@dimen/hdng_txt_size"
-        android:fontFamily="@font/nunito_bold"
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginStart="@dimen/pg_margin"
-        android:layout_marginEnd="@dimen/pg_margin" />
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:weightSum="3">
 
-    <ImageButton
-        android:id="@+id/create_playlist_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_add_24"
-        android:layout_gravity="end"
-        android:paddingEnd="@dimen/top_margin"
-        android:clickable="true"/>
+        <TextView
+            android:id="@+id/tv_library"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
+            android:gravity="top"
+            android:text="@string/library"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/hdng_txt_size"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/create_playlist_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/offset_wide"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:gravity="center"
+            app:srcCompat="@drawable/ic_add_24"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
 
     <!--Just a simple recyclerview . Nothing is attached yet-->
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playlists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/playlists"
-        />
+        android:layout_marginStart="@dimen/pg_margin"
+        android:layout_marginEnd="@dimen/pg_margin"
+        android:layout_marginBottom="400dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_library"
+        app:layout_constraintVertical_bias="0.412" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/FAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/colorAccent"
+        android:contentDescription="@string/upload_button"
+        android:text="@string/upload"
+        android:visibility="visible"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.906" />
 
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
