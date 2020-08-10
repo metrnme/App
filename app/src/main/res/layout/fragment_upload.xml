@@ -38,84 +38,83 @@
         tools:layout_editor_absoluteX="16dp" />
 
 
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_desc">
 
 
-        <LinearLayout
-            app:layout_constraintTop_toBottomOf="@+id/tv_desc"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        <Button
+            android:id="@+id/btn_browseart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorAccent"
+            android:fontFamily="@font/nunito_bold"
+            android:text="Browse Image" />
+
+        <Button
+            android:id="@+id/btn_browseaudio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="110dp"
+            android:layout_marginEnd="110dp"
+            android:layout_marginBottom="25dp"
+            android:backgroundTint="@color/colorAccent"
+            android:fontFamily="@font/nunito_bold"
+            android:text="Browse Track" />
+
+        <EditText
+            android:id="@+id/name_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/linear">
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/pg_margin"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="@dimen/pg_margin"
+
+            android:ems="10"
+            android:fontFamily="@font/nunito_light"
+            android:hint="Track Name"
+            android:inputType="text"
+            android:textSize="@dimen/body_txt_size_large" />
+
+        <EditText
+            android:id="@+id/inst_txt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/pg_margin"
+            android:layout_marginTop="@dimen/pg_margin"
+            android:layout_marginEnd="@dimen/pg_margin"
+            android:layout_marginBottom="5dp"
+            android:ems="10"
+            android:fontFamily="@font/nunito_light"
+            android:hint="Instrument(s)"
+            android:inputType="text"
+            android:textSize="@dimen/body_txt_size_large" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_upl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="185dp"
+            android:layout_marginEnd="@dimen/pg_margin"
+            android:backgroundTint="@color/fab"
+            android:clickable="true"
+            app:borderWidth="0dp"
+            app:srcCompat="@drawable/ic_file_upload_black_24dp" />
 
 
-            <EditText
-                android:id="@+id/name_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/pg_margin"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="@dimen/pg_margin"
-
-                android:ems="10"
-                android:fontFamily="@font/nunito_light"
-                android:hint="Track Name"
-                android:inputType="text"
-                android:textSize="@dimen/body_txt_size_large" />
-
-            <EditText
-                android:id="@+id/inst_txt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/pg_margin"
-                android:layout_marginTop="@dimen/pg_margin"
-                android:layout_marginEnd="@dimen/pg_margin"
-                android:layout_marginBottom="5dp"
-                android:ems="10"
-                android:fontFamily="@font/nunito_light"
-                android:hint="Instrument(s)"
-                android:inputType="text"
-                android:textSize="@dimen/body_txt_size_large" />
-
-            <Button
-                android:id="@+id/btn_browseart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="100dp"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="@color/colorAccent"
-                android:fontFamily="@font/nunito_bold"
-                android:text="Browse Image" />
-
-            <Button
-                android:id="@+id/btn_browseaudio"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="110dp"
-                android:layout_marginEnd="110dp"
-                android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/colorAccent"
-                android:fontFamily="@font/nunito_bold"
-                android:text="Browse Track" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_upl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="185dp"
-                android:layout_marginEnd="@dimen/pg_margin"
-                android:backgroundTint="@color/fab"
-                android:clickable="true"
-                app:borderWidth="0dp"
-                app:srcCompat="@drawable/ic_file_upload_black_24dp" />
-
-
-        </LinearLayout>
-
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

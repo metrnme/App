@@ -7,15 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestListener
 import com.example.mtrnme2.R
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
 import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
+import com.example.mtrnme2.states.LikeState
 import com.example.mtrnme2.states.PlayerState
 import com.google.gson.Gson
 import retrofit2.Call
@@ -28,6 +27,9 @@ class PlayerFragment : BaseFragment() {
     private var currentPlayerState: PlayerState = PlayerState.STARTED
     private var mediaPlayer: MediaPlayer? = null
     var imageurl = ""
+    var currentLikeState: LikeState = LikeState.Like
+
+
 
     companion object {
         fun getNewInstance(): PlayerFragment {
@@ -104,8 +106,21 @@ class PlayerFragment : BaseFragment() {
 
         binding.title.text = globalMusicData?.name.toString()
         binding.tUsername.text = globalMusicData?.username.toString()
-        var trackId = globalMusicData!!.track_id;
-        var imgKey = globalMusicData!!.image_url;
+        var trackId = globalMusicData!!.track_id
+        var imgKey = globalMusicData!!.image_url
+        //for(s in globalMusicData!!.user_likes){
+            //if (s.contains(appData.username)){
+               //showToast("yiss")
+                //currentLikeState=LikeState.Like
+
+            //}else{
+               // currentLikeState=LikeState.Unlike
+            //}}
+
+        //var b: Boolean = lakes.contains(appData.username)
+
+
+//
 
         var allComments: String = getAllComments(trackId) //ArrayList<TrackCommentsItem>
 
@@ -129,8 +144,10 @@ class PlayerFragment : BaseFragment() {
 
             },
             { error -> Log.e("error", error.message) })
+
+
         var myGenre = globalMusicData!!.genre;
-        var DisplayGenre = "";
+        var DisplayGenre = ""
         for (i in myGenre) {
             DisplayGenre = DisplayGenre + " " + i
         }
@@ -147,6 +164,7 @@ class PlayerFragment : BaseFragment() {
         for (i in myInst) {
             DisplayInst = DisplayInst + " " + i
         }
+
         var track_url = "";
         Amplify.Storage.getUrl(globalMusicData!!.url.toString(),
             { result -> track_url = result.url.toString() },
@@ -158,7 +176,7 @@ class PlayerFragment : BaseFragment() {
         Log.d("Comments", allComments)
         binding.comments.text = allComments
 
-        binding.playTrack.setOnCheckedChangeListener { p0, p1 ->
+        binding.playTrack.setOnCheckedChangeListener { _, p1 ->
             binding.progressView.visibility = View.VISIBLE
             if (p1) {
                 currentPlayerState = PlayerState.PLAYING
@@ -193,12 +211,26 @@ class PlayerFragment : BaseFragment() {
             }
         }
 
-        binding.likeTrack.setOnClickListener{
-            //Check the current state of the button lets suppose its 1
-            if(false){
-                unLike()
-            }else{
+//        binding.likeTrack.setOnClickListener{
+//            //Check the current state of the button lets suppose its 1
+//            if(false){
+//                unLike()
+//            }else{
+//                Like()
+//            }
+//        }
+
+        binding.likeTrack.setOnCheckedChangeListener { p0, p1 ->
+
+            if(p1){
                 Like()
+                currentLikeState = LikeState.Like
+
+            }
+            else{
+                unLike()
+                currentLikeState = LikeState.Unlike
+
             }
         }
         //Comment Track here
@@ -283,4 +315,15 @@ class PlayerFragment : BaseFragment() {
             }})
 
     }
+
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        if (globalMusicData!!.user_likes.contains(appData.username)){
+//            currentLikeState = LikeState.Like
+//        }else{
+//            currentLikeState = LikeState.Unlike
+//        }
+//    }
 }
+
+

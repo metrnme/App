@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mtrnme2.R
@@ -19,7 +20,9 @@ import com.example.mtrnme2.models.userName
 import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.fragment_playlist.*
+import kotlinx.android.synthetic.main.fragment_playlist.FAB
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,6 +53,11 @@ class PlaylistFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (appData.musician){
+            FAB.show()
+        } else {
+            FAB.hide()
+        }
         getPlaylists()
 
         create_playlist_btn.setOnClickListener{
@@ -58,6 +66,17 @@ class PlaylistFragment : BaseFragment() {
             var bundle = Bundle()
             navigator.navigate(R.id.nav_upload_playlist, bundle)
         }
+
+
+
+        FAB.setOnClickListener{
+            var navigator = findNavController()
+            assert(navigator!=null)
+            var bundle = Bundle()
+            navigator.navigate(R.id.nav_upload, bundle)
+        }
+
+
     }
 
     fun getPlaylists(): MutableList<AllPlaylistResponseItem>
