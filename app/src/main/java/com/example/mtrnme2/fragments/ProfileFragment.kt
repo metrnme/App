@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Integer.parseInt
 
 class ProfileFragment : BaseFragment() {
     var trkAdapter: TrackAdapter? = null
@@ -52,6 +53,7 @@ class ProfileFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         ProfileFragment.globalMusicData =
             Gson().fromJson(arguments?.getString("data"), AllUserResponseItem::class.java)
+
         binding.nameTxt.text = globalMusicData!!.name
         binding.unameTxt.text = globalMusicData!!.username
         var inst: String = ""
@@ -150,7 +152,7 @@ class ProfileFragment : BaseFragment() {
                                                     .showDraggedIndicator(true)
                                                     .searchEnabled(true)
                                                     .onItemClickListener { item, playlistPosition ->
-                                                        addtoPlaylist(item.key.toInt(), listOfTracks[position].track_id)
+                                                        addtoPlaylist(parseInt(item.key), listOfTracks[position].track_id)
                                                         showToast(items[playlistPosition].key)
                                                     }
                                                     .show()
