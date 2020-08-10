@@ -84,7 +84,7 @@ class PlaylistFragment : BaseFragment() {
         var listOfPlaylist = mutableListOf<AllPlaylistResponseItem>()
         var PlaylistService: PlaylistService? = null
         PlaylistService = ServiceBuilder.buildPlaylistService()
-        var getPlaylist: Call<AllPlaylistResponse> = PlaylistService.getPlaylist(userName(username = "aceasad"))!!
+        var getPlaylist: Call<AllPlaylistResponse> = PlaylistService.getPlaylist(userName(username = appData.username))!!
         getPlaylist.enqueue(object : Callback<AllPlaylistResponse> {
             override fun onFailure(call: Call<AllPlaylistResponse>, t: Throwable) {
                 Log.e("app:", "Error Occurred : ${t.message}")

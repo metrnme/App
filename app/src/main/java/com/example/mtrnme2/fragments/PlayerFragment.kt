@@ -1,11 +1,15 @@
 package com.example.mtrnme2.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
@@ -108,14 +112,8 @@ class PlayerFragment : BaseFragment() {
         binding.tUsername.text = globalMusicData?.username.toString()
         var trackId = globalMusicData!!.track_id
         var imgKey = globalMusicData!!.image_url
-        //for(s in globalMusicData!!.user_likes){
-            //if (s.contains(appData.username)){
-               //showToast("yiss")
-                //currentLikeState=LikeState.Like
 
-            //}else{
-               // currentLikeState=LikeState.Unlike
-            //}}
+        binding.likeTrack.isChecked = globalMusicData?.user_likes?.contains(appData.username)!! ?: false
 
         //var b: Boolean = lakes.contains(appData.username)
 
@@ -236,9 +234,38 @@ class PlayerFragment : BaseFragment() {
         //Comment Track here
         binding.commentTrack.setOnClickListener{
             var Comment = "What a beautiful track @"+appData.username
+            showAlertAndGetComment()
+
             postComment(Comment)
         }
 
+    }
+
+    private fun showAlertAndGetComment() {
+        val builder = AlertDialog.Builder(context)
+        val view = View.inflate(context, R.layout.comment_layout, null)
+
+        builder.setTitle("Post Comment")
+        builder.setCancelable(true)
+        builder.setView(view)
+        val commentText = view.findViewById<EditText>(R.id.comment_edit_text)
+
+        builder.setPositiveButton("Submit Comment"
+        ) { dialog, which ->
+            if(commentText.text.isNullOrEmpty()){
+                showToast("Please provide comment")
+                return@setPositiveButton
+            }
+
+            postComment(commentText.text.toString())
+            var allComments: String = getAllComments(globalMusicData?.track_id!!)
+            binding.comments.text = allComments
+            binding.comments.isSelected = true
+            dialog.dismiss()
+        }
+
+        builder.create()
+        builder.show()
     }
 
     fun postComment(Comment:String){
@@ -266,6 +293,8 @@ class PlayerFragment : BaseFragment() {
             }})
 
     }
+
+
     fun unLike(){
         var TrackService: TrackService? = null
         TrackService = ServiceBuilder.buildTrackService()

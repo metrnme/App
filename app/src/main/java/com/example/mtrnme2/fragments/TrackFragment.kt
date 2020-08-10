@@ -1,6 +1,7 @@
 package com.example.mtrnme2.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.mtrnme2.R
 import com.example.mtrnme2.activities.viewmodels.TrackViewModel
+import com.example.mtrnme2.adapters.PlaylistAdapter
 import com.example.mtrnme2.adapters.TrackAdapter
-import com.example.mtrnme2.models.AllTrackResponse
-import com.example.mtrnme2.models.AllTrackResponseItem
-import com.example.mtrnme2.models.GenericResponse
-import com.example.mtrnme2.models.updatePlaylist
+import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
 import com.google.gson.Gson
+import com.minibugdev.sheetselection.SheetSelection
+import com.minibugdev.sheetselection.SheetSelectionItem
+import kotlinx.android.synthetic.main.fragment_playlist.*
 import kotlinx.android.synthetic.main.track_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -97,8 +99,52 @@ class TrackFragment : BaseFragment() {
                                 when(view.id){
                                     R.id.more->{
                                         //Add to playlist
-                                        addtoPlaylist(listOfTracks[position].track_id)
-                                        showToast(listOfTracks[position].name)
+
+                                        var listOfPlaylist = mutableListOf<AllPlaylistResponseItem>()
+                                        var PlaylistService: PlaylistService? = null
+                                        PlaylistService = ServiceBuilder.buildPlaylistService()
+                                        var getPlaylist: Call<AllPlaylistResponse> = PlaylistService.getPlaylist(userName(username = appData.username))!!
+                                        getPlaylist.enqueue(object : Callback<AllPlaylistResponse> {
+                                            override fun onFailure(call: Call<AllPlaylistResponse>, t: Throwable) {
+                                                Log.e("app:", "Error Occurred : ${t.message}")
+                                            }
+
+                                            override fun onResponse(
+                                                call: Call<AllPlaylistResponse>,
+                                                response: Response<AllPlaylistResponse>
+                                            ) {
+                                                // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                                                if (response.isSuccessful || response.body() != null) {
+                                                    var responsebody: AllPlaylistResponse = response.body()!!
+                                                    Log.e(
+                                                        "app:Track Info Response",
+                                                        "Response Body : $responsebody"
+                                                    )
+                                                    //Should get all Instruments from here
+
+                                                    val playlists = responsebody
+
+                                                    showLog(playlists.size.toString() + " Size")
+
+                                                    val items = ArrayList<SheetSelectionItem>()
+
+                                                    for(list in playlists){
+                                                        items.add(SheetSelectionItem(list.pl_id.toString(), list.name, R.drawable.ic_check))
+                                                    }
+                                                        SheetSelection.Builder(context!!)
+                                                            .title("Choose Playlist")
+                                                            .items(items)
+                                                            .selectedPosition(2)
+                                                            .showDraggedIndicator(true)
+                                                            .searchEnabled(true)
+                                                            .onItemClickListener { item, playlistPosition ->
+                                                                addtoPlaylist(item.key.toInt(), listOfTracks[position].track_id)
+                                                                showToast(items[playlistPosition].key)
+                                                            }
+                                                            .show()
+                                                }
+                                            }
+                                        })
                                     }
 
                                     R.id.track_cons->{
@@ -117,7 +163,41 @@ class TrackFragment : BaseFragment() {
                 return listOfTracks
             }
 
-    private fun addtoPlaylist(trackId: Int) {
+
+    fun getPlaylists(): MutableList<AllPlaylistResponseItem>
+    {
+        var listOfPlaylist = mutableListOf<AllPlaylistResponseItem>()
+        var PlaylistService: PlaylistService? = null
+        PlaylistService = ServiceBuilder.buildPlaylistService()
+        var getPlaylist: Call<AllPlaylistResponse> = PlaylistService.getPlaylist(userName(username = appData.username))!!
+        getPlaylist.enqueue(object : Callback<AllPlaylistResponse> {
+            override fun onFailure(call: Call<AllPlaylistResponse>, t: Throwable) {
+                Log.e("app:", "Error Occurred : ${t.message}")
+            }
+
+            override fun onResponse(
+                call: Call<AllPlaylistResponse>,
+                response: Response<AllPlaylistResponse>
+            ) {
+                // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                if (response.isSuccessful || response.body() != null) {
+                    var responsebody: AllPlaylistResponse = response.body()!!
+                    Log.e(
+                        "app:Track Info Response",
+                        "Response Body : $responsebody"
+                    )
+                    //Should get all Instruments from here
+
+                    for (i in responsebody) {
+                        listOfPlaylist.add(i)
+                    }
+                }
+            }
+        })
+        return listOfPlaylist
+
+    }
+    private fun addtoPlaylist(playlistId: Int,trackId: Int) {
 
     //Get all playlist here for a user and show in dialog for them to
     // select one of the playlist
@@ -126,7 +206,7 @@ class TrackFragment : BaseFragment() {
 
         var PlayistService: PlaylistService? = null
         PlayistService = ServiceBuilder.buildPlaylistService()
-        var addTracktoPlaylist: Call<GenericResponse> = PlayistService?.updatePlaylist(updatePlaylist(playlist_id = 1, track_id = trackId))!!
+        var addTracktoPlaylist: Call<GenericResponse> = PlayistService?.updatePlaylist(updatePlaylist(playlist_id = playlistId, track_id = trackId))!!
         addTracktoPlaylist.enqueue(object : Callback<GenericResponse> {
             override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
                 Log.e("app:", "Error Occurred : ${t.message}")

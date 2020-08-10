@@ -65,6 +65,10 @@ dependencies {
 
     implementation "com.github.TutorialsAndroid:FilePicker:$filePicker"
 
+    def materialBottomSheet = "0.0.2"
+
+    implementation "com.github.minibugdev:sheetselection:$materialBottomSheet"
+
     //AWS Amplify
     implementation 'com.amplifyframework:core:1.1.1'
     implementation 'com.amplifyframework:aws-storage-s3:1.1.1'
