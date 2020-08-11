@@ -1,15 +1,15 @@
 package com.example.mtrnme2.fragments
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.media.MediaPlayer
+import android.os.Handler
+import android.text.TextUtils
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
+import android.widget.SeekBar
 import android.widget.Toast
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
@@ -31,6 +31,10 @@ class PlayerFragment : BaseFragment() {
     private lateinit var binding: FragmentPlayerBinding
     private var currentPlayerState: PlayerState = PlayerState.STARTED
     private var mediaPlayer: MediaPlayer? = null
+    private lateinit var runnable:Runnable
+    private var handler: Handler = Handler()
+    private var pause:Boolean = false
+
     var imageurl = ""
     var currentLikeState: LikeState = LikeState.Like
 
@@ -91,7 +95,7 @@ class PlayerFragment : BaseFragment() {
                             commentString += "@ ${y}"
                         }
 
-                        if(commentString.isNullOrEmpty()){
+                        if(TextUtils.isEmpty(commentString)){
                             binding.comments.text = "No Comments Available"
                         }else{
                             binding.comments.text = commentString
@@ -169,24 +173,36 @@ class PlayerFragment : BaseFragment() {
 
         binding.playTrack.setOnCheckedChangeListener { _, p1 ->
             binding.progressView.visibility = View.VISIBLE
+        if(pause){
+            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition)
+            mediaPlayer!!.start()
+            binding.progressView.visibility = View.GONE
+            pause = false
+        }else{
             if (p1) {
-                currentPlayerState = PlayerState.PLAYING
-                mediaPlayer = MediaPlayer()
+                    currentPlayerState = PlayerState.PLAYING
+                    mediaPlayer = MediaPlayer()
 
-                if (track_url != "") {
-                    mediaPlayer?.setDataSource(track_url)
-                    mediaPlayer?.prepareAsync()
-                    //mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                    mediaPlayer?.setOnPreparedListener { p0 ->
-                        p0?.start()
-                        binding.progressView.visibility = View.GONE
+
+                    if (track_url != "") {
+                        mediaPlayer?.setDataSource(track_url)
+                        mediaPlayer?.prepareAsync()
+                        //mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                        mediaPlayer?.setOnPreparedListener { p0 ->
+                            p0?.start()
+                            binding.progressView.visibility = View.GONE
+
+                        }
                     }
-                }
-            } else {
-                binding.progressView.visibility = View.GONE
+                } else {
+
                 currentPlayerState = PlayerState.PAUSED
                 mediaPlayer?.pause()
-            }
+                pause = true
+                binding.progressView.visibility = View.GONE
+
+
+            }}
         }
 
         binding.stopTrack.setOnClickListener {
@@ -234,6 +250,7 @@ class PlayerFragment : BaseFragment() {
 
     }
 
+
     private fun showAlertAndGetComment() {
         val builder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
         val view = View.inflate(context, R.layout.comment_layout, null)
@@ -246,7 +263,7 @@ class PlayerFragment : BaseFragment() {
 
         builder.setPositiveButton("Submit Comment"
         ) { dialog, which ->
-            if(commentText.text.isNullOrEmpty()){
+            if(TextUtils.isEmpty(commentText.text)){
                 showToast("Please provide comment")
                 return@setPositiveButton
             }
