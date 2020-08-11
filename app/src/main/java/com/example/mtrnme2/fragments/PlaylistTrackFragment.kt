@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amazonaws.util.ValidationUtils.assertNotNull
 import com.example.mtrnme2.R
-import com.example.mtrnme2.adapters.TrackAdapter
+import com.example.mtrnme2.adapters.TrackDeleteAdapter
 import com.example.mtrnme2.databinding.FragmentPlaylistTrackBinding
 import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.PlaylistService
@@ -21,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PlaylistTrackFragment : BaseFragment() {
-    var trkAdapter: TrackAdapter? = null
+    var trkAdapter: TrackDeleteAdapter? = null
     private lateinit var binding: FragmentPlaylistTrackBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +54,7 @@ class PlaylistTrackFragment : BaseFragment() {
     }
 
     fun getPlaylistTracks(trackidlist: ArrayList<Int>): MutableList<AllTrackResponseItem> {
-        var listOfTracks = mutableListOf<AllTrackResponseItem>()
+        var listOfTracks:MutableList<AllTrackResponseItem>  = ArrayList()
         var TrackService: PlaylistService? = null
         TrackService = ServiceBuilder.buildPlaylistService()
         var getTracks: Call<AllTrackResponse> = TrackService?.getPlaylistTracks(trackidlist)
@@ -76,7 +77,7 @@ class PlaylistTrackFragment : BaseFragment() {
                     )
                     //Should get all Instruments from here
 
-                    trkAdapter = TrackAdapter(response.body()!!)
+                    trkAdapter = TrackDeleteAdapter(response.body()!!)
                     // This is recyclerview. First we are initiating a layout orientation
                     playlisttracks.layoutManager = LinearLayoutManager(context)
 
@@ -85,7 +86,7 @@ class PlaylistTrackFragment : BaseFragment() {
 
                     trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
                         when (view.id) {
-                            R.id.more -> {
+                            R.id.delete -> {
                                 //Delete a track from Playlist here
                                 var PlaylistService: PlaylistService? = null
                                 PlaylistService = ServiceBuilder.buildPlaylistService()
@@ -111,9 +112,9 @@ class PlaylistTrackFragment : BaseFragment() {
                                 })
                                 showToast("Track has been removed from Playlist")
                             }
-                            R.id.track_cons -> {
+                            R.id.track_cons_delete -> {
                                 var navigator = findNavController()
-                                assert(navigator != null)
+                                assertNotNull(navigator, "Delete")
                                 var bundle = Bundle()
                                 bundle.putString("data", Gson().toJson(response.body()!![position], AllTrackResponseItem::class.java))
                                 navigator.navigate(R.id.nav_player, bundle)

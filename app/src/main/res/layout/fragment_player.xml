@@ -106,11 +106,18 @@
             app:layout_constraintTop_toBottomOf="@+id/player_layout">
 
             <TextView
+                android:id="@+id/tv_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="start"/>
+
+            <TextView
                 android:id="@+id/genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/top_margin"
                 android:layout_weight="1"
+                android:text="Genre"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/small_txt_size" />
@@ -127,10 +134,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/top_margin"
                 android:layout_weight="1"
+                android:text="INST"
                 android:fontFamily="@font/nunito_bold"
                 android:gravity="end"
                 android:textColor="@color/white"
                 android:textSize="@dimen/small_txt_size" />
+
+            <TextView
+                android:id="@+id/tv_due"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="end"
+                android:layout_marginEnd="18dp" />
 
         </LinearLayout>
 
@@ -157,8 +172,8 @@
 
             <ToggleButton
                 android:id="@+id/like_track"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:background="@drawable/like_unlike_states"
                 android:textOn=""
@@ -177,13 +192,6 @@
                 android:textOff=""
                 android:textOn="" />
 
-            <ImageView
-                android:id="@+id/stop_track"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                app:srcCompat="@drawable/ic_stop"
-                />
-
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -192,8 +200,8 @@
             <ImageButton
                 android:id="@+id/comment_track"
                 android:backgroundTint="@color/colorPrimaryDark"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_comment"/>
 
@@ -206,14 +214,31 @@
 
 
         </LinearLayout>
-        
-        <SeekBar
-            android:layout_width="match_parent"
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/player_layout"
-            android:foregroundGravity="center"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <SeekBar
+                android:id="@+id/seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="571dp"
+                android:foregroundGravity="center"
+                android:layout_marginStart="@dimen/pg_margin"
+                android:layout_marginEnd="@dimen/pg_margin"/>
+            <!-- app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintTop_toBottomOf=""-->
+
+
+
+
+     </RelativeLayout>
 
 
         <ProgressBar
@@ -228,5 +253,5 @@
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+ </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

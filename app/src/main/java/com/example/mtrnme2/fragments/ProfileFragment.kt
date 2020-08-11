@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amazonaws.util.ValidationUtils.assertNotNull
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -81,7 +82,7 @@ class ProfileFragment : BaseFragment() {
         getAllUserTracks()
     }
     fun getAllUserTracks():MutableList<AllTrackResponseItem> {
-        var listOfTracks  = mutableListOf<AllTrackResponseItem>()
+        var listOfTracks:MutableList<AllTrackResponseItem>  = ArrayList()//mutableListOf<AllTrackResponseItem>()
         var TrackService: TrackService? = null
         TrackService = ServiceBuilder.buildTrackService()
         var getTracks: Call<AllTrackResponse> = TrackService?.getUserTracks(userName(username = globalMusicData!!.username))!!
@@ -114,7 +115,7 @@ class ProfileFragment : BaseFragment() {
                             R.id.more->{
                                 //Add to playlist
 
-                                var listOfPlaylist = mutableListOf<AllPlaylistResponseItem>()
+                                var listOfPlaylist:MutableList<AllPlaylistResponseItem> = ArrayList()
                                 var PlaylistService: PlaylistService? = null
                                 PlaylistService = ServiceBuilder.buildPlaylistService()
                                 var getPlaylist: Call<AllPlaylistResponse> = PlaylistService.getPlaylist(userName(username = appData.username))!!
@@ -164,7 +165,7 @@ class ProfileFragment : BaseFragment() {
                             R.id.track_cons->{
                                 showToast("Clicked!")
                                 var navigator = findNavController()
-                                assert(navigator!=null)
+                                assertNotNull(navigator,"Play")
                                 var bundle = Bundle()
                                 bundle.putString("data", Gson().toJson(response.body()!![position], AllTrackResponseItem::class.java))
                                 navigator.navigate(R.id.nav_player, bundle)

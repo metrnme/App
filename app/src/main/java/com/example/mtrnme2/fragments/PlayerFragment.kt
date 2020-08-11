@@ -22,6 +22,7 @@ import com.example.mtrnme2.states.LikeState
 import com.example.mtrnme2.states.PlayerState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_player.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -173,9 +174,10 @@ class PlayerFragment : BaseFragment() {
 
         binding.playTrack.setOnCheckedChangeListener { _, p1 ->
             binding.progressView.visibility = View.VISIBLE
+
         if(pause){
-            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition)
             mediaPlayer!!.start()
+            //mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition)
             binding.progressView.visibility = View.GONE
             pause = false
         }else{
@@ -184,13 +186,18 @@ class PlayerFragment : BaseFragment() {
                     mediaPlayer = MediaPlayer()
 
 
+
                     if (track_url != "") {
                         mediaPlayer?.setDataSource(track_url)
                         mediaPlayer?.prepareAsync()
+
                         //mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
                         mediaPlayer?.setOnPreparedListener { p0 ->
                             p0?.start()
                             binding.progressView.visibility = View.GONE
+                            initializeSeekBar()
+//                            mediaPlayer?.seekTo(mediaPlayer!!.currentPosition)
+
 
                         }
                     }
@@ -202,32 +209,53 @@ class PlayerFragment : BaseFragment() {
                 binding.progressView.visibility = View.GONE
 
 
-            }}
-        }
 
-        binding.stopTrack.setOnClickListener {
-            currentPlayerState = PlayerState.STOPPED
-            if (mediaPlayer != null) {
-                mediaPlayer?.stop()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Media is null. Please provide",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
+
+
+        }
         }
 
-//        binding.likeTrack.setOnClickListener{
-//            //Check the current state of the button lets suppose its 1
-//            if(false){
-//                unLike()
-//            }else{
-//                Like()
+//        binding.stopTrack.setOnClickListener {
+//            currentPlayerState = PlayerState.STOPPED
+//            if (mediaPlayer != null) { //mediaPlayer != null
+////               pause = false
+////               currentPlayerState = PlayerState.PLAYING
+//                mediaPlayer?.stop()
+//
+//                currentPlayerState = PlayerState.STARTED
+//
+////               handler.removeCallbacks(runnable)
+//                //seek_bar.progress = 0
+//                //mediaPlayer?.reset()
+//            } else {
+//                Toast.makeText(
+//                    requireContext(),
+//                    "Media is null. Please provide",
+//                    Toast.LENGTH_SHORT
+//                ).show()
 //            }
 //        }
 
-        binding.likeTrack.setOnCheckedChangeListener { p0, p1 ->
+        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                if (b) {
+                    mediaPlayer?.seekTo(i * 1000)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                //mediaPlayer?.seekTo(i * 1000)
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                //mediaPlayer?.seekTo(i * 1000)
+
+            }
+        })
+
+
+    binding.likeTrack.setOnCheckedChangeListener { p0, p1 ->
 
             if(p1){
                 Like()
@@ -249,6 +277,33 @@ class PlayerFragment : BaseFragment() {
        }
 
     }
+
+    // Method to initialize seek bar and audio stats
+    private fun initializeSeekBar() {
+        seek_bar.max = mediaPlayer!!.seconds
+
+        runnable = Runnable {
+            seek_bar.progress = mediaPlayer!!.currentSeconds
+
+            tv_pass.text = "${mediaPlayer?.currentSeconds} sec"
+            val diff = mediaPlayer?.seconds?.minus(mediaPlayer!!.currentSeconds)
+            tv_due.text = "$diff sec"
+
+            handler.postDelayed(runnable, 1000)
+        }
+        handler.postDelayed(runnable, 1000)
+    }
+
+    // Creating an extension property to get the media player time duration in seconds
+    val MediaPlayer.seconds:Int
+        get() {
+            return this.duration / 1000
+        }
+    // Creating an extension property to get media player current position in seconds
+    val MediaPlayer.currentSeconds:Int
+        get() {
+            return this.currentPosition/1000
+        }
 
 
     private fun showAlertAndGetComment() {
