@@ -56,9 +56,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_txt"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+       />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/uname_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.434" />
+        app:layout_constraintVertical_bias="0.434" />-->
 
     <TextView
         android:id="@+id/contact_string"
@@ -94,7 +94,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_profile"
-        app:layout_constraintVertical_bias="0.094" />
+        app:layout_constraintVertical_bias="0.069" />
 
     <ScrollView
         android:id="@+id/scroll_songs"

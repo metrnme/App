@@ -72,14 +72,17 @@ class ProfileFragment : BaseFragment() {
         Amplify.Storage.getUrl(globalMusicData!!.imgUrl,
             { result ->
                 var imageurl = result.url.toString()
-                Glide.with(this)
+
+                activity?.runOnUiThread{
+                        Glide.with(context ?: requireContext())
                         .load(imageurl) // image url
                         .placeholder(R.drawable.album_art_background) // any placeholder to load at start
                         .error(R.drawable.album_art_error)  // any image in case of error
                         .skipMemoryCache(true)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                         .transform(CircleCrop())
                         .into(binding.imgProfile)
+                }
             },
             { error -> Log.e("error", error.message) })
         //Check if already following
