@@ -46,6 +46,9 @@
             android:name="url"
             android:defaultValue="null"
             app:argType="string" />
+        <action
+            android:id="@+id/action_nav_player_to_nav_profile"
+            app:destination="@id/nav_profile" />
     </fragment>
     <fragment
         android:id="@+id/nav_track"
@@ -59,7 +62,11 @@
     <fragment
         android:id="@+id/nav_upload"
         android:name="com.example.mtrnme2.fragments.UploadFragment"
-        android:label="nav_upload" />
+        android:label="nav_upload" >
+        <action
+            android:id="@+id/action_nav_upload_to_nav_playlist"
+            app:destination="@id/nav_playlist" />
+    </fragment>
     <fragment
         android:id="@+id/nav_playlist"
         android:name="com.example.mtrnme2.fragments.PlaylistFragment"

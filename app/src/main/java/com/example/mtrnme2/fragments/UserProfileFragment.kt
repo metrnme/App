@@ -29,6 +29,7 @@ class UserProfileFragment : BaseFragment() {
     private lateinit var binding: FragmentUserProfileBinding
     var userService : UserService?=null
     var trkAdapter: TrackDeleteAdapter? = null
+    var imgurl = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +50,11 @@ class UserProfileFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+//        PlayerFragment.globalMusicData =
+//            Gson().fromJson(arguments?.getString("data"), AllTrackResponseItem::class.java)
+//        var imgKey = PlayerFragment.globalMusicData!!.image_url
+
+
         var getUserCall : Call<AllUserResponseItem> = userService?.getUser(userName(username = appData.username))!!
         getUserCall.enqueue(object : Callback<AllUserResponseItem> {
             override fun onFailure(call: Call<AllUserResponseItem>, t: Throwable) {
@@ -64,29 +70,50 @@ class UserProfileFragment : BaseFragment() {
                     val responsebody : AllUserResponseItem = response.body()!!
                     Log.e("app New User Response", "Response Body : " + responsebody.username)
                     binding.nameTxt.text = responsebody!!.name
-                    binding.unameTxt.text = responsebody!!.username
+                    //binding.unameTxt.text = responsebody!!.username
                     var inst: String = ""
                     for (i in responsebody!!.inst) {
                         inst += "  $i"
                     }
                     binding.instTxt.text = inst
-                    binding.contactString.text = responsebody!!.bio
-                    var imageurl:String=""
-                    Amplify.Storage.getUrl(responsebody!!.imgUrl,
-                            { result ->
-                                imageurl = result.url.toString()
-                                Glide.with(this@UserProfileFragment)
-                                        .load(imageurl) // image url
-                                        .placeholder(R.drawable.album_art_background) // any placeholder to load at start
-                                        .error(R.drawable.album_art_error)  // any image in case of error
-                                        .skipMemoryCache(true)
-                                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .transform(CircleCrop())
-                                        .into(binding.imgProfile)
+                    binding.contactString.text = responsebody.bio
+                    var imgKey:String=responsebody.imgUrl
+                    Amplify.Storage.getUrl(imgKey,
+                        { result ->
+                            showLog("RESULT:" + result.url.toString())
+                            imgurl=result.url.toString()
+                            activity?.runOnUiThread {
+                                Glide.with(context ?: requireContext())
+                                    .load(imgurl) // image url
+                                    .error(R.drawable.album_art_error)
+                                    .centerCrop()
+                                    .placeholder(R.drawable.album_art_background)
+                                    .into(binding.imgProfile)
+                            }
 
 
-                            },
-                            { error -> Log.e("error", error.message) })
+                            var echo = 1+1
+                        },
+                        { error -> Log.e("Glide", error.message) })
+
+
+
+//                    var imgurl:String=""
+//                    Amplify.Storage.getUrl(responsebody!!.imgUrl,
+//                            { result ->
+//                                imgurl = result.url.toString()
+//                                Glide.with(this@UserProfileFragment)
+//                                        .load(imgurl) // image url
+//                                        .placeholder(R.drawable.album_art_background) // any placeholder to load at start
+//                                        .error(R.drawable.album_art_error)  // any image in case of error
+//                                        .skipMemoryCache(true)
+//                                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                                        .transform(CircleCrop())
+//                                        .into(binding.imgProfile)
+//
+//
+//                            },
+//                            { error -> Log.e("error", error.message) })
 
 
                 }

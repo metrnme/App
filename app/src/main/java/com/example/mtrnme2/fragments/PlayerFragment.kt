@@ -10,19 +10,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.SeekBar
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.mtrnme2.R
+import com.example.mtrnme2.adapters.UsersAdapter
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
 import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
+import com.example.mtrnme2.services.UserService
 import com.example.mtrnme2.states.LikeState
 import com.example.mtrnme2.states.PlayerState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_player.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -121,6 +126,38 @@ class PlayerFragment : BaseFragment() {
         binding.likeTrack.isChecked = globalMusicData?.user_likes?.contains(appData.username)!! ?: false
 
         //var b: Boolean = lakes.contains(appData.username)
+        binding.collab.setOnClickListener {
+            var listOfUsers = mutableListOf<AllUserResponseItem>()
+            var UserService: UserService? = null
+            UserService = ServiceBuilder.buildservice()
+            var getUsers: Call<AllUserResponseItem> = UserService?.getUser(userName(username = globalMusicData!!.username))!!
+            getUsers.enqueue(object : Callback<AllUserResponseItem> {
+                override fun onFailure(call: Call<AllUserResponseItem>, t: Throwable) {
+                    Log.e("User Err", "Error Occurred : ${t.message}")
+                }
+
+                override fun onResponse(
+                    call: Call<AllUserResponseItem>,
+                    response: Response<AllUserResponseItem>
+                ) {
+
+                    // Log.e("app:Network Response", "Response Body : " + response.errorBody())
+                    if (response.isSuccessful || response.body() != null) {
+                        var responsebody: AllUserResponseItem = response.body()!!
+                        Log.e(
+                            "app:User Info Response",
+                            "Response Body : $responsebody"
+                        )
+                        //Should get all Instruments from here
+                        var navigator = findNavController()
+                        assert(navigator!=null)
+                        var bundle = Bundle()
+                        bundle.putString("data", Gson().toJson(responsebody, AllUserResponseItem::class.java))
+                        navigator.navigate(R.id.nav_profile, bundle)
+                    }
+                }
+            })
+        }
 
 
 //
@@ -129,7 +166,7 @@ class PlayerFragment : BaseFragment() {
 
         //if below statement is true then show the heart button with red
         //globalMusicData!!.user_likes.contains(appData.username)
-        imageurl = "https://infinitiliveaboard.com/public/images/infinity_intro.jpg"
+        //imageurl = "https://infinitiliveaboard.com/public/images/infinity_intro.jpg"
         Amplify.Storage.getUrl(imgKey,
             { result ->
                 showLog("RESULT:" + result.url.toString())
@@ -148,7 +185,7 @@ class PlayerFragment : BaseFragment() {
             },
             { error -> Log.e("Glide", error.message) })
 
-        Log.d("Glide",imageurl);
+        Log.d("Glide",imageurl)
 
 
         var myGenre = globalMusicData!!.genre;
