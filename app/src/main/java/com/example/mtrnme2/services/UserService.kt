@@ -24,4 +24,11 @@ interface UserService {
 
     @GET("api/v1/users")
     fun getAllUsers(): Call<AllUserResponse>
+
+    @PUT("api/v1/follow")
+    fun userFollow(@Body followUser: followUser): Call<GenericResponse>
+
+    @PUT("api/v1/unfollow")
+    fun userUnfollow(@Body followUser: followUser): Call<GenericResponse>
+
 }

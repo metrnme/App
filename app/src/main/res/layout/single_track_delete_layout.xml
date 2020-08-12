@@ -11,7 +11,7 @@ THis is single tract layout which we will user in adapter
     android:layout_marginStart="@dimen/pg_margin"
     android:layout_marginEnd="@dimen/pg_margin"
     android:layout_marginBottom="20dp"
-    android:id="@+id/track_cons"
+    android:id="@+id/track_cons_delete"
     android:clickable="true">
 
     <TextView
@@ -72,18 +72,18 @@ THis is single tract layout which we will user in adapter
         android:textSize="14sp"
         android:paddingStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/more"
+        app:layout_constraintEnd_toStartOf="@+id/delete"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
-        android:id="@+id/more"
+        android:id="@+id/delete"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginTop="3.5dp"
-        android:tint="@color/add"
+        android:tint="@color/upload"
         android:layout_marginEnd="@dimen/dp_10"
-        app:srcCompat="@drawable/ic_add_24"
+        app:srcCompat="@drawable/ic_cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"

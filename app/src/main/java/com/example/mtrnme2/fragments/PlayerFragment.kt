@@ -1,18 +1,18 @@
 package com.example.mtrnme2.fragments
 
 import android.media.MediaPlayer
+import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.SeekBar
-import android.widget.Toast
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.mtrnme2.R
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
 import com.example.mtrnme2.models.*
@@ -22,10 +22,11 @@ import com.example.mtrnme2.states.LikeState
 import com.example.mtrnme2.states.PlayerState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_player.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+import java.util.Timer
 
 class PlayerFragment : BaseFragment() {
     private lateinit var binding: FragmentPlayerBinding
@@ -61,7 +62,6 @@ class PlayerFragment : BaseFragment() {
         binding.comments.isSelected = true
         return binding.root
     }
-
     fun getAllComments(id: Int): String {
         //   var listOfComments  = ArrayList<TrackCommentsItem>()
         var allComments: String = " "
@@ -130,21 +130,22 @@ class PlayerFragment : BaseFragment() {
         //if below statement is true then show the heart button with red
         //globalMusicData!!.user_likes.contains(appData.username)
 
-
         Amplify.Storage.getUrl(imgKey,
             { result ->
                 imageurl = result.url.toString()
-                Glide.with(binding.img.context)
-                        .load(imageurl) // image url
-                        .error(R.drawable.album_art_error)
-                        .centerCrop()
-                        .placeholder(R.drawable.album_art_background) // any placeholder to load at start / any image in case of error esizing
-                        .into(binding.img)
-
-
-
             },
-            { error -> Log.e("error", error.message) })
+            { error -> Log.e("Glide", error.message) })
+
+        Log.d("Glide",imageurl);
+        Glide.with(binding.img.context)
+                    .load(imageurl) // image url
+                    .error(R.drawable.album_art_error)
+                    .centerCrop()
+                    .placeholder(R.drawable.album_art_background) // any placeholder to load at start / any image in case of error esizing
+                    //                .override(250, 250)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(binding.img)
+
 
 
         var myGenre = globalMusicData!!.genre;
@@ -173,9 +174,10 @@ class PlayerFragment : BaseFragment() {
 
         binding.playTrack.setOnCheckedChangeListener { _, p1 ->
             binding.progressView.visibility = View.VISIBLE
+
         if(pause){
-            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition)
             mediaPlayer!!.start()
+            //mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition)
             binding.progressView.visibility = View.GONE
             pause = false
         }else{
@@ -184,13 +186,18 @@ class PlayerFragment : BaseFragment() {
                     mediaPlayer = MediaPlayer()
 
 
+
                     if (track_url != "") {
                         mediaPlayer?.setDataSource(track_url)
                         mediaPlayer?.prepareAsync()
+
                         //mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
                         mediaPlayer?.setOnPreparedListener { p0 ->
                             p0?.start()
                             binding.progressView.visibility = View.GONE
+                            initializeSeekBar()
+//                          mediaPlayer?.seekTo(mediaPlayer!!.currentPosition)
+
 
                         }
                     }
@@ -201,33 +208,52 @@ class PlayerFragment : BaseFragment() {
                 pause = true
                 binding.progressView.visibility = View.GONE
 
-
-            }}
-        }
-
-        binding.stopTrack.setOnClickListener {
-            currentPlayerState = PlayerState.STOPPED
-            if (mediaPlayer != null) {
-                mediaPlayer?.stop()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Media is null. Please provide",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
+
+
+        }
         }
 
-//        binding.likeTrack.setOnClickListener{
-//            //Check the current state of the button lets suppose its 1
-//            if(false){
-//                unLike()
-//            }else{
-//                Like()
+//        binding.stopTrack.setOnClickListener {
+//            currentPlayerState = PlayerState.STOPPED
+//            if (mediaPlayer != null) { //mediaPlayer != null
+////               pause = false
+////               currentPlayerState = PlayerState.PLAYING
+//                mediaPlayer?.stop()
+//
+//                currentPlayerState = PlayerState.STARTED
+//
+////               handler.removeCallbacks(runnable)
+//                //seek_bar.progress = 0
+//                //mediaPlayer?.reset()
+//            } else {
+//                Toast.makeText(
+//                    requireContext(),
+//                    "Media is null. Please provide",
+//                    Toast.LENGTH_SHORT
+//                ).show()
 //            }
 //        }
 
-        binding.likeTrack.setOnCheckedChangeListener { p0, p1 ->
+        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                if (b) {
+                    mediaPlayer?.seekTo(i * 1000)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                //mediaPlayer?.seekTo(i * 1000)
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                //mediaPlayer?.seekTo(i * 1000)
+
+            }
+        })
+
+
+    binding.likeTrack.setOnCheckedChangeListener { p0, p1 ->
 
             if(p1){
                 Like()
@@ -242,17 +268,51 @@ class PlayerFragment : BaseFragment() {
         }
         //Comment Track here
         binding.commentTrack.setOnClickListener{
-//           var Comment = "What a beautiful track @"+appData.username
                 showAlertAndGetComment()
 
-//              postComment(Comment)
        }
 
     }
 
+//    override fun onPause() {
+//        super.onPause()
+//        if(mediaPlayer!=null){
+//        mediaPlayer?.release()
+//        //mediaPlayer!!.reset()
+//
+//    }}
+
+    // Method to initialize seek bar and audio stats
+    private fun initializeSeekBar() {
+        seek_bar.max = mediaPlayer!!.seconds
+        if(seek_bar!=null) {
+            runnable = Runnable {
+                seek_bar.progress = mediaPlayer!!.currentSeconds
+
+                tv_pass.text = "${mediaPlayer?.currentSeconds} sec"
+                val diff = mediaPlayer?.seconds?.minus(mediaPlayer!!.currentSeconds)
+                tv_due.text = "$diff sec"
+
+                handler.postDelayed(runnable, 1000)
+            }
+            handler.postDelayed(runnable, 1000)
+        }
+    }
+
+    // Creating an extension property to get the media player time duration in seconds
+    val MediaPlayer.seconds:Int
+        get() {
+            return this.duration / 1000
+        }
+    // Creating an extension property to get media player current position in seconds
+    val MediaPlayer.currentSeconds:Int
+        get() {
+            return this.currentPosition/1000
+        }
+
 
     private fun showAlertAndGetComment() {
-        val builder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
         val view = View.inflate(context, R.layout.comment_layout, null)
 
         //builder.setTitle("Post Comment")
@@ -306,6 +366,19 @@ class PlayerFragment : BaseFragment() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(mediaPlayer!=null) {
+            mediaPlayer?.reset()
+            handler.removeCallbacks(runnable)
+            seek_bar.progress = 0
+        }
+    }
     fun unLike(){
         var TrackService: TrackService? = null
         TrackService = ServiceBuilder.buildTrackService()
@@ -355,6 +428,8 @@ class PlayerFragment : BaseFragment() {
             }})
 
     }
+
+
 
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)

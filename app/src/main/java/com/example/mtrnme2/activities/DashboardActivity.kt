@@ -48,7 +48,6 @@ class DashboardActivity : BaseActivity() {
     }
 
     override fun onResume() {
-
         super.onResume()
     }
 

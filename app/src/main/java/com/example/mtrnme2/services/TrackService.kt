@@ -30,7 +30,6 @@ interface TrackService {
 
     @POST("api/v1/comment")
     fun postComment(@Body commentModel: CommentModel): Call<GenericResponse>
-
 }
 
 

@@ -1,19 +1,14 @@
 package com.example.mtrnme2.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.mtrnme2.R
 import com.example.mtrnme2.activities.viewmodels.TrackViewModel
-import com.example.mtrnme2.adapters.PlaylistAdapter
 import com.example.mtrnme2.adapters.TrackAdapter
 import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.PlaylistService
@@ -22,7 +17,6 @@ import com.example.mtrnme2.services.TrackService
 import com.google.gson.Gson
 import com.minibugdev.sheetselection.SheetSelection
 import com.minibugdev.sheetselection.SheetSelectionItem
-import kotlinx.android.synthetic.main.fragment_playlist.*
 import kotlinx.android.synthetic.main.track_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -127,9 +121,8 @@ class TrackFragment : BaseFragment() {
                                                     showLog(playlists.size.toString() + " Size")
 
                                                     val items = ArrayList<SheetSelectionItem>()
-
                                                     for(list in playlists){
-                                                        items.add(SheetSelectionItem(list.pl_id.toString(), list.name, R.drawable.ic_check))
+                                                        items.add(SheetSelectionItem(list.pl_id.toString(), list.name, R.drawable.ic_checkw))
                                                     }
                                                         SheetSelection.Builder(context!!)
                                                             .title("Choose Playlist")
@@ -139,7 +132,7 @@ class TrackFragment : BaseFragment() {
                                                             .searchEnabled(true)
                                                             .onItemClickListener { item, playlistPosition ->
                                                                 addtoPlaylist(item.key.toInt(), listOfTracks[position].track_id)
-                                                                showToast(items[playlistPosition].key)
+                                                                showToast("Added to "+items[playlistPosition].value)
                                                             }
                                                             .show()
                                                 }

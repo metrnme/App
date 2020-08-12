@@ -84,7 +84,7 @@ class PlaylistFragment : BaseFragment() {
     }
 
     private fun showAlertAndGetPlaylist() {
-        val builder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
         val view = View.inflate(context, R.layout.playlist_layout, null)
 
 
