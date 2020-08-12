@@ -1,18 +1,18 @@
 package com.example.mtrnme2.fragments
 
 import android.media.MediaPlayer
+import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.SeekBar
-import android.widget.Toast
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.mtrnme2.R
 import com.example.mtrnme2.databinding.FragmentPlayerBinding
 import com.example.mtrnme2.models.*
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_player.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+import java.util.Timer
 
 class PlayerFragment : BaseFragment() {
     private lateinit var binding: FragmentPlayerBinding
@@ -62,7 +62,6 @@ class PlayerFragment : BaseFragment() {
         binding.comments.isSelected = true
         return binding.root
     }
-
     fun getAllComments(id: Int): String {
         //   var listOfComments  = ArrayList<TrackCommentsItem>()
         var allComments: String = " "
@@ -131,21 +130,22 @@ class PlayerFragment : BaseFragment() {
         //if below statement is true then show the heart button with red
         //globalMusicData!!.user_likes.contains(appData.username)
 
-
         Amplify.Storage.getUrl(imgKey,
             { result ->
                 imageurl = result.url.toString()
-                Glide.with(binding.img.context)
-                        .load(imageurl) // image url
-                        .error(R.drawable.album_art_error)
-                        .centerCrop()
-                        .placeholder(R.drawable.album_art_background) // any placeholder to load at start / any image in case of error esizing
-                        .into(binding.img)
-
-
-
             },
-            { error -> Log.e("error", error.message) })
+            { error -> Log.e("Glide", error.message) })
+
+        Log.d("Glide",imageurl);
+        Glide.with(binding.img.context)
+                    .load(imageurl) // image url
+                    .error(R.drawable.album_art_error)
+                    .centerCrop()
+                    .placeholder(R.drawable.album_art_background) // any placeholder to load at start / any image in case of error esizing
+                    //                .override(250, 250)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(binding.img)
+
 
 
         var myGenre = globalMusicData!!.genre;
@@ -196,7 +196,7 @@ class PlayerFragment : BaseFragment() {
                             p0?.start()
                             binding.progressView.visibility = View.GONE
                             initializeSeekBar()
-//                            mediaPlayer?.seekTo(mediaPlayer!!.currentPosition)
+//                          mediaPlayer?.seekTo(mediaPlayer!!.currentPosition)
 
 
                         }
@@ -207,8 +207,6 @@ class PlayerFragment : BaseFragment() {
                 mediaPlayer?.pause()
                 pause = true
                 binding.progressView.visibility = View.GONE
-
-
 
             }
 
@@ -270,28 +268,35 @@ class PlayerFragment : BaseFragment() {
         }
         //Comment Track here
         binding.commentTrack.setOnClickListener{
-//           var Comment = "What a beautiful track @"+appData.username
                 showAlertAndGetComment()
 
-//              postComment(Comment)
        }
 
     }
 
+//    override fun onPause() {
+//        super.onPause()
+//        if(mediaPlayer!=null){
+//        mediaPlayer?.release()
+//        //mediaPlayer!!.reset()
+//
+//    }}
+
     // Method to initialize seek bar and audio stats
     private fun initializeSeekBar() {
         seek_bar.max = mediaPlayer!!.seconds
+        if(seek_bar!=null) {
+            runnable = Runnable {
+                seek_bar.progress = mediaPlayer!!.currentSeconds
 
-        runnable = Runnable {
-            seek_bar.progress = mediaPlayer!!.currentSeconds
+                tv_pass.text = "${mediaPlayer?.currentSeconds} sec"
+                val diff = mediaPlayer?.seconds?.minus(mediaPlayer!!.currentSeconds)
+                tv_due.text = "$diff sec"
 
-            tv_pass.text = "${mediaPlayer?.currentSeconds} sec"
-            val diff = mediaPlayer?.seconds?.minus(mediaPlayer!!.currentSeconds)
-            tv_due.text = "$diff sec"
-
+                handler.postDelayed(runnable, 1000)
+            }
             handler.postDelayed(runnable, 1000)
         }
-        handler.postDelayed(runnable, 1000)
     }
 
     // Creating an extension property to get the media player time duration in seconds
@@ -361,6 +366,19 @@ class PlayerFragment : BaseFragment() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(mediaPlayer!=null) {
+            mediaPlayer?.reset()
+            handler.removeCallbacks(runnable)
+            seek_bar.progress = 0
+        }
+    }
     fun unLike(){
         var TrackService: TrackService? = null
         TrackService = ServiceBuilder.buildTrackService()
@@ -410,6 +428,8 @@ class PlayerFragment : BaseFragment() {
             }})
 
     }
+
+
 
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)

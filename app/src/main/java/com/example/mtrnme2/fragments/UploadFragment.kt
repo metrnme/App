@@ -1,33 +1,25 @@
 package com.example.mtrnme2.fragments
 
-import android.content.Intent
+import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import com.abdeveloper.library.MultiSelectDialog
+import com.abdeveloper.library.MultiSelectModel
 import com.amplifyframework.core.Amplify
 import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.developer.filepicker.view.FilePickerDialog
-import com.example.mtrnme2.R
-import com.example.mtrnme2.activities.UserRegistration
 import com.example.mtrnme2.databinding.FragmentUploadBinding
-import com.example.mtrnme2.models.TrackUpload
 import com.example.mtrnme2.models.GenericResponse
+import com.example.mtrnme2.models.TrackUpload
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_upload.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,6 +46,41 @@ class UploadFragment : BaseFragment() {
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        binding.btnGenre.setOnClickListener{
+           var listOfGenre = ArrayList<MultiSelectModel>()
+            listOfGenre.add(MultiSelectModel(1,"Rock"))
+            listOfGenre.add(MultiSelectModel(1,"House"))
+            listOfGenre.add(MultiSelectModel(1,"Classical"))
+
+            var alreadySelectedGenre = ArrayList<Int>()
+            val multiSelectDialog: MultiSelectDialog = MultiSelectDialog()
+                    .title("Genre") //setting title for dialog
+                    .titleSize(25F)
+                    .positiveText("Done")
+                    .negativeText("Cancel")
+                    .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                    .setMaxSelectionLimit(listOfGenre.size) //you can set maximum checkbox selection limit (Optional)
+                    .preSelectIDsList(alreadySelectedGenre) //List of ids that you need to be selected
+                    .multiSelectList(listOfGenre) // the multi select model list with ids and name
+                    .onSubmit(object : MultiSelectDialog.SubmitCallbackListener {
+                        override fun onSelected(selectedIds: ArrayList<Int?>, selectedNames: ArrayList<String?>, dataString: String) {
+                            //will return list of selected IDS
+                            for (i in selectedIds) {
+                                showToast(i.toString())
+                                showToast(i.toString())
+                                showToast(dataString)
+                            }
+                        }
+
+                        override fun onCancel() {
+                            Log.d(TAG, "Dialog cancelled")
+                        }
+                    })
+//            multiSelectDialog.show(getSupportFragmentManager(),"multiSelectDialog")
+
+        }
+
         binding.btnBrowseart.setOnClickListener { view ->
             Snackbar.make(view, "BROWSE!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
