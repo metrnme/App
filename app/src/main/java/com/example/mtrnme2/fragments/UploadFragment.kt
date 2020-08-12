@@ -2,6 +2,7 @@ package com.example.mtrnme2.fragments
 
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -148,9 +149,8 @@ class UploadFragment : BaseFragment() {
                     "File Selected: ${it.size} has been selected",
                     Toast.LENGTH_SHORT
                 ).show()
-
-                imgKey=name_txt.text.toString()
-                imgKey+=(0..100000).random().toString()+"image"
+                var date = java.util.Calendar.getInstance()
+                imgKey="${date.time.time}_"+(0..100).random().toString()+"_profile_image"
                 uploadFile(imgKey,it[0].toString())
 
             }
@@ -169,9 +169,8 @@ class UploadFragment : BaseFragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                trackKey=name_txt.text.toString()
-                trackKey+=(0..100000).random().toString()
-                trackPath=it[0].toString()
+                var date = java.util.Calendar.getInstance()
+                trackKey="${date.time.time}_"+(0..100).random().toString()+"_track"
                 uploadFile(trackKey,it[0].toString())
             }
             dialog.setTitle("Select a File")
@@ -180,6 +179,16 @@ class UploadFragment : BaseFragment() {
         }
 
         binding.fabUpl.setOnClickListener { view ->
+            if(binding.nameTxt.text.isNullOrEmpty()){
+                showToast("Please provide title")
+                return@setOnClickListener
+            }
+
+            if(binding.instTxt.text.isNullOrEmpty()){
+                showToast("Please provide Instrument Name")
+                return@setOnClickListener
+            }
+
             var addTrack : Call<GenericResponse> = trackService?.uploadTrack(TrackUpload(name=name_txt.text.toString(), url=trackKey, username=appData.username, image_url=imgKey, genre = listOf(selectedGenre), inst_used=listOf("Drums", "Guitars", "Vocals")))!!
             addTrack.enqueue(object : Callback<GenericResponse> {
                 override fun onFailure(call: Call<GenericResponse>, t: Throwable) {

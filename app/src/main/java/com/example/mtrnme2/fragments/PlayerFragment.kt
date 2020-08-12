@@ -129,23 +129,26 @@ class PlayerFragment : BaseFragment() {
 
         //if below statement is true then show the heart button with red
         //globalMusicData!!.user_likes.contains(appData.username)
-
+        imageurl = "https://infinitiliveaboard.com/public/images/infinity_intro.jpg"
         Amplify.Storage.getUrl(imgKey,
             { result ->
-                imageurl = result.url.toString()
+                showLog("RESULT:" + result.url.toString())
+                imageurl=result.url.toString()
+                activity?.runOnUiThread {
+                    Glide.with(context ?: requireContext())
+                        .load(imageurl) // image url
+                        .error(R.drawable.album_art_error)
+                        .centerCrop()
+                        .placeholder(R.drawable.album_art_background)
+                        .into(binding.img)
+                }
+
+
+                var echo = 1+1
             },
             { error -> Log.e("Glide", error.message) })
 
         Log.d("Glide",imageurl);
-        Glide.with(binding.img.context)
-                    .load(imageurl) // image url
-                    .error(R.drawable.album_art_error)
-                    .centerCrop()
-                    .placeholder(R.drawable.album_art_background) // any placeholder to load at start / any image in case of error esizing
-                    //                .override(250, 250)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(binding.img)
-
 
 
         var myGenre = globalMusicData!!.genre;

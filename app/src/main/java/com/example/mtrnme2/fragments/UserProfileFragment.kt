@@ -1,41 +1,29 @@
 package com.example.mtrnme2.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.amazonaws.util.ValidationUtils
 import com.amazonaws.util.ValidationUtils.assertNotNull
 import com.amplifyframework.core.Amplify
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.mtrnme2.R
-import com.example.mtrnme2.activities.DashboardActivity
 import com.example.mtrnme2.adapters.TrackDeleteAdapter
-import com.example.mtrnme2.databinding.FragmentProfileBinding
 import com.example.mtrnme2.databinding.FragmentUserProfileBinding
 import com.example.mtrnme2.models.*
-import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
 import com.example.mtrnme2.services.UserService
 import com.google.gson.Gson
-import com.minibugdev.sheetselection.SheetSelection
-import com.minibugdev.sheetselection.SheetSelectionItem
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.uname_txt
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Integer.parseInt
 
 class UserProfileFragment : BaseFragment() {
     private lateinit var binding: FragmentUserProfileBinding
@@ -133,14 +121,18 @@ class UserProfileFragment : BaseFragment() {
                     for(i in responsebody){
                         listOfTracks.add(i)
                     }
-                    trkAdapter = TrackDeleteAdapter(response.body()!!)
+                    var listOfTest = response.body()
+                    trkAdapter = TrackDeleteAdapter(listOfTest!!)
                     user_uploaded_songs.layoutManager = LinearLayoutManager(context)
                     user_uploaded_songs.adapter = trkAdapter
                     trkAdapter!!.setOnItemChildClickListener { adapter, view, position ->
                         when(view.id){
                             R.id.delete->{
                                 //Delete Track
-                                deleteTrack(responsebody!![position].track_id)
+                                deleteTrack(responsebody!![position].track_id, listOfTest)
+                                listOfTest.removeAt(position)
+                                trkAdapter?.notifyDataSetChanged()
+
                             }
 
                             R.id.track_cons_delete->{
@@ -160,7 +152,10 @@ class UserProfileFragment : BaseFragment() {
         return listOfTracks
     }
 
-    private fun deleteTrack(trackID: Int) {
+    private fun deleteTrack(
+        trackID: Int,
+        listOfTest: AllTrackResponse
+    ) {
         var TrackService: TrackService? = null
         TrackService = ServiceBuilder.buildTrackService()
         var delete_Track: Call<GenericResponse> = TrackService?.deleteTrack(removeTrack(username = appData.username,track_id = trackID))!!

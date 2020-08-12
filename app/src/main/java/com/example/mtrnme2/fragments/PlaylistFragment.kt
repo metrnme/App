@@ -176,11 +176,16 @@ class PlaylistFragment : BaseFragment() {
                     playAdapter!!.setOnItemChildClickListener { adapter, view, position ->
                         when (view.id) {
                             R.id.playlist_name -> {
-                                showToast("Playlist Name Clicked")
+                                var navigator = findNavController()
+                                assert(navigator!=null)
+                                var bundle = Bundle()
+                                listOfPlaylist[position].track_list
+                                bundle.putString("data", Gson().toJson(listOfPlaylist[position],AllPlaylistResponseItem::class.java))
+                                navigator.navigate(R.id.nav_playlist_tracks, bundle)
                             }
 
                             R.id.playlist_cons -> {
-                              showToast("Playlist Clicked")
+                              //showToast("Playlist Clicked")
                               var navigator = findNavController()
                               assert(navigator!=null)
                               var bundle = Bundle()
