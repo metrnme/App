@@ -54,6 +54,7 @@
         android:layout_height="200dp"
         app:layout_constraintBottom_toTopOf="@id/name_txt"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_txt"
         app:srcCompat="@drawable/ic_launcher_foreground" />
@@ -96,6 +97,92 @@
         app:layout_constraintTop_toBottomOf="@id/img_profile"
         app:layout_constraintVertical_bias="0.094" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.571">
+
+        <TextView
+            android:id="@+id/followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="@dimen/pg_margin"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:text="92"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body_txt_size" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/following"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pg_margin"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:text="52"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body_txt_size" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.537">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pg_margin"
+            android:layout_marginEnd="@dimen/pg_margin"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:text="Followers"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body_txt_size" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pg_margin"
+            android:layout_marginEnd="@dimen/pg_margin"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:text="Following"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body_txt_size" />
+
+
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/scroll_songs"
         android:layout_width="match_parent"
@@ -107,7 +194,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_string"
-        app:layout_constraintVertical_bias="0.194">
+        app:layout_constraintVertical_bias="0.467">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/uploaded_songs"
@@ -119,6 +206,20 @@
 
     </ScrollView>
 
+    <ToggleButton
+        android:id="@+id/follow_user"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:background="@drawable/fall_unfall_states"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.57" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

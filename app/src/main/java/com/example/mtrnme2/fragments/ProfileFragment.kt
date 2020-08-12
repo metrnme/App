@@ -19,6 +19,9 @@ import com.example.mtrnme2.models.*
 import com.example.mtrnme2.services.PlaylistService
 import com.example.mtrnme2.services.ServiceBuilder
 import com.example.mtrnme2.services.TrackService
+import com.example.mtrnme2.services.UserService
+import com.example.mtrnme2.states.FallUnfallStates
+import com.example.mtrnme2.states.LikeState
 import com.google.gson.Gson
 import com.minibugdev.sheetselection.SheetSelection
 import com.minibugdev.sheetselection.SheetSelectionItem
@@ -32,6 +35,7 @@ class ProfileFragment : BaseFragment() {
     var trkAdapter: TrackAdapter? = null
 
     private lateinit var binding: FragmentProfileBinding
+    var follow: FallUnfallStates = FallUnfallStates.NotFalling
 
     companion object {
 
@@ -52,6 +56,7 @@ class ProfileFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         ProfileFragment.globalMusicData =
             Gson().fromJson(arguments?.getString("data"), AllUserResponseItem::class.java)
 
@@ -77,9 +82,35 @@ class ProfileFragment : BaseFragment() {
                         .into(binding.imgProfile)
             },
             { error -> Log.e("error", error.message) })
+        //Check if already following
+//        var followState : Boolean = false
+//        for( u in globalMusicData!!.followers){
+//            if(u.toString().equals(appData.username)){
+//                followState=true
+//            }
+//        }
+        binding.followUser.isChecked = ProfileFragment.globalMusicData?.followers?.contains(appData.username)!!
 
+
+        //Get User Following
+        binding.followers.text= globalMusicData!!.followers.size.toString()
+        binding.following.text= globalMusicData!!.following.size.toString()
+        binding.followUser.setOnCheckedChangeListener { p0, p1 ->
+            if(p1){
+                //
+                globalMusicData!!.following.contains(appData.username)
+                following()
+                follow = FallUnfallStates.Falling
+            }
+            else{
+                //
+                unfollow()
+                follow = FallUnfallStates.NotFalling
+            }
+        }
 
         getAllUserTracks()
+
     }
     fun getAllUserTracks():MutableList<AllTrackResponseItem> {
         var listOfTracks:MutableList<AllTrackResponseItem>  = ArrayList()//mutableListOf<AllTrackResponseItem>()
@@ -144,7 +175,7 @@ class ProfileFragment : BaseFragment() {
                                             val items = ArrayList<SheetSelectionItem>()
 
                                             for(list in playlists){
-                                                items.add(SheetSelectionItem(list.pl_id.toString(), list.name, R.drawable.ic_check))
+                                                items.add(SheetSelectionItem(list.pl_id.toString(), list.name, R.drawable.ic_checkw))
                                             }
                                             SheetSelection.Builder(context!!)
                                                     .title("Choose Playlist")
@@ -204,6 +235,53 @@ class ProfileFragment : BaseFragment() {
                         "Response Body : $responsebody"
                 )
                 showToast("Track has been added to playlist")
+            }
+        })
+
+    }
+
+    private fun following(){
+        var FollowService: UserService? = null
+        FollowService = ServiceBuilder.buildservice()
+        var Followers: Call<GenericResponse> = FollowService?.userFollow(followUser(to= globalMusicData!!.username,from = appData.username))
+        Followers.enqueue(object : Callback<GenericResponse> {
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("app:", "Error Occurred : ${t.message}")
+            }
+
+            override fun onResponse(
+                call: Call<GenericResponse>,
+                response: Response<GenericResponse>
+            ) {
+                var responsebody: GenericResponse = response.body()!!
+                Log.e(
+                    "Follow",
+                    "Response Body : $responsebody"
+                )
+                showToast("Followed User")
+            }
+        })
+    }
+
+    private fun unfollow(){
+        var UnfollowService: UserService? = null
+        UnfollowService = ServiceBuilder.buildservice()
+        var Unfollow: Call<GenericResponse> = UnfollowService?.userUnfollow(followUser(to= globalMusicData!!.username,from = appData.username))
+        Unfollow.enqueue(object : Callback<GenericResponse> {
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("app:", "Error Occurred : ${t.message}")
+            }
+
+            override fun onResponse(
+                call: Call<GenericResponse>,
+                response: Response<GenericResponse>
+            ) {
+                var responsebody: GenericResponse = response.body()!!
+                Log.e(
+                    "Follow",
+                    "Response Body : $responsebody"
+                )
+                showToast("Unfollowed User")
             }
         })
 

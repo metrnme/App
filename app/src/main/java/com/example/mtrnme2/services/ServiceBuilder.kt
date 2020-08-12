@@ -28,5 +28,10 @@ object ServiceBuilder {
         return retrofit.create(PlaylistService::class.java)
     }
 
+    public fun buildGenreService(): GenreService {
+        return retrofit.create(GenreService::class.java)
+    }
+
+
     
 }

@@ -101,7 +101,9 @@ class SearchFragment : BaseFragment() {
 
                     for (i in responsebody) {
                         if(i.username.contains(SearchUser, ignoreCase = true)) {
-                            listOfUsers.add(i)
+                            if(i.username != appData.username) {
+                                listOfUsers.add(i)
+                            }
                         }
                     }
 

@@ -312,7 +312,7 @@ class PlayerFragment : BaseFragment() {
 
 
     private fun showAlertAndGetComment() {
-        val builder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
         val view = View.inflate(context, R.layout.comment_layout, null)
 
         //builder.setTitle("Post Comment")
