@@ -77,7 +77,8 @@ class PlaylistTrackFragment : BaseFragment() {
                     )
                     //Should get all Instruments from here
 
-                    trkAdapter = TrackDeleteAdapter(response.body()!!)
+                    var listOfTest = response.body()
+                    trkAdapter = TrackDeleteAdapter(listOfTest!!)
                     // This is recyclerview. First we are initiating a layout orientation
                     playlisttracks.layoutManager = LinearLayoutManager(context)
 
@@ -110,6 +111,8 @@ class PlaylistTrackFragment : BaseFragment() {
                                         }
                                     }
                                 })
+                                listOfTest.removeAt(position)
+                                trkAdapter?.notifyDataSetChanged()
                                 showToast("Track has been removed from Playlist")
                             }
                             R.id.track_cons_delete -> {
