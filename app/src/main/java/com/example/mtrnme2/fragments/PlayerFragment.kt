@@ -1,6 +1,7 @@
 package com.example.mtrnme2.fragments
 
 import android.media.MediaPlayer
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
@@ -115,6 +116,13 @@ class PlayerFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if(appData.musician){
+            binding.collab.visibility = View.VISIBLE
+        }
+        else{
+            binding.collab.visibility = View.GONE
+
+        }
         globalMusicData =
             Gson().fromJson(arguments?.getString("data"), AllTrackResponseItem::class.java)
 
@@ -206,7 +214,7 @@ class PlayerFragment : BaseFragment() {
             { result -> track_url = result.url.toString() },
             { error -> Log.e("error", error.message.toString()) })
 
-        binding.inst.text = DisplayInst
+        //binding.inst.text = DisplayInst
         binding.genre.text = DisplayGenre
 
         Log.d("Comments", allComments)

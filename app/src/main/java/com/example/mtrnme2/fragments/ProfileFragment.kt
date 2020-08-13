@@ -61,7 +61,7 @@ class ProfileFragment : BaseFragment() {
             Gson().fromJson(arguments?.getString("data"), AllUserResponseItem::class.java)
 
         binding.nameTxt.text = globalMusicData!!.name
-        binding.unameTxt.text = globalMusicData!!.username
+        //binding.unameTxt.text = globalMusicData!!.username
         var inst: String = ""
         for (i in globalMusicData!!.inst) {
             inst += "  $i"

@@ -86,7 +86,7 @@ class UserProfileFragment : BaseFragment() {
                                 Glide.with(context ?: requireContext())
                                     .load(imgurl) // image url
                                     .error(R.drawable.album_art_error)
-                                    .centerCrop()
+                                    .transform(CircleCrop())
                                     .placeholder(R.drawable.album_art_background)
                                     .into(binding.imgProfile)
                             }
