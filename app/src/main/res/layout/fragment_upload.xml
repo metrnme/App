@@ -79,30 +79,30 @@
             android:inputType="text"
             android:textSize="@dimen/body_txt_size_large" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_Genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
             android:fontFamily="@font/nunito_bold"
             android:text="Select Genre" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_browseart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
             android:fontFamily="@font/nunito_bold"
             android:text="Browse Image" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_browseaudio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
             android:fontFamily="@font/nunito_bold"
             android:text="Browse Track" />
 
@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="185dp"
             android:layout_marginEnd="@dimen/pg_margin"
-            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
             android:clickable="true"
             app:borderWidth="0dp"
             app:srcCompat="@drawable/ic_file_upload_black_24dp" />

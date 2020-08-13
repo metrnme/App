@@ -31,17 +31,18 @@ class SettingsFragment : BaseFragment() {
         }
 
         my_profile.setOnClickListener {
-            showToast("Clicked me!")
+
             findNavController().navigate(R.id.action_nav_settings_to_userProfileFragment)
         }
 
-        tv_about.setOnClickListener {
-            Toast.makeText(this.context, "about", Toast.LENGTH_SHORT).show()
-        }
+//        tv_about.setOnClickListener {
+//            Toast.makeText(this.context, "about", Toast.LENGTH_SHORT).show()
+//        }
 
         btn_logout.setOnClickListener {
             val u = Intent(activity, MainActivity::class.java)
             startActivity(u)
+            showToast("Logged Out")
         }
     }
 }

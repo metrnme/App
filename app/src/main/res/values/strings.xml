@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MTRNME2</string>
+    <string name="app_name">METRNME</string>
     <string name="enter_username">Enter Username</string>
     <string name="come_up_with_something_new">Enter your current username or come up with something new...</string>
     <string name="register">Register</string>
@@ -54,5 +54,6 @@
     <string name="user_bio">User Bio</string>
     <string name="instruments">Instruments</string>
     <string name="my_profile">My Profile</string>
+    <string name="meep">--:--</string>
 
 </resources>

@@ -35,7 +35,7 @@ class MainActivity : BaseActivity() {
 
                 addUserCall.enqueue(object : Callback<GenericResponse>{
                     override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                        Toast.makeText(this@MainActivity, "Error Occurred : ${t.message}", Toast.LENGTH_SHORT).show()
+                        showToast("Username already exists!")
                     }
 
                     override fun onResponse(
@@ -48,17 +48,15 @@ class MainActivity : BaseActivity() {
                             var responsebody : GenericResponse = response.body()!!
                             Log.e("app New User Response", "Response Body : " + responsebody.message)
 
-                            if(responsebody.message[9] != 'a') {
+                           if(responsebody.status == 1) {
 
                                 val intent = Intent(this@MainActivity, UserRegistration::class.java)
                                 appData.username =  uname_txt.text.toString();
                                 startActivity(intent)
-                            }
+                            }else{
+                               showToast("Username already exists!")
+                           }
 
-                            else {
-                                Toast.makeText(this@MainActivity, "Username already exists!", Toast.LENGTH_SHORT).show()
-
-                            }
                         }
                     }
 
@@ -97,10 +95,6 @@ class MainActivity : BaseActivity() {
                                 appData.musician = responsebody.isMusician;
                                 appData.name = responsebody.name;
                                 startActivity(intent)
-                            }
-                            else
-                            {
-                                Toast.makeText(this@MainActivity, "Enter a Registered Username", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

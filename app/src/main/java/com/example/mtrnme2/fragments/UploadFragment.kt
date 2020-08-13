@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.abdeveloper.library.MultiSelectDialog
 import com.abdeveloper.library.MultiSelectModel
 import com.amplifyframework.core.Amplify
@@ -26,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.minibugdev.sheetselection.SheetSelection
 import com.minibugdev.sheetselection.SheetSelectionItem
 import kotlinx.android.synthetic.main.fragment_upload.*
+import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,6 +45,11 @@ class UploadFragment : BaseFragment() {
     var trackKey = ""
     var imgKey = ""
     var selectedGenre = ""
+    var sGenre : Boolean = false
+    var sImage : Boolean = false
+    var sAudio : Boolean = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         properties.selection_type = DialogConfigs.FILE_SELECT
@@ -97,6 +104,7 @@ class UploadFragment : BaseFragment() {
                                   //addtoPlaylist(item.key.toInt(), listOfTracks[position].track_id)
                                   selectedGenre=items[GenrePosition].value
                                   showToast(items[GenrePosition].value)
+                                  sGenre = true
                               }
                               .show()
                       }
@@ -138,9 +146,7 @@ class UploadFragment : BaseFragment() {
 //        }
 
         binding.btnBrowseart.setOnClickListener { view ->
-            Snackbar.make(view, "BROWSE!", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+
             dialog.setDialogSelectionListener {
 
 
@@ -149,12 +155,15 @@ class UploadFragment : BaseFragment() {
                     "File Selected: ${it.size} has been selected",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                sImage = true
                 var date = java.util.Calendar.getInstance()
                 imgKey="${date.time.time}_"+(0..100).random().toString()+"_profile_image"
+
                 uploadFile(imgKey,it[0].toString())
 
             }
-            dialog.setTitle("Select a File")
+            dialog.setTitle("Select an image File")
             dialog.show()
 
         }
@@ -169,9 +178,13 @@ class UploadFragment : BaseFragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
+
                 var date = java.util.Calendar.getInstance()
                 trackKey="${date.time.time}_"+(0..100).random().toString()+"_track"
+                showToast("File being uploaded")
+                showToast("Please press upload button when file is uploaded")
                 uploadFile(trackKey,it[0].toString())
+                sAudio = true
             }
             dialog.setTitle("Select a File")
             dialog.show()
@@ -179,39 +192,53 @@ class UploadFragment : BaseFragment() {
         }
 
         binding.fabUpl.setOnClickListener { view ->
-            if(binding.nameTxt.text.isNullOrEmpty()){
+            if (binding.nameTxt.text.isNullOrEmpty()) {
                 showToast("Please provide title")
                 return@setOnClickListener
             }
 
-            if(binding.instTxt.text.isNullOrEmpty()){
+            if (binding.instTxt.text.isNullOrEmpty()) {
                 showToast("Please provide Instrument Name")
                 return@setOnClickListener
             }
 
-            var addTrack : Call<GenericResponse> = trackService?.uploadTrack(TrackUpload(name=name_txt.text.toString(), url=trackKey, username=appData.username, image_url=imgKey, genre = listOf(selectedGenre), inst_used=listOf("Drums", "Guitars", "Vocals")))!!
-            addTrack.enqueue(object : Callback<GenericResponse> {
-                override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                    showToast("Failed to Upload Track")
-                }
+            if (sGenre && sAudio && sImage) {
 
-                override fun onResponse(
-                    call: Call<GenericResponse>,
-                    response: Response<GenericResponse>
-                ) {
-                    Log.e("app Network Response", "Response Body : " + response.body())
-
-                    if (response.isSuccessful || response.body()!=null){
-                        var responsebody : GenericResponse = response.body()!!
-                        Log.e("Track Uploaded", "Response Body : " + responsebody.message)
-
+                var addTrack: Call<GenericResponse> = trackService?.uploadTrack(
+                    TrackUpload(
+                        name = name_txt.text.toString(),
+                        url = trackKey,
+                        username = appData.username,
+                        image_url = imgKey,
+                        genre = listOf(selectedGenre),
+                        inst_used = listOf("Drums", "Guitars", "Vocals")
+                    )
+                )!!
+                addTrack.enqueue(object : Callback<GenericResponse> {
+                    override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                        showToast("Failed to Upload Track")
                     }
-                }
 
-            })
-            Snackbar.make(view, "UPLOAD!", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+                    override fun onResponse(
+                        call: Call<GenericResponse>,
+                        response: Response<GenericResponse>
+                    ) {
+                        Log.e("app Network Response", "Response Body : " + response.body())
+
+                        if (response.isSuccessful || response.body() != null) {
+                            var responsebody: GenericResponse = response.body()!!
+                            Log.e("Track Uploaded", "Response Body : " + responsebody.message)
+
+                        }
+                    }
+
+                })
+                showToast("Track Has Been Uploaded!")
+                findNavController().navigate(R.id.action_nav_upload_to_nav_playlist)
+            }
+            else{
+                showToast("genre/image/audio files missing")
+            }
         }
 
     }

@@ -6,7 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 object ServiceBuilder {
-    private const val URL="http://10.0.2.2:5000/"
+    private const val URL="http://3.22.118.101:5000/"
+//        "http://192.168.10.10:5000/"
 
     private val okHttp : OkHttpClient.Builder = OkHttpClient.Builder()
     private val builder = Retrofit.Builder().baseUrl(URL)
